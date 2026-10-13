@@ -1,4 +1,4 @@
-/* IB-7 Prototyp v12-home.js (Entwurf 13.10.2026, Builder A, Präfix vh-). Vanilla JS, defer, nach v10.js. Kein v10-explain mehr.
+/* IB-7 Prototyp v14-home.js (Entwurf 13.10.2026, Builder A, Präfix vh-). Kopie von v12-home.js plus Runde 7 (siehe unten). Vanilla JS, defer, nach v10.js.
    1 Science-Szene .vh-sci (POUCH "03 / THE SCIENCE"): kontinuierlich an den Scroll gekoppelt, kein Schrittwechsel.
      Setzt auf .vh-sci__stage die Variablen --a (Phase A 0..1: Punkte laufen durch, Produkt dreht), --b (Phase B 0..1: Ende mit Karten),
      --p (Gesamtfortschritt), --rot, --pty, --ps, --iy. Variante Produkt: PULSE, AURA, Duo (Überblendung bei etwa 1/3 und 2/3),
@@ -117,6 +117,110 @@
   var start = function () {
     doc.querySelectorAll('.vh-sci').forEach(scene);
     var w = doc.querySelector('.vh-words'); if (w) words(w);
+  };
+  var done = false, once = function () { if (!done) { done = true; start(); } };
+  if (doc.readyState === 'complete' || doc.readyState === 'interactive') once();
+  else { doc.addEventListener('DOMContentLoaded', once); window.addEventListener('load', once); }
+})();
+
+/* ---------------------------------------------------------------------
+   Runde 7 (Builder A, 13.10.2026)
+   3 Abgestimmt statt zusammengewürfelt [data-vh-mix]: beim Einscrollen an die Scrollposition gekoppelt.
+     Mix-Balken fahren unruhig (Schwingung, die zum Ende ausläuft) auf ihre falschen Längen, IB-7-Balken laufen sauber bis zur Optimum-Linie.
+     Setzt --k je Balken. Ohne JS oder bei reduzierter Bewegung gilt der Endzustand (CSS-Standard --k: 1).
+   4 Kennzahlen [data-vh-count] zählen beim ersten Einscrollen einmal hoch (bei reduzierter Bewegung sofort fertig).
+   5 Rohstoff-Tabelle [data-vh-ingr]: Tippen oder Fokus auf eine Zeile hebt das passende Feld im Foto hervor.
+   Shopify: je Funktion ein kleiner Web Component.
+   --------------------------------------------------------------------- */
+(function () {
+  'use strict';
+  var doc = document;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var clamp = function (v, a, b) { return Math.min(b === undefined ? 1 : b, Math.max(a === undefined ? 0 : a, v)); };
+  var ease = function (t) { return t * t * (3 - 2 * t); };
+  var queue = [], ticking = false;
+  var request = function (fn) {
+    if (queue.indexOf(fn) < 0) queue.push(fn);
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function () { ticking = false; var q = queue.slice(); queue.length = 0; q.forEach(function (f) { f(); }); });
+  };
+
+  var mix = function (fig) {
+    var mixBars = Array.prototype.slice.call(fig.querySelectorAll('.vh-bar:not(.vh-bar--ib)'));
+    var ibBars = Array.prototype.slice.call(fig.querySelectorAll('.vh-bar--ib'));
+    if (reduce || (!mixBars.length && !ibBars.length)) return;
+    var update = function () {
+      var vh = window.innerHeight, r = fig.getBoundingClientRect();
+      if (r.bottom < -80 || r.top > vh + 80) return;
+      var t = clamp((vh * 0.9 - r.top) / (vh * 0.55));
+      mixBars.forEach(function (b, i) {
+        var e = ease(t), wob = 0.17 * Math.sin(t * (13 + i * 2.1) + i * 1.3) * Math.sin(Math.PI * t);
+        b.style.setProperty('--k', clamp(e + wob, 0, 1.6).toFixed(3));
+      });
+      ibBars.forEach(function (b, i) {
+        b.style.setProperty('--k', ease(clamp(t * 1.45 - i * 0.06)).toFixed(3));
+      });
+    };
+    update();
+    window.addEventListener('scroll', function () { request(update); }, { passive: true });
+    window.addEventListener('resize', function () { request(update); });
+  };
+
+  var count = function (el) {
+    var final = el.textContent, m = final.match(/\d[\d.,]*/);
+    if (!m) return;
+    var raw = m[0], dec = /,\d+$/.test(raw) ? raw.split(',')[1].length : 0;
+    var target = parseFloat(raw.replace(/\./g, '').replace(',', '.'));
+    if (isNaN(target) || reduce || !('IntersectionObserver' in window)) return;
+    var fmt = function (v) {
+      var s = v.toFixed(dec).split('.'), i = s[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      return dec ? i + ',' + s[1] : i;
+    };
+    var pre = final.slice(0, m.index), post = final.slice(m.index + raw.length);
+    el.innerHTML = '';
+    var f = doc.createElement('span'); f.className = 'vh-cnt__final'; f.textContent = final;
+    var l = doc.createElement('span'); l.className = 'vh-cnt__live'; l.setAttribute('aria-hidden', 'true');
+    el.appendChild(f); el.appendChild(l);
+    var set = function (v) { l.textContent = pre + fmt(v) + post; };
+    set(0);
+    var io = new IntersectionObserver(function (en) {
+      if (!en[0].isIntersecting) return; io.disconnect();
+      var t0 = null, dur = 1500;
+      var step = function (ts) {
+        if (t0 === null) t0 = ts;
+        var p = clamp((ts - t0) / dur), v = target * (1 - Math.pow(1 - p, 3));
+        set(p >= 1 ? target : v);
+        if (p < 1) requestAnimationFrame(step); else el.textContent = final;
+      };
+      requestAnimationFrame(step);
+    }, { threshold: 0.6 });
+    io.observe(el);
+  };
+
+  var ingr = function (root) {
+    var fig = root.querySelector('.vh-ingr__fig'), hl = root.querySelector('.vh-ingr__hl');
+    var rows = Array.prototype.slice.call(root.querySelectorAll('tbody tr[data-hl]'));
+    if (!fig || !hl || !rows.length) return;
+    var choose = function (tr) {
+      var p = tr.getAttribute('data-hl').split(',');
+      hl.style.setProperty('--hc', p[0]); hl.style.setProperty('--hr', p[1]);
+      fig.classList.add('has-hl');
+      rows.forEach(function (r) { var on = r === tr; r.classList.toggle('is-on', on); var b = r.querySelector('.vh-ingr__pick'); if (b) b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    };
+    rows.forEach(function (tr) {
+      var td = tr.cells[0], b = doc.createElement('button');
+      b.type = 'button'; b.className = 'vh-ingr__pick'; b.setAttribute('aria-pressed', 'false');
+      b.textContent = td.textContent; td.textContent = ''; td.appendChild(b);
+      b.addEventListener('click', function () { choose(tr); });
+      b.addEventListener('focus', function () { choose(tr); });
+      tr.addEventListener('mouseenter', function () { choose(tr); });
+    });
+  };
+
+  var start = function () {
+    doc.querySelectorAll('[data-vh-mix]').forEach(mix);
+    doc.querySelectorAll('.vh-ritual [data-fakt]').forEach(count);
+    doc.querySelectorAll('[data-vh-ingr]').forEach(ingr);
   };
   var done = false, once = function () { if (!done) { done = true; start(); } };
   if (doc.readyState === 'complete' || doc.readyState === 'interactive') once();

@@ -39,13 +39,13 @@
     'the-aura.html': 'the-aura-v5.html', 'vergleich.html': 'vergleich-v5.html', 'ritual.html': 'ritual-v7.html',
     'the-mind.html': 'the-mind-v6.html', 'inhaltsstoffe.html': 'inhaltsstoffe-v5.html', 'geprueft.html': 'geprueft-v5.html',
     'ueber-uns.html': 'ueber-uns-v8.html', 'bewertungen.html': 'bewertungen-v5.html', 'hilfe.html': 'hilfe-v6.html',
-    'ritual-check.html': 'ritual-check-v5.html', 'index.html': 'index-v12.html', './': 'index-v12.html', '.': 'index-v12.html', 'index-v8.html': 'index-v12.html', 'index-v9.html': 'index-v12.html', '': null
+    'ritual-check.html': 'ritual-check-v5.html', 'index.html': 'index-v13.html', './': 'index-v13.html', '.': 'index-v13.html', 'index-v8.html': 'index-v13.html', 'index-v9.html': 'index-v13.html', '': null
   };
   ['shop', 'perfect-duo', 'the-pulse', 'the-aura', 'vergleich', 'ritual', 'the-mind', 'inhaltsstoffe', 'geprueft', 'ueber-uns', 'bewertungen', 'hilfe', 'ritual-check'].forEach(function (n) { MAP[n + '-v3.html'] = n + '-v5.html'; MAP[n + '-v4.html'] = n + '-v5.html'; });
   /* Neuere Einzelseiten (z. B. index-v11, ueber-uns-v6) setzen am html-Element data-v10-links='{"alt.html":"neu.html"}'.
      Ohne das Attribut bleibt jede bestehende v10/v5-Seite unverändert. */
-  /* Stand 13.10.2026: aktuelle Versionen sind Startseite v12, Über uns v8, Ritual v7, THE MIND v6 und Hilfe v6; alle übrigen v5-Seiten verlinken dorthin */
-  var OVR = { 'index-v12.html': 'index-v12.html', 'index-v12.html': 'index-v12.html', 'ueber-uns-v8.html': 'ueber-uns-v8.html', 'ueber-uns-v8.html': 'ueber-uns-v8.html', 'ueber-uns-v8.html': 'ueber-uns-v8.html', 'ritual-v7.html': 'ritual-v7.html', 'the-mind-v6.html': 'the-mind-v6.html', 'hilfe-v6.html': 'hilfe-v6.html', 'ritual-v7.html': 'ritual-v7.html' };
+  /* Stand 13.10.2026: aktuelle Versionen sind Startseite v13, Über uns v8, Ritual v7, THE MIND v6 und Hilfe v6; alle übrigen v5-Seiten verlinken dorthin */
+  var OVR = { 'index-v13.html': 'index-v13.html', 'index-v13.html': 'index-v13.html', 'index-v13.html': 'index-v13.html', 'ueber-uns-v8.html': 'ueber-uns-v8.html', 'ueber-uns-v8.html': 'ueber-uns-v8.html', 'ueber-uns-v8.html': 'ueber-uns-v8.html', 'ritual-v7.html': 'ritual-v7.html', 'the-mind-v6.html': 'the-mind-v6.html', 'hilfe-v6.html': 'hilfe-v6.html', 'ritual-v7.html': 'ritual-v7.html' };
   try { var own = JSON.parse(root.getAttribute('data-v10-links') || '{}') || {}; for (var k in own) OVR[k] = own[k]; } catch (err) { /* Standard behalten */ }
   var rewrite = function (a) {
     var href = a.getAttribute('href');
@@ -414,7 +414,7 @@
       right.insertAdjacentHTML('afterbegin', '<a class="header__text-link v10-hlink" href="shop-v5.html">Suche</a><a class="header__text-link v10-hlink" href="#konto">Konto</a>');
       var burger = doc.querySelector('.header__burger'); if (burger) right.appendChild(burger);   /* Handy: Menü rechts neben dem Warenkorb */
     }
-    var logo = doc.querySelector('.header__logo'); if (logo) logo.setAttribute('href', 'index-v12.html');
+    var logo = doc.querySelector('.header__logo'); if (logo) logo.setAttribute('href', 'index-v13.html');
     var foot = doc.querySelector('.footer');
     if (foot) {
       foot.classList.add('v10-footer');
