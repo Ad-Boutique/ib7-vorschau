@@ -35,17 +35,17 @@
 
   /* ---------- 1 Links ---------- */
   var MAP = {
-    'shop.html': 'shop-v5.html', 'perfect-duo.html': 'perfect-duo-v6.html', 'the-pulse.html': 'the-pulse-v5.html',
-    'the-aura.html': 'the-aura-v5.html', 'vergleich.html': 'vergleich-v5.html', 'ritual.html': 'ritual-v7.html',
-    'the-mind.html': 'the-mind-v6.html', 'inhaltsstoffe.html': 'inhaltsstoffe-v5.html', 'geprueft.html': 'geprueft-v5.html',
-    'ueber-uns.html': 'ueber-uns-v8.html', 'bewertungen.html': 'bewertungen-v5.html', 'hilfe.html': 'hilfe-v6.html',
-    'ritual-check.html': 'ritual-check-v5.html', 'index.html': 'index-v13.html', './': 'index-v13.html', '.': 'index-v13.html', 'index-v8.html': 'index-v13.html', 'index-v9.html': 'index-v13.html', '': null
+    'shop.html': 'shop-v5.html', 'perfect-duo.html': 'perfect-duo-v7.html', 'the-pulse.html': 'the-pulse-v6.html',
+    'the-aura.html': 'the-aura-v6.html', 'vergleich.html': 'vergleich-v5.html', 'ritual.html': 'ritual-v7.html',
+    'the-mind.html': 'the-mind-v7.html', 'inhaltsstoffe.html': 'inhaltsstoffe-v5.html', 'geprueft.html': 'geprueft-v5.html',
+    'ueber-uns.html': 'ueber-uns-v8.html', 'bewertungen.html': 'bewertungen-v6.html', 'hilfe.html': 'hilfe-v6.html',
+    'ritual-check.html': 'ritual-check-v5.html', 'index.html': 'index-v14.html', './': 'index-v14.html', '.': 'index-v14.html', 'index-v8.html': 'index-v14.html', 'index-v9.html': 'index-v14.html', '': null
   };
   ['shop', 'perfect-duo', 'the-pulse', 'the-aura', 'vergleich', 'ritual', 'the-mind', 'inhaltsstoffe', 'geprueft', 'ueber-uns', 'bewertungen', 'hilfe', 'ritual-check'].forEach(function (n) { MAP[n + '-v3.html'] = n + '-v5.html'; MAP[n + '-v4.html'] = n + '-v5.html'; });
   /* Neuere Einzelseiten (z. B. index-v11, ueber-uns-v6) setzen am html-Element data-v10-links='{"alt.html":"neu.html"}'.
      Ohne das Attribut bleibt jede bestehende v10/v5-Seite unverändert. */
-  /* Stand 13.10.2026: aktuelle Versionen sind Startseite v13, Über uns v8, Ritual v7, Perfect Duo v6, THE MIND v6 und Hilfe v6; alle übrigen v5-Seiten verlinken dorthin */
-  var OVR = { 'index-v13.html': 'index-v13.html', 'index-v13.html': 'index-v13.html', 'index-v13.html': 'index-v13.html', 'ueber-uns-v8.html': 'ueber-uns-v8.html', 'ueber-uns-v8.html': 'ueber-uns-v8.html', 'ueber-uns-v8.html': 'ueber-uns-v8.html', 'ritual-v7.html': 'ritual-v7.html', 'the-mind-v6.html': 'the-mind-v6.html', 'hilfe-v6.html': 'hilfe-v6.html', 'ritual-v7.html': 'ritual-v7.html', 'perfect-duo-v6.html': 'perfect-duo-v6.html' };
+  /* Stand 13.10.2026: aktuelle Versionen sind Startseite v14, Über uns v8, Ritual v7, Perfect Duo v7, THE PULSE v6, THE AURA v6, THE MIND v7, Bewertungen v6 und Hilfe v6; alle übrigen v5-Seiten verlinken dorthin */
+  var OVR = { 'index-v14.html': 'index-v14.html', 'index-v14.html': 'index-v14.html', 'index-v14.html': 'index-v14.html', 'index-v14.html': 'index-v14.html', 'ueber-uns-v8.html': 'ueber-uns-v8.html', 'ueber-uns-v8.html': 'ueber-uns-v8.html', 'ueber-uns-v8.html': 'ueber-uns-v8.html', 'ritual-v7.html': 'ritual-v7.html', 'the-mind-v7.html': 'the-mind-v7.html', 'the-mind-v7.html': 'the-mind-v7.html', 'hilfe-v6.html': 'hilfe-v6.html', 'ritual-v7.html': 'ritual-v7.html', 'perfect-duo-v7.html': 'perfect-duo-v7.html', 'perfect-duo-v7.html': 'perfect-duo-v7.html', 'the-pulse-v6.html': 'the-pulse-v6.html', 'the-aura-v6.html': 'the-aura-v6.html', 'bewertungen-v6.html': 'bewertungen-v6.html' };
   try { var own = JSON.parse(root.getAttribute('data-v10-links') || '{}') || {}; for (var k in own) OVR[k] = own[k]; } catch (err) { /* Standard behalten */ }
   var rewrite = function (a) {
     var href = a.getAttribute('href');
@@ -391,12 +391,12 @@
      ib7.js rendert Header, Menü, Warenkorb und Footer im v2-Look. Hier werden nach dem Rendern nur Klassen gesetzt,
      die Hauptnavigation als Pillen neu gefüllt (aktive Seite markiert) und die Footer-Spalten neu beschriftet.
      Drawer, Warenkorb und Newsletter-Formular von ib7.js bleiben dieselben Elemente und funktionieren weiter. */
-  var NAV = [['shop-v5.html', 'Shop'], ['ritual-v7.html', 'Ritual'], ['the-mind-v6.html', 'THE MIND'], ['ueber-uns-v8.html', 'Über uns'], ['hilfe-v6.html', 'Hilfe']];
+  var NAV = [['shop-v5.html', 'Shop'], ['ritual-v7.html', 'Ritual'], ['the-mind-v7.html', 'THE MIND'], ['ueber-uns-v8.html', 'Über uns'], ['hilfe-v6.html', 'Hilfe']];
   var NAV_OF = {
-    'shop-v5.html': 0, 'perfect-duo-v6.html': 0, 'the-pulse-v5.html': 0, 'the-aura-v5.html': 0,
+    'shop-v5.html': 0, 'perfect-duo-v7.html': 0, 'the-pulse-v6.html': 0, 'the-aura-v6.html': 0,
     'ritual-v7.html': 1, 'vergleich-v5.html': 1, 'ritual-check-v5.html': 1,
-    'the-mind-v6.html': 2, 'inhaltsstoffe-v5.html': 2, 'geprueft-v5.html': 2,
-    'ueber-uns-v8.html': 3, 'bewertungen-v5.html': 3, 'hilfe-v6.html': 4
+    'the-mind-v7.html': 2, 'inhaltsstoffe-v5.html': 2, 'geprueft-v5.html': 2,
+    'ueber-uns-v8.html': 3, 'bewertungen-v6.html': 3, 'hilfe-v6.html': 4
   };
   var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var initChrome = function () {
@@ -414,15 +414,15 @@
       right.insertAdjacentHTML('afterbegin', '<a class="header__text-link v10-hlink" href="shop-v5.html">Suche</a><a class="header__text-link v10-hlink" href="#konto">Konto</a>');
       var burger = doc.querySelector('.header__burger'); if (burger) right.appendChild(burger);   /* Handy: Menü rechts neben dem Warenkorb */
     }
-    var logo = doc.querySelector('.header__logo'); if (logo) logo.setAttribute('href', 'index-v13.html');
+    var logo = doc.querySelector('.header__logo'); if (logo) logo.setAttribute('href', 'index-v14.html');
     var foot = doc.querySelector('.footer');
     if (foot) {
       foot.classList.add('v10-footer');
       var cols = foot.querySelector('.footer__cols');
       var C = [
-        ['01', 'Shop', [['perfect-duo-v6.html', 'Das Perfect Duo'], ['the-pulse-v5.html', 'THE PULSE'], ['the-aura-v5.html', 'THE AURA'], ['shop-v5.html', 'Alle Produkte'], ['ritual-check-v5.html', 'Ritual-Check']]],
-        ['02', 'Wissen', [['ritual-v7.html', 'Das Ritual'], ['the-mind-v6.html', 'THE MIND'], ['inhaltsstoffe-v5.html', 'Inhaltsstoffe'], ['geprueft-v5.html', 'Geprüft'], ['vergleich-v5.html', 'Ritual oder Cocktail?']]],
-        ['03', 'Hilfe', [['hilfe-v6.html#faq', 'Häufige Fragen'], ['hilfe-v6.html#versand', 'Versand und Rückgabe'], ['hilfe-v6.html#kontakt', 'Kontakt'], ['bewertungen-v5.html', 'Bewertungen'], ['ueber-uns-v8.html', 'Über uns']]],
+        ['01', 'Shop', [['perfect-duo-v7.html', 'Das Perfect Duo'], ['the-pulse-v6.html', 'THE PULSE'], ['the-aura-v6.html', 'THE AURA'], ['shop-v5.html', 'Alle Produkte'], ['ritual-check-v5.html', 'Ritual-Check']]],
+        ['02', 'Wissen', [['ritual-v7.html', 'Das Ritual'], ['the-mind-v7.html', 'THE MIND'], ['inhaltsstoffe-v5.html', 'Inhaltsstoffe'], ['geprueft-v5.html', 'Geprüft'], ['vergleich-v5.html', 'Ritual oder Cocktail?']]],
+        ['03', 'Hilfe', [['hilfe-v6.html#faq', 'Häufige Fragen'], ['hilfe-v6.html#versand', 'Versand und Rückgabe'], ['hilfe-v6.html#kontakt', 'Kontakt'], ['bewertungen-v6.html', 'Bewertungen'], ['ueber-uns-v8.html', 'Über uns']]],
         ['04', 'Rechtliches', [['#', 'Impressum'], ['#', 'Datenschutz'], ['#', 'AGB'], ['#', 'Widerrufsbelehrung'], ['#', 'Cookie-Einstellungen']]]
       ];
       if (cols) cols.innerHTML = C.map(function (c) { return '<div class="footer__col"><h4><b>' + c[0] + '</b> / ' + esc(c[1]) + '</h4><ul>' + c[2].map(function (l) { return '<li><a href="' + l[0] + '">' + esc(l[1]) + '</a></li>'; }).join('') + '</ul></div>'; }).join('');

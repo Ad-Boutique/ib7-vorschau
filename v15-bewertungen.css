@@ -1,0 +1,58 @@
+/* =====================================================================
+   IB-7 Bewertungen v6 (Builder C, Runde 8, 13.10.2026): echte Trusted-Shops-Bewertungen im POUCH-Listenstil.
+   Additiv zu v10.css und v10-marke.css. Präfix .vb-. Nur Tokens, Mobile First (min-width 750 / 990).
+   Sterne sind reines CSS (Maske + Verlauf aus Tokens): --vb-n = Anzahl gefüllter Sterne, auch Dezimalwerte.
+   ===================================================================== */
+
+/* ---------- Sterne ---------- */
+.vb-stars { --vb-n: 5; flex: none; display: inline-block; width: 5em; height: 1em; font-size: 0.95rem; vertical-align: middle; background: linear-gradient(90deg, var(--blue) calc(var(--vb-n) * 20%), color-mix(in srgb, var(--blue) 24%, transparent) 0); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.8l2.7 6 6.5.6-4.9 4.3 1.5 6.4L12 16.8 6.2 20.1l1.5-6.4L2.8 9.4l6.5-.6z'/%3E%3C/svg%3E") 0 0 / 1em 1em repeat-x; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.8l2.7 6 6.5.6-4.9 4.3 1.5 6.4L12 16.8 6.2 20.1l1.5-6.4L2.8 9.4l6.5-.6z'/%3E%3C/svg%3E") 0 0 / 1em 1em repeat-x; }
+.vb-stars--lg { font-size: 1.35rem; }
+.vb-s5 { --vb-n: 5; }
+.vb-s4 { --vb-n: 4; }
+.vb-s493 { --vb-n: 4.93; }
+
+/* ---------- Verteilung: 5 Balken, Breite = Anzahl / Gesamt ---------- */
+.vb-revlist { --vb-total: 15; }
+.vb-dist { list-style: none; margin: var(--v10-s3) 0 0; padding: 0; display: grid; gap: var(--v10-s2); width: 100%; max-width: 20rem; }
+.vb-dist__row { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr) 1.75rem; align-items: center; gap: var(--v10-s3); font-size: var(--v10-t-small); color: var(--ink); }
+.vb-dist__row b { font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.vb-bar { display: block; height: 0.5rem; border-radius: var(--r-pill); background: var(--mist); overflow: hidden; }
+.vb-bar i { display: block; height: 100%; border-radius: inherit; background: var(--blue-deep); width: calc(var(--vb-n, 0) / var(--vb-total) * 100%); }
+.vb-n0 { --vb-n: 0; }
+.vb-n1 { --vb-n: 1; }
+.vb-n14 { --vb-n: 14; }
+
+/* ---------- Liste ---------- */
+.vb-main { display: grid; gap: var(--v10-s5); min-width: 0; align-content: start; }
+.vb-item { gap: var(--v10-s3); }
+.vb-item__top { align-items: center; }
+.vb-item__who { display: inline-flex; align-items: center; gap: var(--v10-s2); flex-wrap: wrap; }
+.vb-item__top time, .vb-short__item time { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.vb-item__body { display: grid; gap: var(--v10-s3); }
+.vb-item__body p { margin: 0; max-width: 46rem; color: var(--ink); font-size: 1rem; line-height: 1.7; overflow-wrap: anywhere; }
+
+/* Filter Alle / Mit Text: reines CSS, Radios als Chips (44 px) */
+.vb-filter { display: flex; flex-wrap: wrap; gap: var(--v10-s2); margin: 0; padding: 0; border: 0; min-width: 0; }
+.vb-chip { position: relative; display: inline-flex; align-items: center; justify-content: center; min-height: var(--v10-touch); padding: 0 var(--v10-s4); border-radius: var(--r-pill); background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; cursor: pointer; }
+.vb-chip input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.vb-chip:has(input:checked) { background: var(--blue-deep); color: var(--paper); box-shadow: none; }
+.vb-chip:has(input:focus-visible) { outline: 2px solid var(--blue-deep); outline-offset: 2px; }
+.vb-page:has(#vb-f-text:checked) .vb-short-wrap { display: none; }
+
+/* Kompakte Zeilen für Bewertungen ohne Text */
+.vb-short-wrap { display: grid; gap: var(--v10-s3); }
+.vb-short__title { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: var(--v10-t-h3); line-height: 1.3; letter-spacing: -0.01em; }
+.vb-short { list-style: none; margin: 0; padding: 0; display: grid; border-top: var(--v10-hair); }
+.vb-short__item { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--v10-s3); min-height: 3rem; padding-block: var(--v10-s2); border-bottom: var(--v10-hair); font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--ink-mid); }
+
+/* Button und Käuferschutz */
+.vb-end { display: grid; gap: var(--v10-s4); justify-items: start; }
+.vb-hint { margin: 0; font-size: var(--v10-t-small); color: var(--ink-mid); max-width: 46rem; }
+.vb-rail3 { --cols: 3; }
+
+@media (min-width: 750px) {
+  .vb-end { grid-template-columns: auto minmax(0, 20rem); align-items: start; column-gap: var(--v10-s5); }
+}
+@media (min-width: 990px) {
+  .v10-revlist.vb-revlist .v10-revlist__side { position: sticky; top: calc(var(--header-h) + var(--v10-s4)); align-self: start; }
+}

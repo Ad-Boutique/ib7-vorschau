@@ -1,4 +1,4 @@
-/* IB-7 Prototyp v14-home.js (Entwurf 13.10.2026, Builder A, Präfix vh-). Kopie von v12-home.js plus Runde 7 (siehe unten). Vanilla JS, defer, nach v10.js.
+/* IB-7 Prototyp v15-home.js (Entwurf 13.10.2026, Builder A, Präfix vh-). Kopie von v12-home.js plus Runde 7 (siehe unten). Vanilla JS, defer, nach v10.js.
    1 Science-Szene .vh-sci (POUCH "03 / THE SCIENCE"): kontinuierlich an den Scroll gekoppelt, kein Schrittwechsel.
      Setzt auf .vh-sci__stage die Variablen --a (Phase A 0..1: Punkte laufen durch, Produkt dreht), --b (Phase B 0..1: Ende mit Karten),
      --p (Gesamtfortschritt), --rot, --pty, --ps, --iy. Variante Produkt: PULSE, AURA, Duo (Überblendung bei etwa 1/3 und 2/3),

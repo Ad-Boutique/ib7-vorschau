@@ -1,6 +1,6 @@
 /* =====================================================================
-   IB-7 v14-home.css (Entwurf 13.10.2026, Builder A, Runde 7, Präfix vh-). Kopie von v12-home.css plus Runde-7-Ergänzungen (unten)
-   Nur für index-v13. Lädt NACH v10.css und v10-marke.css (v10-explain.css wird nicht mehr gebraucht).
+   IB-7 v15-home.css (Entwurf 13.10.2026, Builder A, Runde 8, Präfix vh-). Kopie von v14-home.css; Änderungen Runde 8: Flaschenzeile gleichmäßig, Rohstoff-Foto ohne Blau-Abdunklung
+   Nur für index-v14. Lädt NACH v10.css und v10-marke.css (v10-explain.css wird nicht mehr gebraucht).
    A) POUCH "03 / THE SCIENCE", jetzt kontinuierlich an den Scroll gekoppelt (v12-home.js setzt --a, --b, --p, --rot, --pty, --ps, --iy):
       Linie 001/002 links, Headline zweizeilig versetzt mittig links, Text-Fenster mit durchlaufenden Punkten (Maske),
       Produkt rechts dreht und kippt, am Ende schieben sich gläserne Karten von unten an ihre Stelle.
@@ -228,8 +228,8 @@
 .vh-ritual__top { display: grid; gap: var(--v10-s4); align-content: start; min-width: 0; }
 .vh-ritual__title { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(2.4rem, 1.5rem + 4vw, 4.5rem); line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; color: var(--paper); }
 .vh-ritual__box { display: grid; gap: var(--v10-s4); padding: clamp(0.75rem, 0.5rem + 1.5vw, 1.5rem); border-radius: var(--r-media); background: color-mix(in srgb, var(--paper) 12%, transparent); }
-.vh-ritual__line { display: flex; align-items: flex-end; justify-content: center; gap: 3%; height: clamp(9rem, 7rem + 12vw, 15rem); }
-.vh-ritual__line img { width: auto; height: calc(var(--s) * 100%); max-width: 22%; object-fit: contain; }
+.vh-ritual__line { display: flex; align-items: flex-end; justify-content: center; gap: clamp(0.5rem, 0.25rem + 2.2vw, 1.5rem); height: clamp(9rem, 7rem + 12vw, 15rem); }
+.vh-ritual__line img { flex: none; width: auto; height: calc(var(--s) * 100%); object-fit: contain; }
 .vh-ritual__formula { margin: 0; text-align: center; font-family: var(--font-display); font-weight: 400; font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--paper); }
 .vh-ritual__nums { display: grid; gap: var(--v10-s5); align-content: start; margin: 0; padding: 0; list-style: none; }
 .vh-ritual__nums li { display: grid; gap: var(--v10-s1); margin: 0; padding-top: var(--v10-s4); border-top: 1px solid color-mix(in srgb, var(--paper) 40%, transparent); }
@@ -255,7 +255,7 @@
 .vh-ingr__grid { display: grid; gap: var(--v10-s6); }
 .vh-ingr__fig { position: relative; margin: 0; aspect-ratio: 1; border-radius: var(--r-card); overflow: hidden; background: var(--porcelain); }
 .vh-ingr__fig img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.vh-ingr__hl { position: absolute; left: calc(var(--hc, 0) * 33.3333%); top: calc(var(--hr, 0) * 50%); width: 33.3333%; height: 50%; border-radius: var(--r-small); box-shadow: 0 0 0 100vmax color-mix(in srgb, var(--night) 50%, transparent); outline: 2px solid var(--paper); outline-offset: -2px; opacity: 0; pointer-events: none; transition: left var(--v10-d2) var(--v10-ease), top var(--v10-d2) var(--v10-ease), opacity var(--v10-d2) var(--v10-ease); }
+.vh-ingr__hl { position: absolute; left: calc(var(--hc, 0) * 33.3333%); top: calc(var(--hr, 0) * 50%); width: 33.3333%; height: 50%; border-radius: var(--r-small); box-shadow: 0 0 0 100vmax color-mix(in srgb, var(--paper) 58%, transparent); opacity: 0; pointer-events: none; transition: left var(--v10-d2) var(--v10-ease), top var(--v10-d2) var(--v10-ease), opacity var(--v10-d2) var(--v10-ease); }
 .vh-ingr__fig.has-hl .vh-ingr__hl { opacity: 1; }
 .vh-ingr__tab { width: 100%; border-collapse: collapse; }
 .vh-ingr__tab thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
@@ -296,6 +296,4 @@
   .vh-proof__list li { grid-template-columns: minmax(0, 1fr); align-content: start; gap: var(--v10-s2); padding-block: var(--v10-s4) 0; border-bottom: 0 !important; }
 }
 
-/* Rohstoff-Foto ohne warme Töne (Wunsch Daniel 13.10.): kühler Blau-Duoton über Tokens, Struktur bleibt erhalten */
-.vh-ingr__fig { background: color-mix(in srgb, var(--blue) 55%, var(--paper)); isolation: isolate; }
-.vh-ingr__fig img { filter: grayscale(1) contrast(1.08) brightness(1.06); mix-blend-mode: luminosity; }
+/* Rohstoff-Foto: Originalfarben (Ausnahme von der Regel keine warmen Töne, Daniel 13.10.2026), kein Duoton */
