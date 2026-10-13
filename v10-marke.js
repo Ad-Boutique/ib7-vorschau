@@ -125,7 +125,7 @@
         '<div><div class="vm-legend" aria-hidden="true"><span>unterdosiert</span><span>Optimum</span><span>überdosiert</span></div><ul class="vm-score">' + rows + '</ul></div>' +
         '<div class="stack"><h3 class="v10-h3">Was auffällt</h3><ul class="vm-tips" role="list">' + tips + '</ul></div>' +
         '<div class="v10-rx__duo"><img src="assets/v6/duo.webp" alt="" width="495" height="1000"><div><b>Unsere Empfehlung: das Perfect Duo</b><p>179,00 € statt 228,00 €, du sparst 49,00 €. Zwei Pumpstöße, morgens und abends.</p>' +
-        (r.gentle ? '<p><a class="inline-link" href="the-pulse-v5.html">Vorsichtig starten? THE PULSE ist duftfrei.</a></p>' : '') + '</div><div class="v10-actions"><a class="btn btn--light" href="perfect-duo-v5.html">Zum Perfect Duo ' + ARR + '</a></div></div>' +
+        (r.gentle ? '<p><a class="inline-link" href="the-pulse-v5.html">Vorsichtig starten? THE PULSE ist duftfrei.</a></p>' : '') + '</div><div class="v10-actions"><a class="btn btn--light" href="perfect-duo-v6.html">Zum Perfect Duo ' + ARR + '</a></div></div>' +
         '<p class="v10-micro vm-disclaimer">Orientierung auf Basis deiner fünf Antworten. Keine Hautdiagnose und keine medizinische Beratung.</p>' +
         '<div class="vm-mailbox"><h3 class="v10-h3">Ergebnis und Tipps per E-Mail (optional)</h3>' +
         '<form novalidate><label class="v10-visually-hidden" for="vm-mail">E-Mail-Adresse</label><input id="vm-mail" type="email" placeholder="E-Mail-Adresse" autocomplete="email">' +

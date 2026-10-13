@@ -4,7 +4,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Das Perfect Duo · IB-7 v5</title>
+<title>Das Perfect Duo · IB-7 v6</title>
 <meta name="description" content="Das Perfect Duo: THE PULSE und THE AURA, aufeinander abgestimmt. 179,00 € statt 228,00 €. Entwurf v5, nicht in Shopify.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +14,8 @@
 <link rel="stylesheet" href="v10.css">
 <link rel="stylesheet" href="v10-explain.css">
 <link rel="stylesheet" href="v10-shop.css">
+<link rel="stylesheet" href="v14-ritual.css">
+<!-- perfect-duo-v6: wie v5, Erklär-Szene "Zusammenspiel" nutzt jetzt exakt die Grafik der Ritual-Seite v7 (Reihenfolge-Querschnitt, v14-ritual.css). -->
 <!-- Entwurf perfect-duo-v5 (Builder A, System v10, 13.10.2026). Spezifikation: design/plan/art-direction-v3.md. Nicht in Shopify. -->
 </head>
 <body>
@@ -139,28 +141,31 @@
   </section>
 
   <div class="v10-pgap"></div>
-  <section class="v10-scene v10-scene--mist v10-skin" data-scene="skin" aria-labelledby="sk-title">
+  <section class="v10-scene v10-scene--mist vw7" id="zusammenspiel" data-scene="order" aria-labelledby="od-title">
     <div class="v10-scene__stage">
-      <div class="v10-scene__head"><span class="v10-label"><b>04</b> / Zusammenspiel</span><h2 class="v10-h2" id="sk-title">Eines aktiviert. <em>Eines versiegelt.</em></h2></div>
+      <div class="v10-scene__head"><span class="v10-label"><b>04</b> / Zusammenspiel</span><h2 class="v10-h2" id="od-title">Warum zuerst das Serum. <em>Dann die Creme.</em></h2></div>
       <div class="v10-scene__vis">
-        <svg class="v10-skin__svg" viewBox="0 0 360 260" role="img" aria-label="Hautquerschnitt: THE PULSE gelangt in die oberen Hautschichten, THE AURA legt sich darüber und hält die Feuchtigkeit.">
-          <rect class="l1" x="0" y="96" width="360" height="30" rx="8"/><rect class="l2" x="0" y="128" width="360" height="62" rx="8"/><rect class="l3" x="0" y="192" width="360" height="68" rx="8"/>
-          <text x="12" y="115">Hautoberfläche</text><text x="12" y="163">obere Hautschichten</text><text x="12" y="230">tiefere Schichten</text>
-          <circle class="drop" cx="70" cy="30" r="5" style="--dy:112"/><circle class="drop" cx="110" cy="22" r="4" style="--dy:128"/><circle class="drop" cx="150" cy="32" r="5" style="--dy:114"/><circle class="drop" cx="190" cy="24" r="4" style="--dy:130"/><circle class="drop" cx="230" cy="30" r="5" style="--dy:110"/><circle class="drop" cx="270" cy="20" r="4" style="--dy:126"/><circle class="drop" cx="310" cy="28" r="5" style="--dy:116"/>
-          <rect class="cream" x="6" y="80" width="348" height="12" rx="6"/>
-          <g class="vap"><path d="M100 92V50M94 58l6-8 6 8"/><path d="M180 92V44M174 52l6-8 6 8"/><path d="M260 92V50M254 58l6-8 6 8"/></g>
-          <g class="stop"><path d="M88 70h24M168 70h24M248 70h24"/></g>
-        </svg>
-        <ul class="v10-skin__legend" role="list"><li><i></i>THE PULSE</li><li><i class="is-cream"></i>THE AURA</li></ul>
+        <div class="vw7__fig">
+          <ol class="vw7-pills" aria-hidden="true"><li>1 Reinigen</li><li>2 Serum</li><li>3 Creme</li></ol>
+          <svg class="vw7-svg" viewBox="0 0 226 128" role="img" aria-label="Querschnitt der Haut, der sich pro Schritt aufbaut: Erst ist die Haut gereinigt, dann sinken die Tropfen des Serums THE PULSE in die Haut ein, zuletzt legt sich die Creme THE AURA auf die Haut.">
+            <rect class="sk" x="0" y="40" width="140" height="84" rx="8"/>
+            <path class="edge" d="M6 40H134"/>
+            <circle class="imp" cx="14" cy="37" r="2.6"/><circle class="imp" cx="32" cy="37" r="3"/><circle class="imp" cx="47" cy="37" r="2.4"/><circle class="imp" cx="70" cy="37" r="3"/><circle class="imp" cx="88" cy="37" r="2.6"/><circle class="imp" cx="106" cy="37" r="3"/><circle class="imp" cx="124" cy="37" r="2.4"/>
+            <circle class="dr" cx="12" cy="6" r="3.8" style="--dy:86;--k:0"/><circle class="dr" cx="30" cy="12" r="3.8" style="--dy:88;--k:1"/><circle class="dr" cx="48" cy="6" r="3.8" style="--dy:102;--k:2"/><circle class="dr" cx="66" cy="12" r="3.8" style="--dy:80;--k:3"/><circle class="dr" cx="84" cy="6" r="3.8" style="--dy:94;--k:4"/><circle class="dr" cx="102" cy="12" r="3.8" style="--dy:96;--k:5"/><circle class="dr" cx="120" cy="6" r="3.8" style="--dy:86;--k:6"/>
+            <rect class="cr" x="0" y="24" width="140" height="16" rx="6"/>
+            <g class="l l3"><path d="M142 32h6"/><text x="152" y="30">THE AURA<tspan x="152" dy="14">VERSIEGELT</tspan></text></g>
+            <g class="l l1"><path d="M142 68h6"/><text x="152" y="66">HAUT,<tspan x="152" dy="14">GEREINIGT</tspan></text></g>
+            <g class="l l2"><path d="M142 104h6"/><text x="152" y="102">THE PULSE<tspan x="152" dy="14">ZIEHT EIN</tspan></text></g>
+          </svg>
+        </div>
       </div>
       <ol class="v10-scene__steps">
-        <li class="v10-scene__step"><button class="v10-scene__btn" type="button"><span class="v10-scene__no">01</span>THE PULSE aktiviert</button><p class="v10-scene__text">Das Gel zieht sofort ein und bringt sieben Wirkstoffe in die oberen Hautschichten.</p></li>
-        <li class="v10-scene__step"><button class="v10-scene__btn" type="button"><span class="v10-scene__no">02</span>THE AURA versiegelt</button><p class="v10-scene__text">Die Creme legt sich darüber und schließt ein, was das Serum gebracht hat. Ohne Abschluss würde ein Teil verdunsten.</p></li>
-        <li class="v10-scene__step"><button class="v10-scene__btn" type="button"><span class="v10-scene__no">03</span>Nichts verdunstet</button><p class="v10-scene__text">Jede Funktion gibt es genau einmal. Morgens und abends, das war die ganze Routine.</p></li>
+        <li class="v10-scene__step"><button class="v10-scene__btn" type="button"><span class="v10-scene__no">01</span>Reinigen</button><p class="v10-scene__text">Saubere Haut nimmt auf, was du aufträgst. Heute reinigst du wie gewohnt, später übernimmt 00 THE SOURCE.</p></li>
+        <li class="v10-scene__step"><button class="v10-scene__btn" type="button"><span class="v10-scene__no">02</span>Serum zuerst</button><p class="v10-scene__text">THE PULSE ist ein Gel und zieht sofort ein. Es muss zuerst auf die Haut, solange nichts darüber liegt.</p></li>
+        <li class="v10-scene__step"><button class="v10-scene__btn" type="button"><span class="v10-scene__no">03</span>Creme zuletzt</button><p class="v10-scene__text">THE AURA versiegelt das Serum. Je ein Pumpstoß morgens und abends, das ist die ganze Routine.</p></li>
       </ol>
       <div class="v10-scene__foot"><button class="btn" type="button" data-add="duo">Perfect Duo in den Warenkorb</button></div>
     </div>
-    <div class="wrap"></div>
   </section>
 
   <div class="v10-pgap"></div>
