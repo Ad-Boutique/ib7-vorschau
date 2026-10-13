@@ -1,0 +1,1686 @@
+/* =====================================================================
+   IB-7 Komponentensystem v10 (Entwurf 13.10.2026, Art Direction Runde 4)
+   Gilt für index-v10.html und alle *-v5.html Unterseiten. Basis: v9.css (umbenannt v9 zu v10),
+   eckige Werte zurückgenommen (rund wie v8), darunter der Block "v10 POUCH" mit dem Elementstil von drinkpouch.com.
+   v10- und v8-Dateien bleiben unverändert. Lädt NACH ib7.css und v4.css. Regeln:
+   - Mobile First für 375 px, nur min-width 750 / 990 / 1200 px
+   - nur Tokens aus ib7.css (und color-mix mit Tokens), keine festen Farbwerte, keine Verläufe
+   - Touch-Ziele mind. 44 px, Fokus immer sichtbar, keine Hover-only-Inhalte
+   - Grid-Spalten immer minmax(0, 1fr), kein horizontaler Seiten-Scroll ab 320 px
+   Spezifikation und Markup-Verträge: design/plan/art-direction-v3.md
+   ===================================================================== */
+
+:root {
+  --v10-ease: cubic-bezier(0.22, 0.7, 0.12, 1);
+  --v10-ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+  --v10-d1: 200ms;
+  --v10-d2: 300ms;
+  --v10-d3: 600ms;
+
+  --v10-s1: 0.25rem; --v10-s2: 0.5rem; --v10-s3: 0.75rem; --v10-s4: 1rem; --v10-s5: 1.5rem;
+  --v10-s6: 2rem; --v10-s7: 3rem; --v10-s8: 4rem; --v10-s9: 6rem;
+  --v10-section: clamp(3.5rem, 2.6rem + 3.8vw, 6rem);
+  --v10-head-gap: clamp(1.75rem, 1.25rem + 2vw, 3rem);
+
+  --v10-t-display: clamp(2.25rem, 1.55rem + 3.1vw, 4.5rem);
+  --v10-t-h1: clamp(2rem, 1.5rem + 2.4vw, 3.75rem);
+  --v10-t-h2: clamp(1.75rem, 1.4rem + 1.6vw, 3rem);
+  --v10-t-h3: clamp(1.15rem, 1.07rem + 0.4vw, 1.5rem);
+  --v10-t-statement: clamp(1.6rem, 1.05rem + 2.6vw, 3.5rem);
+  --v10-t-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --v10-t-body: clamp(1rem, 0.97rem + 0.12vw, 1.0625rem);
+  --v10-t-small: 0.875rem;
+  --v10-t-micro: 0.78rem;
+
+  --v10-accent-night: color-mix(in srgb, var(--blue) 55%, var(--paper));
+  --v10-scrim: color-mix(in srgb, var(--night) 58%, transparent);
+  --v10-hair: 1px solid var(--line);
+  --v10-hair-night: 1px solid color-mix(in srgb, var(--on-night) 18%, transparent);
+  --v10-glass: color-mix(in srgb, var(--paper) 10%, transparent);
+  --v10-touch: 2.75rem;
+  --v10-measure: 65ch;
+}
+
+/* ---------- Basis ---------- */
+.v10 { font-size: var(--v10-t-body); }
+.v10 :where(img) { max-width: 100%; }
+.v10-js [data-reveal] { opacity: 0; transform: translateY(1rem); transition: opacity var(--v10-d2) var(--v10-ease), transform var(--v10-d2) var(--v10-ease); }
+.v10-js [data-reveal].is-in { opacity: 1; transform: none; }
+/* Platzhalter dürfen umbrechen (sonst Überlauf bei 320 px) */
+.v10 .ph { white-space: normal; }
+/* Warme Drive-Bilder (Reishi, Schisandra, Shea, Jojoba) bis zum Ersatz kühl als Schwarzweiß: CI verbietet warme Töne */
+.v10-img--cool { filter: grayscale(1) contrast(1.05); }
+.v10-visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.v10-skip { position: absolute; left: 1rem; top: -4rem; z-index: 60; padding: 0.75rem 1rem; border-radius: var(--r-small); background: var(--paper); color: var(--blue-deep); font-family: var(--font-display); }
+.v10-skip:focus { top: 1rem; }
+.v10 :focus-visible { outline: 2px solid var(--blue-deep); outline-offset: 3px; }
+.v10 :is(.v10-section--deep, .v10-section--night, .v10-compare, .v10-news, .v10-quote, .v10-spot--teaser, .v10-phero--image) :focus-visible { outline-color: var(--paper); }
+
+/* ---------- Sections und Farbflächen ---------- */
+.v10-section { padding-block: var(--v10-section); }
+.v10-section--tight { padding-block: calc(var(--v10-section) * 0.6); }
+.v10-section--paper { background: var(--paper); }
+.v10-section--porcelain { background: var(--porcelain); }
+.v10-section--mist { background: var(--mist); }
+.v10-section--deep { background: var(--blue-deep); color: var(--paper); }
+.v10-section--night { background: var(--night); color: var(--on-night); }
+.v10-section--flush-top { padding-top: 0; }
+
+/* ---------- Typografie ---------- */
+.v10-display, .v10-h1, .v10-h2, .v10-h3 { font-family: var(--font-display); margin: 0; text-wrap: balance; }
+.v10-display { font-size: var(--v10-t-display); font-weight: 300; line-height: 1.04; letter-spacing: -0.035em; }
+.v10-h1 { font-size: var(--v10-t-h1); font-weight: 300; line-height: 1.06; letter-spacing: -0.035em; }
+.v10-h2 { font-size: var(--v10-t-h2); font-weight: 300; line-height: 1.1; letter-spacing: -0.03em; max-width: 22ch; }
+.v10-h3 { font-size: var(--v10-t-h3); font-weight: 400; line-height: 1.25; letter-spacing: -0.015em; }
+.v10 :is(.v10-display, .v10-h1, .v10-h2, .v10-statement__text) em { font-style: italic; color: var(--blue-text); }
+.v10 :is(.v10-section--deep, .v10-section--night, .v10-compare, .v10-news, .v10-quote, .v10-spot--teaser, .v10-phero--image, .v10-phero--deep) :is(.v10-display, .v10-h1, .v10-h2) em { color: var(--v10-accent-night); }
+.v10-lead { font-size: var(--v10-t-lead); line-height: 1.6; color: var(--ink-mid); max-width: 38rem; margin: 0; }
+.v10 :is(.v10-section--deep, .v10-section--night, .v10-compare, .v10-news, .v10-phero--image, .v10-phero--deep) .v10-lead { color: var(--on-night); }
+.v10-text { max-width: var(--v10-measure); color: var(--ink-mid); margin: 0; }
+.v10-small { font-size: var(--v10-t-small); color: var(--ink-mid); }
+.v10-micro { font-size: var(--v10-t-micro); color: var(--ink-mid); line-height: 1.45; }
+.v10-num { font-variant-numeric: tabular-nums; }
+.v10-fn { font-size: var(--v10-t-micro); color: var(--ink-mid); max-width: 46rem; margin: var(--v10-s5) 0 0; }
+
+/* Kicker / Label: eine Zeile Versalien über der Headline, nie dekorative Nummern-Kaskaden */
+.v10-kicker { display: inline-block; font-family: var(--font-display); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue-deep); line-height: 1.4; }
+.v10 :is(.v10-section--deep, .v10-section--night, .v10-compare, .v10-news, .v10-quote, .v10-spot--teaser, .v10-phero--image, .v10-phero--deep) .v10-kicker { color: var(--v10-accent-night); }
+
+/* Tags (POUCH): klein, kantig gerundet, auf Bild oder Karte */
+.v10-tag { display: inline-flex; align-items: center; min-height: 1.6rem; padding: 0 0.6rem; border-radius: 0.4rem; font-family: var(--font-display); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; background: var(--mist); color: var(--blue-deep); white-space: nowrap; }
+.v10-tag--main { background: var(--blue-deep); color: var(--paper); }
+.v10-tag--soon { background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink-mid); }
+.v10-tag--live { background: var(--paper); box-shadow: inset 0 0 0 1px var(--blue); color: var(--blue-deep); }
+
+/* Kennzahlen aus Theme-Settings "IB-7 Fakten" (Beleg offen, E0) */
+[data-fakt] { white-space: nowrap; }
+.v10-notes-on [data-fakt] { text-decoration: underline dotted var(--blue); text-underline-offset: 0.18em; }
+
+/* ---------- Section-Kopf ---------- */
+.v10-head { display: grid; gap: var(--v10-s4); margin-bottom: var(--v10-head-gap); }
+.v10-head__text { display: grid; gap: var(--v10-s3); min-width: 0; }
+.v10-head__link { justify-self: start; }
+.v10-head--center { justify-items: center; text-align: center; }
+.v10-head--center .v10-head__text { justify-items: center; }
+.v10-head--center .v10-h2 { margin-inline: auto; }
+@media (min-width: 990px) {
+  .v10-head { grid-template-columns: minmax(0, 1fr) auto; align-items: end; column-gap: var(--v10-s7); }
+  .v10-head__link { justify-self: end; }
+  .v10-head--center { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---------- Buttons (Ergänzungen zu .btn aus ib7.css) ---------- */
+.v10-actions { display: flex; flex-wrap: wrap; gap: var(--v10-s3) var(--v10-s5); align-items: center; }
+.v10-actions--stack { display: grid; gap: var(--v10-s3); }
+.v10 .btn { white-space: normal; max-width: 100%; text-align: center; line-height: 1.25; padding-block: 0.6rem; }
+.btn--block-m { width: 100%; }
+@media (min-width: 750px) { .btn--block-m { width: auto; } }
+.btn--sm { min-height: var(--v10-touch); padding: 0 1.15rem; font-size: 0.875rem; }
+.btn--line-light { background: transparent; color: var(--paper); border-color: color-mix(in srgb, var(--paper) 55%, transparent); }
+@media (hover: hover) { .btn--line-light:hover { background: var(--paper); color: var(--blue-deep); border-color: var(--paper); } }
+.v10-link-light { color: var(--paper); }
+.v10 :is(.v10-section--deep, .v10-section--night, .v10-compare, .v10-news, .v10-spot--teaser, .v10-phero--image, .v10-phero--deep) .link { color: var(--paper); }
+.v10-actions__note { flex-basis: 100%; }
+
+/* ---------- Rail: am Handy wischbar, ab 990 px Raster (--cols) ---------- */
+.v10-rail { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(15rem, 80%); gap: var(--v10-s3); overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; margin-inline: calc(var(--gutter) * -1); padding: 0 var(--gutter) var(--v10-s2); scroll-padding-inline: var(--gutter); scrollbar-width: none; }
+.v10-rail::-webkit-scrollbar { display: none; }
+.v10-rail > * { scroll-snap-align: start; min-width: 0; }
+@media (min-width: 750px) { .v10-rail { grid-auto-columns: minmax(15rem, 44%); } }
+@media (min-width: 990px) {
+  .v10-rail { grid-auto-flow: row; grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr)); overflow: visible; margin-inline: 0; padding: 0; gap: var(--v10-s4); }
+}
+.v10-grid { display: grid; gap: var(--v10-s4); }
+@media (min-width: 750px) { .v10-grid--2, .v10-grid--3, .v10-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 990px) { .v10-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } .v10-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+/* ---------- Produktkarte (POUCH-Tags, STEM-Bildwechsel) ---------- */
+.v10-pcard { position: relative; display: grid; grid-template-rows: auto 1fr; border-radius: var(--r-card); background: var(--paper); overflow: hidden; color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+.v10-pcard__media { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--paper); }
+.v10-pcard__media img { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity var(--v10-d3) var(--v10-ease), transform 900ms var(--v10-ease); }
+.v10-pcard__prod { object-fit: contain; padding: 12% 18% 8%; }
+.v10-pcard__alt { object-fit: cover; opacity: 0; transform: scale(1.05); }
+@media (hover: hover) { .v10-pcard:hover .v10-pcard__alt { opacity: 1; transform: none; } .v10-pcard:hover .v10-pcard__prod { opacity: 0; } }
+.v10-pcard:focus-within .v10-pcard__alt { opacity: 1; transform: none; }
+.v10-pcard:focus-within .v10-pcard__prod { opacity: 0; }
+.v10-pcard__tags { position: absolute; left: var(--v10-s3); top: var(--v10-s3); z-index: 2; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.v10-pcard__body { display: grid; gap: 0.35rem; align-content: start; padding: var(--v10-s4) var(--v10-s4) 1.1rem; border-top: var(--v10-hair); }
+.v10-pcard__row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.25rem var(--v10-s3); }
+.v10-pcard__name { font-family: var(--font-display); font-size: 1.05rem; font-weight: 400; margin: 0; letter-spacing: -0.01em; }
+.v10-pcard__link { color: inherit; text-decoration: none; }
+.v10-pcard__link::after { content: ''; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.v10-pcard__link:focus-visible { outline: none; }
+.v10-pcard:has(.v10-pcard__link:focus-visible) { outline: 2px solid var(--blue-deep); outline-offset: 3px; }
+.v10-pcard__price { font-family: var(--font-display); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.v10-pcard__price s { color: var(--ink-mid); font-size: 0.8rem; margin-left: 0.35rem; }
+.v10-pcard__role { margin: 0; font-size: var(--v10-t-small); color: var(--ink-mid); }
+.v10-pcard__unit { margin: 0; font-size: var(--v10-t-micro); color: var(--ink-mid); font-variant-numeric: tabular-nums; }
+.v10-pcard__add { position: relative; z-index: 2; justify-self: start; margin-top: var(--v10-s2); display: inline-flex; align-items: center; gap: 0.5rem; min-height: var(--v10-touch); padding: 0 1rem; border: 1px solid var(--blue-deep); border-radius: var(--v10-r-ctl); background: var(--paper); color: var(--blue-deep); font-family: var(--font-display); font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: background var(--v10-d1), color var(--v10-d1); }
+@media (hover: hover) { .v10-pcard__add:hover { background: var(--blue-deep); color: var(--paper); } }
+.v10-pcard__add svg { width: 1rem; height: 1rem; }
+.v10-pcard--soon .v10-pcard__media { background: var(--mist); }
+.v10-pcard--soon .v10-pcard__prod { opacity: 0.72; }
+.v10-pcard__trio { position: absolute; inset: 16% 10% 8%; display: flex; justify-content: center; align-items: end; gap: 4%; }
+.v10-pcard__trio img { position: static; width: auto; height: 72%; object-fit: contain; opacity: 0.7; }
+.v10-pcard__trio img:nth-child(2) { height: 84%; }
+@media (min-width: 990px) {
+  .v10-pcard--feature { grid-column: span 2; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); grid-template-rows: none; }
+  .v10-pcard--feature .v10-pcard__media { aspect-ratio: auto; min-height: 26rem; }
+  .v10-pcard--feature .v10-pcard__body { border-top: 0; border-left: var(--v10-hair); align-content: center; padding: var(--v10-s6); }
+  .v10-pcard--feature .v10-pcard__name { font-size: 1.6rem; font-weight: 300; }
+}
+
+/* ---------- Spezifikationsliste (POUCH "01 / ...") ---------- */
+.v10-specs { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
+.v10-specs li { margin: 0; display: grid; grid-template-columns: 2.4rem minmax(0, 1fr); font-family: var(--font-display); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.v10-specs b { font-weight: 500; opacity: 0.7; }
+
+/* ---------- Laufband (Yucca) ---------- */
+.v10-marquee { position: relative; background: var(--blue-deep); color: var(--paper); overflow: hidden; padding-block: var(--v10-s4); }
+.v10-marquee__track { display: flex; width: max-content; animation: v10-run 50s linear infinite; }
+.v10-marquee.is-paused .v10-marquee__track, .v10-marquee:hover .v10-marquee__track, .v10-marquee:focus-within .v10-marquee__track { animation-play-state: paused; }
+.v10-marquee__group { display: flex; gap: 2.5rem; padding: 0 2.5rem 0 0; margin: 0; list-style: none; }
+.v10-marquee__group li { margin: 0; display: flex; align-items: center; gap: 2.5rem; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.05rem, 0.92rem + 0.8vw, 1.6rem); white-space: nowrap; }
+.v10-marquee__group li::after { content: ''; width: 0.4rem; height: 0.4rem; border-radius: 50%; background: var(--blue); }
+.v10-marquee__toggle { position: absolute; right: var(--v10-s2); top: 50%; transform: translateY(-50%); z-index: 2; width: var(--v10-touch); height: var(--v10-touch); border-radius: 50%; border: 1px solid color-mix(in srgb, var(--paper) 45%, transparent); background: var(--blue-deep); color: var(--paper); display: grid; place-items: center; cursor: pointer; }
+.v10-marquee__toggle::before, .v10-marquee__toggle::after { content: ''; width: 3px; height: 0.8rem; background: currentColor; border-radius: 1px; grid-area: 1 / 1; }
+.v10-marquee__toggle::before { transform: translateX(-3px); }
+.v10-marquee__toggle::after { transform: translateX(3px); }
+.v10-marquee__toggle[aria-pressed="true"]::before { width: 0; height: 0; background: none; border-style: solid; border-width: 0.45rem 0 0.45rem 0.75rem; border-color: transparent transparent transparent currentColor; transform: translateX(1px); }
+.v10-marquee__toggle[aria-pressed="true"]::after { display: none; }
+@keyframes v10-run { to { transform: translateX(-50%); } }
+
+/* ---------- Statement mit Bildkapseln (POUCH) ---------- */
+.v10-statement__text { font-family: var(--font-display); font-weight: 300; font-size: var(--v10-t-statement); line-height: 1.18; letter-spacing: -0.03em; margin: 0; max-width: 24ch; text-wrap: pretty; }
+.v10-cap { display: inline-block; vertical-align: middle; height: 0.8em; width: 1.9em; border-radius: var(--v10-r-ctl); overflow: hidden; position: relative; top: -0.06em; margin-inline: 0.08em; background: var(--mist); transition: width var(--v10-d3) var(--v10-ease); }
+.v10-cap img { width: 100%; height: 100%; object-fit: cover; }
+.v10-js .v10-statement:not(.is-in) .v10-cap { width: 0.3em; }
+.v10-js .v10-statement[data-reveal] { opacity: 1; transform: none; }
+.v10-statement .v10-actions { margin-top: var(--v10-s6); }
+
+/* ---------- Duo-Benefit (ersetzt v7-Blase, 3-Spalten-Grid, nichts absolut positioniert) ---------- */
+.v10-benefit { display: grid; gap: var(--v10-s5); justify-items: center; grid-template-areas: "orb" "start" "end" "buy"; }
+.v10-benefit__orb { grid-area: orb; margin: 0; width: min(100%, 19rem); aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: var(--paper); box-shadow: 0 0 0 1px var(--line), inset 0 0 0 0.625rem var(--mist); display: grid; place-items: center; }
+.v10-benefit__orb img { height: 62%; width: auto; max-width: 56%; object-fit: contain; }
+.v10-benefit__col { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--v10-s4); width: 100%; max-width: 30rem; }
+.v10-benefit__col--start { grid-area: start; }
+.v10-benefit__col--end { grid-area: end; }
+.v10-benefit__item { margin: 0; display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: var(--v10-s3); align-items: start; }
+.v10-benefit__item::before { content: ''; height: 1px; margin-top: 0.75rem; background: var(--blue-deep); }
+.v10-benefit__item b { display: block; font-family: var(--font-display); font-weight: 500; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.v10-benefit__item span { display: block; font-size: 0.94rem; color: var(--ink-mid); }
+.v10-benefit__buy { grid-area: buy; display: grid; gap: var(--v10-s4); justify-items: center; text-align: center; width: 100%; max-width: 30rem; padding-top: var(--v10-s2); }
+.v10-benefit__buy .v10-price { justify-content: center; }
+.v10-benefit__buy .v10-actions { justify-content: center; }
+@media (min-width: 990px) {
+  .v10-benefit { grid-template-columns: minmax(0, 1fr) minmax(0, 24rem) minmax(0, 1fr); grid-template-areas: "start orb end" ". buy ."; column-gap: clamp(1.5rem, 3vw, 3.5rem); row-gap: var(--v10-s6); align-items: center; }
+  .v10-benefit__orb { width: 100%; }
+  .v10-benefit__col { max-width: 21rem; gap: var(--v10-s6); }
+  .v10-benefit__col--start { justify-self: end; }
+  .v10-benefit__col--start .v10-benefit__item { grid-template-columns: minmax(0, 1fr) clamp(2rem, 4vw, 4rem); text-align: right; }
+  .v10-benefit__col--start .v10-benefit__item::before { order: 2; }
+  .v10-benefit__col--end { justify-self: start; }
+  .v10-benefit__col--end .v10-benefit__item { grid-template-columns: clamp(2rem, 4vw, 4rem) minmax(0, 1fr); }
+}
+
+/* ---------- Preis ---------- */
+.v10-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.7rem; }
+.v10-price__now { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.5rem, 1.35rem + 0.6vw, 2rem); letter-spacing: -0.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.v10-price__was { color: var(--ink-mid); font-size: var(--v10-t-small); font-variant-numeric: tabular-nums; }
+.v10-price__save { padding: 0.2rem 0.65rem; border-radius: var(--v10-r-ctl); background: var(--mist); color: var(--blue-deep); font-size: 0.8rem; font-weight: 700; }
+.v10-price__unit { flex-basis: 100%; font-size: var(--v10-t-micro); color: var(--ink-mid); font-variant-numeric: tabular-nums; }
+
+/* ---------- Entdecken-Karten (Yucca) ---------- */
+.v10-explore { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(15rem, 80%); gap: var(--v10-s3); overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; margin-inline: calc(var(--gutter) * -1); padding: 0 var(--gutter) var(--v10-s2); scroll-padding-inline: var(--gutter); scrollbar-width: none; }
+.v10-explore::-webkit-scrollbar { display: none; }
+@media (min-width: 750px) { .v10-explore { grid-auto-columns: minmax(15rem, 44%); } }
+.v10-xcard { scroll-snap-align: start; position: relative; isolation: isolate; display: grid; align-content: end; min-height: 26rem; border-radius: var(--r-card); overflow: hidden; background: var(--mist); color: var(--ink); text-decoration: none; }
+.v10-xcard > img { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--v10-ease); }
+.v10-xcard__card { margin: var(--v10-s3); padding: var(--v10-s4) 1.1rem; border-radius: calc(var(--r-card) - 0.5rem); background: var(--paper); display: grid; gap: 0.4rem; }
+.v10-xcard__label { font-family: var(--font-display); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-deep); }
+.v10-xcard__title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 400; line-height: 1.25; margin: 0; }
+.v10-xcard__text { font-size: 0.92rem; color: var(--ink-mid); margin: 0; }
+.v10-xcard__more { display: flex; justify-content: space-between; align-items: center; min-height: var(--v10-touch); margin-top: 0.2rem; border-top: var(--v10-hair); font-family: var(--font-display); font-size: 0.875rem; color: var(--blue-deep); }
+.v10-xcard__more svg { width: 1rem; height: 1rem; }
+@media (min-width: 990px) {
+  .v10-explore { display: flex; overflow: visible; margin-inline: 0; padding: 0; height: 32rem; gap: var(--v10-s3); }
+  .v10-xcard { flex: 1 1 0; min-width: 0; min-height: 0; transition: flex-grow var(--v10-d3) var(--v10-ease); }
+  .v10-xcard__text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .v10-explore:not(:hover):not(:focus-within) .v10-xcard:first-child, .v10-xcard:hover, .v10-xcard:focus-visible { flex-grow: 2.3; }
+  .v10-explore:not(:hover):not(:focus-within) .v10-xcard:first-child .v10-xcard__text, .v10-xcard:hover .v10-xcard__text, .v10-xcard:focus-visible .v10-xcard__text { -webkit-line-clamp: 6; }
+}
+@media (hover: hover) { .v10-xcard:hover > img { transform: scale(1.04); } }
+
+/* ---------- Inhaltsstoff-Spotlight (LAB46): Teaser und Voll ---------- */
+.v10-spot { position: relative; isolation: isolate; overflow: hidden; }
+.v10-spot__media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--mist); }
+.v10-spot__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity 700ms var(--v10-ease), transform 1200ms var(--v10-ease); }
+.v10-spot__media img.is-on { opacity: 1; transform: none; }
+.v10-spot__inner { display: grid; gap: var(--v10-s5); padding-block: var(--v10-s6) var(--v10-s7); }
+.v10-spot__list { list-style: none; margin: 0; padding: 0; display: grid; counter-reset: v10spot; }
+.v10-spot__item { margin: 0; }
+.v10-spot__tab { width: 100%; display: flex; align-items: baseline; gap: var(--v10-s3); min-height: 3rem; padding: 0.35rem 0; border: 0; border-bottom: var(--v10-hair); background: none; color: var(--ink-soft); font-family: var(--font-display); font-weight: 300; font-size: clamp(1.45rem, 1.1rem + 1.6vw, 2.5rem); letter-spacing: -0.02em; line-height: 1.15; text-align: left; cursor: pointer; transition: color var(--v10-d2); }
+.v10-spot__tab small { font-family: var(--font-body); font-size: var(--v10-t-micro); letter-spacing: 0; color: var(--ink-mid); white-space: nowrap; }
+.v10-spot__tab[aria-selected="true"] { color: var(--ink); }
+.v10-spot__tab[aria-selected="true"]::after { content: ''; margin-left: auto; align-self: center; flex: none; width: 2.5rem; height: 1px; background: var(--blue); }
+@media (hover: hover) { .v10-spot__tab:hover { color: var(--ink); } }
+.v10-spot__panels { display: grid; gap: var(--v10-s3); }
+.v10-spot__panel { display: grid; gap: 0.45rem; padding: 1.1rem 1.2rem; border-radius: var(--r-card); background: var(--paper); color: var(--ink); max-width: 30rem; box-shadow: inset 0 0 0 1px var(--line); }
+.v10-spot__panel[hidden] { display: none; }
+.v10-spot__origin { font-family: var(--font-display); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-text); }
+.v10-spot__name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 400; margin: 0; }
+.v10-spot__role { margin: 0; color: var(--ink-mid); font-size: 0.94rem; }
+.v10-spot__facts { display: grid; grid-template-columns: minmax(0, 0.45fr) minmax(0, 1fr); gap: 0.3rem var(--v10-s3); margin: 0.35rem 0 0; padding-top: var(--v10-s3); border-top: var(--v10-hair); font-size: var(--v10-t-small); }
+.v10-spot__facts dt { color: var(--ink-mid); }
+.v10-spot__facts dd { margin: 0; color: var(--ink); overflow-wrap: anywhere; }
+/* Teaser: dunkel, Bild vollflächig (Startseite) */
+.v10-spot--teaser { background: var(--night); color: var(--on-night); }
+.v10-spot--teaser .v10-spot__tab { color: color-mix(in srgb, var(--on-night) 52%, var(--night)); border-bottom: var(--v10-hair-night); }
+.v10-spot--teaser .v10-spot__tab small { color: var(--on-night-mid); }
+.v10-spot--teaser .v10-spot__tab[aria-selected="true"] { color: var(--on-night); }
+@media (hover: hover) { .v10-spot--teaser .v10-spot__tab:hover { color: var(--on-night); } }
+.v10-spot--teaser .v10-spot__panel { box-shadow: none; }
+@media (min-width: 990px) {
+  .v10-spot--teaser { min-height: 40rem; }
+  .v10-spot--teaser .v10-spot__media { position: absolute; inset: 0 0 0 42%; aspect-ratio: auto; }
+  .v10-spot--teaser .v10-spot__inner { grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr); min-height: 40rem; padding-block: var(--v10-s8); }
+  .v10-spot--teaser .v10-spot__side { padding-right: var(--v10-s7); display: grid; gap: var(--v10-s5); align-content: center; }
+  .v10-spot--teaser .v10-spot__panels { align-self: end; justify-self: end; }
+}
+/* Voll: hell, Liste links, Bild + Info rechts (PDP, Inhaltsstoffe) */
+.v10-spot--full { background: var(--paper); overflow: clip; } /* clip statt hidden: kein Scroll-Container, Sticky der Bildspalte bleibt aktiv */
+.v10-spot--full .v10-spot__inner { padding-block: 0; }
+.v10-spot--full .v10-spot__media { border-radius: var(--r-media); }
+@media (min-width: 990px) {
+  .v10-spot--full .v10-spot__inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--v10-s8); align-items: start; }
+  .v10-spot--full .v10-spot__aside { position: sticky; top: calc(var(--header-h) + 1.5rem); display: grid; gap: var(--v10-s4); }
+  .v10-spot--full .v10-spot__media { aspect-ratio: 5 / 4; }
+}
+/* ohne JS: alle Infokarten untereinander, Liste nur als Übersicht */
+.v10-spot:not(.is-ready) .v10-spot__panel[hidden] { display: grid; }
+
+/* ---------- Produktseite: Galerie + Buy-Box (LAB46 / POUCH) ---------- */
+.v10-pdp { background: var(--porcelain); padding-block: var(--v10-s3) var(--v10-section); }
+.v10-crumbs { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; min-height: var(--v10-touch); font-size: var(--v10-t-micro); color: var(--ink-mid); }
+.v10-crumbs a { color: var(--ink-mid); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; min-height: var(--v10-touch); min-width: var(--v10-touch); }
+.v10-pdp__grid { display: grid; gap: var(--v10-s5); }
+.v10-gallery { display: grid; gap: var(--v10-s2); min-width: 0; }
+.v10-gallery__track { display: grid; grid-auto-flow: column; grid-auto-columns: 100%; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; border-radius: var(--r-media); background: var(--paper); scrollbar-width: none; }
+.v10-gallery__track::-webkit-scrollbar { display: none; }
+.v10-gallery__slide { position: relative; margin: 0; aspect-ratio: 1; overflow: hidden; scroll-snap-align: start; background: var(--paper); }
+.v10-gallery__slide img { width: 100%; height: 100%; object-fit: cover; }
+.v10-gallery__slide--contain img { object-fit: contain; padding: 8%; }
+.v10-gallery__tag { position: absolute; left: var(--v10-s3); bottom: var(--v10-s3); padding: 0.3rem 0.7rem; border-radius: var(--v10-r-ctl); background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); font-size: var(--v10-t-micro); color: var(--ink-mid); }
+.v10-gallery__dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 0; }
+.v10-gallery__dots button { width: var(--v10-touch); height: var(--v10-touch); border: 0; background: none; display: grid; place-items: center; padding: 0; cursor: pointer; }
+.v10-gallery__dots button::before { content: ''; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--line); transition: background var(--v10-d1), transform var(--v10-d1); }
+.v10-gallery__dots button[aria-current="true"]::before { background: var(--blue-deep); transform: scale(1.25); }
+.v10-gallery__thumbs { display: none; }
+@media (min-width: 990px) {
+  .v10-pdp__grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); column-gap: clamp(2rem, 4vw, 4.5rem); align-items: start; }
+  .v10-gallery { position: sticky; top: calc(var(--header-h) + 1rem); grid-template-columns: 4.75rem minmax(0, 1fr); gap: var(--v10-s3); align-items: start; }
+  .v10-gallery__thumbs { display: grid; gap: var(--v10-s2); align-content: start; max-height: calc(100vh - var(--header-h) - 3rem); overflow-y: auto; scrollbar-width: none; grid-row: 1; grid-column: 1; }
+  .v10-gallery__track { grid-row: 1; grid-column: 2; }
+  .v10-gallery__slide { max-height: calc(100vh - var(--header-h) - 3rem); }
+  .v10-gallery__thumbs button { width: 4.75rem; aspect-ratio: 1; padding: 0; border: 0; border-radius: var(--r-small); overflow: hidden; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); cursor: pointer; }
+  .v10-gallery__thumbs button img { width: 100%; height: 100%; object-fit: cover; }
+  .v10-gallery__thumbs button.is-contain img { object-fit: contain; padding: 10%; }
+  .v10-gallery__thumbs button[aria-current="true"] { box-shadow: inset 0 0 0 2px var(--blue-deep); }
+  .v10-gallery__dots { display: none; }
+}
+.v10-buy { display: grid; gap: var(--v10-s4); align-content: start; min-width: 0; }
+.v10-buy__kicker { font-size: var(--v10-t-micro); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid); font-family: var(--font-display); }
+.v10-buy__title { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.9rem, 1.5rem + 1.8vw, 3rem); line-height: 1.05; letter-spacing: -0.03em; margin: 0; }
+.v10-buy__claim { font-family: var(--font-display); font-style: italic; color: var(--blue-text); margin: 0; }
+.v10-rating { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; min-height: var(--v10-touch); color: var(--ink-mid); font-size: var(--v10-t-small); text-decoration: none; }
+.v10-rating .stars svg { width: 1rem; height: 1rem; }
+.v10-bullets { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+.v10-bullets li { margin: 0; display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0.6rem; font-size: 0.95rem; color: var(--ink-mid); }
+.v10-bullets svg { width: 1.1rem; height: 1.1rem; margin-top: 0.2rem; color: var(--blue-deep); }
+.v10-bullets strong { color: var(--ink); font-weight: 700; }
+.v10-options { border: 0; margin: 0; padding: 0; display: grid; gap: var(--v10-s2); min-width: 0; }
+.v10-options legend { padding: 0; margin-bottom: var(--v10-s2); font-family: var(--font-display); font-size: 0.875rem; font-weight: 500; }
+.v10-option { position: relative; display: grid; grid-template-columns: 1.25rem minmax(0, 1fr) auto; gap: var(--v10-s3); align-items: center; min-height: 3.5rem; padding: 0.8rem 1rem; border-radius: var(--r-small); background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); cursor: pointer; }
+.v10-option:has(input:checked) { box-shadow: inset 0 0 0 2px var(--blue-deep); }
+.v10-option input { width: 1.15rem; height: 1.15rem; margin: 0; accent-color: var(--blue-deep); }
+.v10-option__name { font-family: var(--font-display); font-weight: 500; font-size: 0.95rem; }
+.v10-option__sub { display: block; font-size: var(--v10-t-micro); color: var(--ink-mid); }
+.v10-option__price { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--font-display); font-size: 0.95rem; }
+.v10-option__price s { display: block; font-size: var(--v10-t-micro); color: var(--ink-mid); }
+.v10-option__flag { position: absolute; right: var(--v10-s3); top: 0; transform: translateY(-50%); padding: 0.1rem 0.55rem; border-radius: var(--v10-r-ctl); background: var(--blue-deep); color: var(--paper); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.02em; }
+.v10-atc { display: grid; gap: var(--v10-s2); }
+.v10-atc .btn { width: 100%; }
+.v10-express { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v10-s2); }
+.v10-express span { display: grid; place-items: center; min-height: 3rem; border-radius: var(--v10-r-ctl); border: 1px dashed var(--ink-soft); color: var(--ink-mid); font-size: var(--v10-t-micro); text-align: center; padding: 0 0.5rem; }
+.v10-assure { list-style: none; margin: 0; padding: var(--v10-s3) 0 0; display: grid; gap: 0.4rem; border-top: var(--v10-hair); }
+.v10-assure li { margin: 0; display: flex; gap: 0.6rem; align-items: center; font-size: var(--v10-t-small); color: var(--ink-mid); }
+.v10-assure svg { width: 1.1rem; height: 1.1rem; flex: none; color: var(--blue-deep); }
+.v10-upgrade { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); gap: var(--v10-s4); align-items: center; padding: var(--v10-s4); border-radius: var(--r-card); background: var(--mist); color: var(--ink); text-decoration: none; }
+.v10-upgrade img { width: 4.5rem; height: 4.5rem; object-fit: contain; border-radius: var(--r-small); background: var(--paper); }
+.v10-upgrade strong { font-family: var(--font-display); font-weight: 500; }
+.v10-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--v10-s2); list-style: none; margin: 0; padding: 0; }
+.v10-facts li { margin: 0; display: grid; gap: 0.15rem; padding: 0.7rem 0.75rem; border-radius: var(--r-small); background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
+.v10-facts span { font-size: var(--v10-t-micro); color: var(--ink-mid); }
+.v10-facts strong { font-family: var(--font-display); font-weight: 400; font-size: 0.9rem; }
+.v10-buy .acc { margin-top: var(--v10-s2); }
+
+/* ---------- Nutzen-Karten (LAB46) ---------- */
+.v10-bcard { display: grid; grid-template-rows: auto 1fr; border-radius: var(--r-card); overflow: hidden; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
+.v10-bcard__media { aspect-ratio: 4 / 3; overflow: hidden; background: var(--mist); }
+.v10-bcard__media img { width: 100%; height: 100%; object-fit: cover; }
+.v10-bcard__body { display: grid; gap: 0.45rem; align-content: start; padding: 1.1rem 1.2rem 1.3rem; }
+.v10-bcard__title { font-family: var(--font-display); font-weight: 400; font-size: 1.2rem; line-height: 1.25; margin: 0; }
+.v10-bcard__text { margin: 0; color: var(--ink-mid); font-size: 0.94rem; }
+.v10-bcard__big { font-family: var(--font-display); font-weight: 300; font-size: clamp(2.2rem, 1.8rem + 1.6vw, 3.2rem); line-height: 1; color: var(--blue-deep); font-variant-numeric: tabular-nums; }
+.v10-bcard--stat .v10-bcard__media { display: grid; place-items: center; background: var(--mist); }
+
+/* ---------- Cross-Sell (LAB46 "Vollende ...") ---------- */
+.v10-xsell { display: grid; gap: var(--v10-s5); }
+.v10-xsell__copy { display: grid; gap: var(--v10-s4); align-content: center; }
+.v10-xsell__minis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v10-s3); }
+.v10-xsell__media { border-radius: var(--r-media); overflow: hidden; aspect-ratio: 4 / 3; background: var(--mist); }
+.v10-xsell__media img { width: 100%; height: 100%; object-fit: cover; }
+@media (min-width: 990px) { .v10-xsell { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--v10-s8); align-items: stretch; } .v10-xsell__media { aspect-ratio: auto; min-height: 30rem; } }
+.v10-mini { position: relative; display: grid; gap: 0.35rem; padding: var(--v10-s3); border-radius: var(--r-card); background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
+.v10-mini__img { position: relative; aspect-ratio: 1; border-radius: var(--r-small); background: var(--porcelain); overflow: hidden; }
+/* Prozent-Höhe im Grid-Item löst sich nicht auf, deshalb absolut: Freisteller immer ganz sichtbar */
+.v10-mini__img img { position: absolute; top: 9%; left: 50%; transform: translateX(-50%); height: 82%; width: auto; max-width: none; }
+.v10-mini__name { font-family: var(--font-display); font-weight: 400; font-size: 0.95rem; margin: 0; }
+.v10-mini__name a { color: inherit; text-decoration: none; }
+.v10-mini__name a::after { content: ''; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.v10-mini__meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem; font-size: var(--v10-t-micro); color: var(--ink-mid); font-variant-numeric: tabular-nums; }
+.v10-mini .v10-pcard__add { margin-top: 0.15rem; width: 100%; justify-content: center; }
+.v10-mini--current { box-shadow: inset 0 0 0 2px var(--blue-deep); }
+
+/* ---------- Vergleich auf dunklem Bild (POUCH "Sip vs Drip") ---------- */
+.v10-compare { position: relative; isolation: isolate; overflow: hidden; background: var(--night); color: var(--on-night); padding-block: var(--v10-section); }
+.v10-compare__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+.v10-compare::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--v10-scrim); }
+.v10-compare__grid { display: grid; gap: var(--v10-s6); }
+.v10-compare__head { display: grid; gap: var(--v10-s4); align-content: start; }
+@media (min-width: 990px) { .v10-compare__grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); column-gap: var(--v10-s8); align-items: start; } }
+.v10-ctable { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; font-size: var(--v10-t-small); }
+.v10-ctable caption { text-align: left; padding-bottom: var(--v10-s3); font-size: var(--v10-t-micro); color: var(--on-night-mid); }
+.v10-ctable th, .v10-ctable td { padding: 0.85rem 0.6rem; border-bottom: var(--v10-hair-night); text-align: left; vertical-align: top; overflow-wrap: anywhere; hyphens: auto; }
+.v10-ctable thead th { padding-block: 1.1rem 0.9rem; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.1rem, 0.95rem + 1vw, 1.9rem); letter-spacing: -0.02em; line-height: 1.1; }
+.v10-ctable tbody th { font-family: var(--font-display); font-weight: 500; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--on-night-mid); padding-left: 0; }
+.v10-ctable col.v10-ctable__label { width: 38%; }
+.v10-ctable .is-ib7 { background: var(--v10-glass); color: var(--on-night); }
+.v10-ctable thead .is-ib7 { border-radius: var(--r-small) var(--r-small) 0 0; }
+.v10-ctable tbody tr:last-child .is-ib7 { border-radius: 0 0 var(--r-small) var(--r-small); }
+.v10-ctable td:not(.is-ib7) { color: var(--on-night-mid); }
+.v10-ctable svg { width: 1rem; height: 1rem; vertical-align: -0.15rem; margin-right: 0.3rem; color: var(--v10-accent-night); }
+.v10-ctable--light { color: var(--ink); }
+.v10-ctable--light th, .v10-ctable--light td { border-bottom: var(--v10-hair); }
+.v10-ctable--light tbody th, .v10-ctable--light td:not(.is-ib7) { color: var(--ink-mid); }
+.v10-ctable--light .is-ib7 { background: var(--mist); color: var(--ink); }
+.v10-ctable--light svg { color: var(--blue-deep); }
+@media (min-width: 750px) { .v10-ctable th, .v10-ctable td { padding-inline: 1rem; } .v10-ctable { font-size: 0.95rem; } }
+
+/* ---------- Bewertungen (nur Trusted-Shops-Platzhalter) ---------- */
+.v10-reviews { display: grid; gap: var(--v10-s4); }
+.v10-ts-summary { display: flex; flex-wrap: wrap; gap: var(--v10-s3) var(--v10-s5); align-items: center; }
+.v10-ts-summary__score { font-family: var(--font-display); font-weight: 300; font-size: clamp(2.4rem, 2rem + 1.6vw, 3.4rem); line-height: 1; }
+.v10-ts { display: grid; place-items: center; gap: 0.4rem; min-height: 12rem; padding: var(--v10-s5); border-radius: var(--r-card); border: 1px dashed var(--blue); background: var(--paper); color: var(--ink-mid); text-align: center; font-size: var(--v10-t-small); }
+.v10-ts code { font-size: var(--v10-t-micro); color: var(--blue-deep); overflow-wrap: anywhere; }
+.v10-ts--strip { min-height: 0; grid-template-columns: minmax(0, 1fr); justify-items: start; text-align: left; }
+@media (min-width: 750px) { .v10-ts--strip { grid-template-columns: minmax(0, 1fr) auto; align-items: center; } }
+
+/* ---------- FAQ (Titel links, Liste rechts) ---------- */
+.v10-faq { display: grid; gap: var(--v10-s5); }
+.v10-faq__head { display: grid; gap: var(--v10-s3); align-content: start; }
+@media (min-width: 990px) { .v10-faq { grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr); column-gap: var(--v10-s8); } .v10-faq__head { position: sticky; top: calc(var(--header-h) + 1.5rem); } }
+.v10 .acc summary { min-height: 3.5rem; }
+.v10 .acc__body { color: var(--ink-mid); }
+.v10 .acc__body p + p { margin-top: 0.6rem; }
+
+/* ---------- Evidenz-Liste (LAB46 Studien): nur echte, prüfbare Quellen ---------- */
+.v10-evidence { display: grid; gap: var(--v10-s6); }
+.v10-evidence__group { display: grid; gap: var(--v10-s3); }
+.v10-evidence__title { font-family: var(--font-display); font-weight: 500; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-deep); margin: 0; padding-bottom: var(--v10-s2); border-bottom: 1px solid var(--blue-deep); }
+.v10-evidence__list { list-style: none; margin: 0; padding: 0; display: grid; }
+.v10-evidence__item { margin: 0; display: grid; gap: 0.25rem; padding-block: var(--v10-s4); border-bottom: var(--v10-hair); }
+.v10-evidence__src { font-size: var(--v10-t-micro); color: var(--ink-mid); }
+.v10-evidence__name { font-family: var(--font-display); font-weight: 400; font-size: 1rem; }
+.v10-evidence__result { font-size: var(--v10-t-small); color: var(--ink-mid); }
+.v10-evidence__link { justify-self: start; }
+@media (min-width: 990px) {
+  .v10-evidence { grid-template-columns: minmax(0, 0.35fr) minmax(0, 0.65fr); column-gap: var(--v10-s8); }
+  .v10-evidence__item { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto; column-gap: var(--v10-s5); align-items: baseline; }
+  .v10-evidence__src { grid-column: 1 / -1; }
+}
+
+/* ---------- Mission / Vision-Zeilen (Yucca) ---------- */
+.v10-rows { display: grid; border-top: var(--v10-hair); }
+.v10-row { display: grid; gap: var(--v10-s2); padding-block: var(--v10-s5); border-bottom: var(--v10-hair); }
+.v10-row__label { font-family: var(--font-display); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-deep); }
+.v10-row__text { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.25rem, 1.05rem + 1vw, 2rem); line-height: 1.3; letter-spacing: -0.02em; max-width: 34ch; }
+.v10-row__text--body { font-family: var(--font-body); font-size: var(--v10-t-body); line-height: 1.65; letter-spacing: 0; color: var(--ink-mid); max-width: var(--v10-measure); }
+@media (min-width: 750px) { .v10-row { grid-template-columns: minmax(0, 0.3fr) minmax(0, 0.7fr); column-gap: var(--v10-s6); align-items: baseline; } }
+
+/* ---------- Seiten-Hero für Unterseiten (POUCH "Find your POUCH") ---------- */
+.v10-phero { position: relative; isolation: isolate; overflow: hidden; }
+.v10-phero__inner { display: grid; gap: var(--v10-s5); padding-block: var(--v10-s6) var(--v10-s7); }
+.v10-phero__copy { display: grid; gap: var(--v10-s4); align-content: end; max-width: 44rem; }
+.v10-phero__media { margin: 0; overflow: hidden; background: var(--mist); }
+.v10-phero__media img { width: 100%; height: 100%; object-fit: cover; }
+/* Bild: am Handy Bild oben, Text auf Blue Deep darunter; ab 990 Text auf Bild mit flacher Abdunklung */
+.v10-phero--image { background: var(--blue-deep); color: var(--paper); }
+.v10-phero--image .v10-phero__media { aspect-ratio: 16 / 10; }
+@media (min-width: 990px) {
+  .v10-phero--image { min-height: min(38rem, 78vh); display: grid; align-items: end; }
+  .v10-phero--image .v10-phero__media { position: absolute; inset: 0; z-index: -2; aspect-ratio: auto; }
+  .v10-phero--image::before { content: ''; position: absolute; inset: 0; z-index: -1; background: color-mix(in srgb, var(--night) 34%, transparent); }
+  .v10-phero--image .v10-phero__inner { grid-template-columns: minmax(0, 1fr) minmax(0, 20rem); align-items: end; padding-block: var(--v10-s9) var(--v10-s8); }
+}
+.v10-phero--deep { background: var(--blue-deep); color: var(--paper); }
+.v10-phero--plain { background: var(--mist); }
+.v10-phero--split { background: var(--paper); }
+.v10-phero--split .v10-phero__media { border-radius: var(--r-media); aspect-ratio: 4 / 3; }
+@media (min-width: 990px) {
+  .v10-phero--split .v10-phero__inner, .v10-phero--plain .v10-phero__inner, .v10-phero--deep .v10-phero__inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--v10-s8); align-items: center; padding-block: var(--v10-s8); }
+  .v10-phero--split .v10-phero__media { aspect-ratio: 5 / 4; }
+}
+.v10-phero:not(.v10-phero--image) .v10-phero__inner > .v10-phero__media { border-radius: var(--r-media); aspect-ratio: 4 / 3; min-width: 0; }
+@media (min-width: 990px) { .v10-phero:not(.v10-phero--image) .v10-phero__inner > .v10-phero__media { aspect-ratio: 5 / 4; } }
+.v10-phero--deep .v10-phero__media { background: color-mix(in srgb, var(--paper) 8%, var(--blue-deep)); }
+.v10-phero--plain .v10-specs { align-self: center; }
+.v10-phero__copy .v10-specs { margin-top: var(--v10-s2); }
+.v10-phero .v10-crumbs { color: inherit; opacity: 0.8; }
+.v10-phero .v10-crumbs a { color: inherit; }
+.v10-chips { display: flex; flex-wrap: wrap; gap: var(--v10-s2); list-style: none; margin: 0; padding: 0; }
+.v10-chip { display: inline-flex; align-items: center; min-height: var(--v10-touch); padding: 0 1rem; border-radius: var(--v10-r-ctl); border: 1px solid var(--line); background: var(--paper); color: var(--ink); font-family: var(--font-display); font-size: 0.875rem; text-decoration: none; cursor: pointer; }
+.v10-chip[aria-pressed="true"], .v10-chip[aria-current="true"] { background: var(--blue-deep); border-color: var(--blue-deep); color: var(--paper); }
+
+/* ---------- Kennzahlen / Belege ---------- */
+.v10-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v10-s3); }
+@media (min-width: 990px) { .v10-stats--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.v10-stat { display: grid; gap: 0.3rem; align-content: start; padding: 1.1rem; border-radius: var(--r-card); background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
+.v10-stat b { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.6rem, 1.35rem + 1vw, 2.3rem); line-height: 1.05; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.v10-stat span { font-size: 0.85rem; color: var(--ink-mid); overflow-wrap: anywhere; hyphens: auto; }
+.v10-section--night .v10-stat, .v10-section--deep .v10-stat { background: var(--v10-glass); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--on-night) 18%, transparent); }
+.v10-section--night .v10-stat span, .v10-section--deep .v10-stat span { color: var(--on-night); }
+.v10-bignums { display: grid; gap: var(--v10-s5); }
+@media (min-width: 750px) { .v10-bignums { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.v10-bignum { display: grid; gap: var(--v10-s2); padding-top: var(--v10-s4); border-top: 1px solid currentColor; }
+.v10-bignum b { font-family: var(--font-display); font-weight: 300; font-size: clamp(2.4rem, 1.8rem + 2.6vw, 4.25rem); line-height: 1; letter-spacing: -0.03em; }
+.v10-bignum b [data-fakt] { white-space: normal; }
+.v10-bignum > span { font-size: 0.94rem; opacity: 0.85; }
+
+/* ---------- Garantie-Band ---------- */
+.v10-guarantee { display: grid; gap: var(--v10-s4); padding: var(--v10-s5); border-radius: var(--r-card); background: var(--blue-deep); color: var(--paper); }
+.v10-guarantee__seal { width: 4.75rem; height: 4.75rem; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--paper) 60%, transparent); display: grid; place-items: center; text-align: center; font-family: var(--font-display); font-size: 0.75rem; line-height: 1.05; }
+.v10-guarantee__seal b { display: block; font-size: 1.7rem; font-weight: 300; }
+.v10-guarantee .v10-h3 { color: var(--paper); }
+.v10-guarantee p { margin: 0; color: var(--on-night); }
+@media (min-width: 990px) { .v10-guarantee--wide { grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; column-gap: var(--v10-s6); padding: var(--v10-s6) var(--v10-s7); } }
+
+/* ---------- Zitat auf Dunkelblau (POUCH, Über uns) ---------- */
+.v10-quote { background: var(--night); color: var(--on-night); }
+.v10-quote__grid { display: grid; gap: var(--v10-s5); }
+.v10-quote blockquote { margin: 0; }
+.v10-quote__text { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.5rem, 1.1rem + 2vw, 2.8rem); line-height: 1.25; letter-spacing: -0.02em; max-width: 30ch; margin: 0; }
+.v10-quote__by { display: flex; gap: var(--v10-s3); align-items: center; margin-top: var(--v10-s5); font-size: var(--v10-t-small); color: var(--on-night-mid); }
+.v10-quote__by img { width: 3.5rem; height: 3.5rem; border-radius: 50%; object-fit: cover; }
+.v10-quote__img { border-radius: var(--r-media); overflow: hidden; aspect-ratio: 4 / 5; max-width: 26rem; }
+.v10-quote__img img { width: 100%; height: 100%; object-fit: cover; }
+@media (min-width: 990px) { .v10-quote__grid { grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr); column-gap: var(--v10-s8); align-items: center; } }
+
+/* ---------- Schritte (So einfach) ---------- */
+.v10-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--v10-s3); counter-reset: v10step; }
+@media (min-width: 750px) { .v10-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.v10-step { margin: 0; display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: var(--v10-s4); align-items: center; padding: var(--v10-s3); border-radius: var(--r-card); background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
+.v10-step__img { aspect-ratio: 1; border-radius: var(--r-small); overflow: hidden; }
+.v10-step__img img { width: 100%; height: 100%; object-fit: cover; }
+.v10-step__body { display: grid; gap: 0.2rem; }
+.v10-step__when { font-size: var(--v10-t-micro); color: var(--ink-mid); text-transform: uppercase; letter-spacing: 0.1em; }
+.v10-step__title { font-family: var(--font-display); font-weight: 400; font-size: 1.05rem; margin: 0; }
+
+/* ---------- Newsletter-Band (POUCH "Inside") ---------- */
+.v10-news { background: var(--blue-deep); color: var(--paper); text-align: center; padding-block: var(--v10-section); }
+.v10-news__inner { display: grid; gap: var(--v10-s4); justify-items: center; }
+.v10-news .v10-h2 { margin-inline: auto; max-width: 20ch; }
+.v10-news__form { display: grid; gap: var(--v10-s2); width: 100%; max-width: 30rem; margin-top: var(--v10-s2); }
+.v10-news__form input { min-height: 3.25rem; width: 100%; padding: 0 1.2rem; border-radius: var(--v10-r-ctl); border: 1px solid color-mix(in srgb, var(--paper) 50%, transparent); background: transparent; color: var(--paper); font: inherit; }
+.v10-news__form input::placeholder { color: color-mix(in srgb, var(--paper) 72%, transparent); }
+.v10-news__msg { min-height: 1.4em; font-size: var(--v10-t-small); color: var(--on-night); }
+@media (min-width: 750px) { .v10-news__form { grid-template-columns: minmax(0, 1fr) auto; } }
+
+/* ---------- Formular (hell) ---------- */
+.v10-form { display: grid; gap: var(--v10-s3); max-width: 34rem; }
+.v10-field { display: grid; gap: 0.35rem; }
+.v10-field label { font-size: var(--v10-t-small); font-weight: 600; }
+.v10-field :is(input, textarea, select) { width: 100%; min-height: 3rem; padding: 0.7rem 1rem; border-radius: var(--r-small); border: 1px solid var(--line); background: var(--paper); color: var(--ink); font: inherit; }
+.v10-field textarea { min-height: 8rem; resize: vertical; }
+
+/* ---------- Sprunglinks (Hilfe) ---------- */
+.v10-toc { position: sticky; top: var(--header-h); z-index: 5; background: color-mix(in srgb, var(--porcelain) 94%, transparent); border-bottom: var(--v10-hair); }
+.v10-toc .v10-chips { flex-wrap: nowrap; overflow-x: auto; padding-block: var(--v10-s2); scrollbar-width: none; }
+.v10-toc .v10-chips::-webkit-scrollbar { display: none; }
+.v10-toc .v10-chip { white-space: nowrap; }
+
+/* ---------- Medien-Split (Bild + Text, Akkordeon neben Bild) ---------- */
+.v10-split { display: grid; gap: var(--v10-s5); }
+.v10-split__media { margin: 0; border-radius: var(--r-media); overflow: hidden; aspect-ratio: 4 / 3; background: var(--mist); }
+.v10-split__media img { width: 100%; height: 100%; object-fit: cover; }
+.v10-split__copy { display: grid; gap: var(--v10-s4); align-content: center; min-width: 0; }
+@media (min-width: 990px) { .v10-split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--v10-s8); align-items: center; } .v10-split--rev .v10-split__media { order: 2; } .v10-split__media { aspect-ratio: 5 / 4; } }
+
+/* ---------- Spotlight mit Chips: Handy wischbare Chip-Reihe über Bild und Infokarte, ab 990 große Namensliste ---------- */
+.v10-spot--chips .v10-spot__list { display: flex; flex-wrap: nowrap; gap: var(--v10-s2); overflow-x: auto; overscroll-behavior-x: contain; margin-inline: calc(var(--gutter) * -1); padding: 0 var(--gutter) var(--v10-s2); scroll-padding-inline: var(--gutter); scrollbar-width: none; }
+.v10-spot--chips .v10-spot__list::-webkit-scrollbar { display: none; }
+.v10-spot--chips .v10-spot__item { flex: none; }
+.v10-spot--chips .v10-spot__tab { width: auto; align-items: center; min-height: var(--v10-touch); padding: 0 1rem; border: 1px solid var(--line); border-radius: var(--v10-r-ctl); background: var(--paper); color: var(--ink); font-size: 0.95rem; font-weight: 400; letter-spacing: 0; white-space: nowrap; }
+.v10-spot--chips .v10-spot__tab small { display: none; }
+.v10-spot--chips .v10-spot__tab[aria-selected="true"] { background: var(--blue-deep); border-color: var(--blue-deep); color: var(--paper); }
+.v10-spot--chips .v10-spot__tab[aria-selected="true"]::after { display: none; }
+.v10-spot--chips .v10-spot__aside { display: grid; gap: var(--v10-s3); }
+.v10-spot--chips .v10-spot__panel { max-width: none; }
+@media (min-width: 990px) {
+  .v10-spot--chips .v10-spot__list { display: grid; overflow: visible; margin-inline: 0; padding: 0; gap: 0; }
+  .v10-spot--chips .v10-spot__tab { width: 100%; align-items: baseline; min-height: 3rem; padding: 0.35rem 0; border: 0; border-bottom: var(--v10-hair); border-radius: 0; background: none; color: var(--ink-soft); font-size: clamp(1.45rem, 1.1rem + 1.6vw, 2.5rem); font-weight: 300; letter-spacing: -0.02em; white-space: normal; }
+  .v10-spot--chips .v10-spot__tab small { display: inline; }
+  .v10-spot--chips .v10-spot__tab[aria-selected="true"] { background: none; border-color: var(--line); color: var(--ink); }
+  .v10-spot--chips .v10-spot__tab[aria-selected="true"]::after { display: block; }
+}
+
+/* ---------- Ehrlich-Hinweis, Check-Liste, Check-Karte, Freisteller-Varianten ---------- */
+.v10-honest { display: grid; gap: 0.35rem; padding: var(--v10-s4); border-radius: var(--r-small); background: var(--mist); color: var(--ink); }
+.v10-honest strong { font-family: var(--font-display); font-weight: 500; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-deep); }
+.v10-honest p { margin: 0; font-size: var(--v10-t-small); color: var(--ink-mid); }
+.v10-checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+.v10-checklist li { margin: 0; display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0.6rem; color: var(--ink-mid); }
+.v10-checklist svg { width: 1.1rem; height: 1.1rem; margin-top: 0.25rem; color: var(--blue-deep); }
+.v10-checklist strong { color: var(--ink); font-weight: 700; }
+.v10-checkcard { display: grid; gap: var(--v10-s4); margin-top: var(--v10-s5); padding: var(--v10-s5); border-radius: var(--r-card); background: var(--paper); box-shadow: inset 0 0 0 1px var(--blue); }
+.v10-checkcard__text { display: grid; gap: 0.35rem; }
+@media (min-width: 750px) { .v10-checkcard { grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: var(--v10-s6); padding: var(--v10-s5) var(--v10-s6); } }
+.v10-bcard__media--contain img, .v10-split__media--contain img { object-fit: contain; padding: 6%; background: var(--paper); }
+
+/* ---------- Duo-Abschluss kompakt (.v10-duoend): kleiner Kreis, Preis, Aktionen ---------- */
+.v10-duoend { display: grid; gap: var(--v10-s5); justify-items: center; text-align: center; }
+.v10-duoend__orb { margin: 0; width: 9.5rem; aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: var(--paper); box-shadow: 0 0 0 1px var(--line), inset 0 0 0 0.5rem var(--mist); display: grid; place-items: center; }
+.v10-duoend__orb img { height: 66%; width: auto; max-width: 60%; object-fit: contain; }
+.v10-duoend__copy { display: grid; gap: var(--v10-s3); justify-items: center; min-width: 0; }
+.v10-duoend__copy .v10-price { justify-content: center; }
+.v10-duoend__actions { display: grid; gap: var(--v10-s2); width: 100%; }
+@media (min-width: 750px) {
+  .v10-duoend { grid-template-columns: auto minmax(0, 1fr); text-align: left; justify-items: start; column-gap: var(--v10-s6); }
+  .v10-duoend__copy { justify-items: start; }
+  .v10-duoend__copy .v10-price { justify-content: flex-start; }
+  .v10-duoend__actions { grid-column: 2; display: flex; flex-wrap: wrap; width: auto; align-items: center; gap: var(--v10-s3) var(--v10-s5); }
+}
+@media (min-width: 990px) {
+  .v10-duoend { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .v10-duoend__actions { grid-column: auto; }
+  .v10-duoend__orb { width: 11rem; }
+}
+
+/* ---------- Wertekarten (.v10-values > .v10-value) ---------- */
+.v10-values { display: grid; gap: var(--v10-s3); }
+@media (min-width: 750px) { .v10-values { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--v10-s4); } }
+.v10-value { display: grid; gap: var(--v10-s3); align-content: start; padding: var(--v10-s5); border-radius: var(--r-card); background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
+.v10-value .card__icon { margin-bottom: var(--v10-s1); }
+.v10-value p { margin: 0; color: var(--ink-mid); font-size: 0.94rem; }
+
+/* ---------- Sicher entscheiden (.v10-trust): Garantie + Belege + Trusted Shops ---------- */
+.v10-trust__grid { display: grid; gap: var(--v10-s3); }
+.v10-trust .v10-guarantee { align-content: center; }
+.v10-trust .v10-stats { align-content: stretch; }
+.v10-trust .v10-ts--strip { margin-top: var(--v10-s3); }
+@media (min-width: 990px) {
+  .v10-trust__grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: var(--v10-s4); align-items: stretch; }
+  .v10-trust .v10-guarantee { padding: var(--v10-s6); }
+}
+
+/* ---------- Kaufleiste (ib7 .sticky-buy) auch ab 990 als Pille rechts ---------- */
+.sticky-buy.v10-buybar > div { min-width: 0; }
+/* Handy: Bild 40 px und engere Abstände, damit der Produktname neben dem Button Platz hat (Mobile-Review) */
+.sticky-buy.v10-buybar { grid-template-columns: 2.5rem minmax(0, 1fr) auto; gap: 0.6rem; }
+.sticky-buy.v10-buybar img { width: 2.5rem; height: 2.5rem; }
+@media (min-width: 750px) { .sticky-buy.v10-buybar { grid-template-columns: 3rem minmax(0, 1fr) auto; gap: 0.75rem; } .sticky-buy.v10-buybar img { width: 3rem; height: 3rem; } }
+/* Name darf bei 320 px auf 2 Zeilen umbrechen statt "Das Per..." (Mobile-Review), ab 375 px passt er in eine Zeile */
+.sticky-buy.v10-buybar .sticky-buy__name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; line-height: 1.15; overflow-wrap: anywhere; }
+.sticky-buy.v10-buybar .num { white-space: nowrap; }
+.sticky-buy.v10-buybar .price__was { display: none; }
+.sticky-buy.v10-buybar .btn { padding: 0 1rem; font-size: 0.85rem; }
+@media (min-width: 750px) { .sticky-buy.v10-buybar .price__was { display: inline; } }
+@media (min-width: 990px) { .sticky-buy.v10-buybar { display: grid; left: auto; right: 1.5rem; bottom: 1.5rem; width: 26rem; } }
+/* Mobile-Review: is-off (aus v10.js) = Footer oder ein Formular im Bild bzw. ein Eingabefeld fokussiert, dann weicht
+   die Leiste aus und verdeckt weder Newsletter, Rechner, Kontaktformular noch die letzten Footer-Zeilen.
+   Unsichtbar = nicht fokussierbar (visibility), Ausblenden erst nach der Bewegung. */
+.sticky-buy.v10-buybar.is-off { transform: translateY(150%); }
+.sticky-buy.v10-buybar:not(.is-visible), .sticky-buy.v10-buybar.is-off { visibility: hidden; transition: transform 0.45s var(--ease), visibility 0s linear 0.45s; }
+
+/* ---------- Entwurfs-Notizen ---------- */
+.v10-note { display: none; }
+.v10-notes-on .v10-note { display: block; margin-top: var(--v10-s3); padding: 0.6rem 0.8rem; border-radius: var(--r-small); border: 1px dashed var(--blue); background: var(--paper); color: var(--ink-mid); font-size: var(--v10-t-micro); line-height: 1.45; max-width: 42rem; text-align: left; }
+.v10-notes-btn { position: fixed; left: var(--v10-s4); bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px)); z-index: 36; min-height: var(--v10-touch); padding: 0 var(--v10-s4); border-radius: var(--v10-r-ctl); border: 1px dashed var(--blue-deep); background: var(--paper); color: var(--blue-deep); font-family: var(--font-display); font-size: 0.8rem; cursor: pointer; }
+.v10-notes-btn[aria-pressed="true"] { background: var(--blue-deep); color: var(--paper); border-style: solid; }
+/* Handy/Tablet (Mobile-Review): runder 44-px-Knopf "i" am rechten Rand über der Kaufleiste statt Pille über dem Text.
+   Der Text bleibt als zugänglicher Name erhalten. Ab 990 px wieder die Pille unten links. */
+.v10-notes-btn { left: auto; right: var(--v10-s2); width: var(--v10-touch); height: var(--v10-touch); padding: 0; display: grid; place-items: center; font-size: 0; }
+.v10-notes-btn::before { content: 'i'; font-family: var(--font-display); font-size: 1rem; font-style: italic; line-height: 1; }
+@media (min-width: 990px) {
+  .v10-notes-btn { left: var(--v10-s5); right: auto; bottom: var(--v10-s5); width: auto; height: auto; padding: 0 var(--v10-s4); display: inline-block; font-size: 0.8rem; }
+  .v10-notes-btn::before { content: none; }
+}
+/* Mobile-Review 2: v10.js setzt den Knopf in den Header (links neben den Warenkorb), dort verdeckt er nie Inhalte.
+   Ohne JS bleibt er unten fixiert (dann gibt es ohnehin keine Notizen). */
+.header .v10-notes-btn--header { position: static; flex: none; width: var(--v10-touch); height: var(--v10-touch); margin-right: var(--v10-s2); padding: 0; display: grid; place-items: center; font-size: 0; }
+.header .v10-notes-btn--header::before { content: 'i'; }
+
+/* ---------- Mobile-Review 12.10.2026: Touch-Ziele und Mindestgröße der Schrift in Header, Menü und Footer (ib7.js) ---------- */
+.header__logo { display: inline-flex; align-items: center; min-height: var(--v10-touch); }
+.footer__col a { min-height: var(--v10-touch); min-width: var(--v10-touch); }
+.pay-icons span, .menu-product small { font-size: 0.75rem; }
+
+/* ---------- Musterseite ---------- */
+.v10-sys__label { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; align-items: baseline; padding: var(--v10-s3) 0; margin-bottom: var(--v10-s4); border-bottom: 1px dashed var(--blue); font-size: var(--v10-t-micro); color: var(--ink-mid); }
+.v10-sys__label code { font-size: var(--v10-t-micro); color: var(--blue-deep); overflow-wrap: anywhere; }
+.v10-sys__swatches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v10-s2); }
+@media (min-width: 750px) { .v10-sys__swatches { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.v10-sys__swatch { display: grid; align-content: end; min-height: 6rem; padding: var(--v10-s3); border-radius: var(--r-small); box-shadow: inset 0 0 0 1px var(--line); font-size: var(--v10-t-micro); }
+
+/* ---------- Reduzierte Bewegung ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .v10-marquee__track { animation: none; flex-wrap: wrap; width: auto; }
+  .v10-marquee__group { flex-wrap: wrap; row-gap: 0.5rem; padding-inline: var(--gutter); }
+  .v10-marquee__group[aria-hidden="true"], .v10-marquee__toggle { display: none; }
+  .v10-js [data-reveal] { opacity: 1; transform: none; }
+  .v10-cap, .v10-pcard__media img, .v10-spot__media img, .v10-xcard, .v10-xcard > img { transition: none; }
+}
+
+/* =====================================================================
+   v9-Block (Runde 3, LAB46 und POUCH): Versalien-Mikrotypo, Szenen; Rundungen setzt der v10-Block unten
+   Alles ab hier ist neu oder überschreibt die aus v8 übernommenen Grundregeln.
+   ===================================================================== */
+:root {
+  --v10-caps: 0.75rem;                                  /* Versalien-Mikrotypo, nie kleiner (12 px) */
+  --v10-caps-track: 0.14em;
+  --v10-t-name: clamp(2rem, 1.45rem + 2.4vw, 3.4rem);   /* Produktname PDP */
+  --v10-t-ingr: clamp(2.1rem, 1.2rem + 4vw, 4.75rem);   /* Wirkstoff-Namen in der Vollbild-Szene */
+  --v10-t-card: clamp(1.6rem, 1.3rem + 1.3vw, 2.4rem);  /* Kartentitel Stapel */
+  --v10-t-manifest: clamp(1.45rem, 1.1rem + 1.6vw, 2.35rem);
+  --v10-slate: color-mix(in srgb, var(--blue) 30%, var(--blue-deep));   /* LAB46-Schieferblau. 30 statt 45 % Blue (Mobile-Review 2): Brotkrumen, Kicker und Lead (12 bis 17 px) erreichen so 4,9:1 statt 4,2:1 */
+  --v10-tone-1: var(--blue-deep);
+  --v10-tone-2: color-mix(in srgb, var(--blue) 62%, var(--blue-deep));
+  --v10-tone-3: color-mix(in srgb, var(--blue-deep) 55%, var(--night));
+  --v10-glass-line: color-mix(in srgb, var(--on-night) 22%, transparent);
+  --v10-bar-h: 4.25rem;
+}
+
+/* ---------- Typo: Poppins Light trägt die Eleganz, Versalien mit Laufweite als Gegenpol ---------- */
+.v10-caps { font-family: var(--font-display); font-size: var(--v10-caps); font-weight: 500; letter-spacing: var(--v10-caps-track); text-transform: uppercase; line-height: 1.4; }
+.v10 .v10-kicker { font-size: var(--v10-caps); letter-spacing: var(--v10-caps-track); }
+.v10-kicker--rule { display: block; padding-bottom: var(--v10-s3); border-bottom: 1px solid currentColor; }
+.v10 :is(.v10-h1, .v10-h2, .v10-display) { font-weight: 300; letter-spacing: -0.03em; }
+.v10 :is(.v10-display, .v10-h1, .v10-h2, .v10-statement__text) em { font-style: normal; font-weight: 300; }
+
+/* ---------- Buttons (Runde 3, Form überschreibt der v10-Block) ---------- */
+.btn { border-radius: 0; min-height: 3.25rem; padding: 0 1.6rem; font-size: 0.78rem; font-weight: 500; letter-spacing: var(--v10-caps-track); text-transform: uppercase; }
+.btn--frame { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+@media (hover: hover) { .btn--frame:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); } }
+.btn--frame-light { background: transparent; color: var(--paper); border: 1px solid color-mix(in srgb, var(--paper) 70%, transparent); }
+@media (hover: hover) { .btn--frame-light:hover { background: var(--paper); color: var(--blue-deep); } }
+.v10 .link { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.v10 .v10-tag { border-radius: var(--v10-r-tag); }
+.v10 .v10-price__save { border-radius: var(--v10-r-tag); }
+
+/* =====================================================================
+   1 LAB46-PDP-Kopf: Bild randlos links, schlichte Buy-Box rechts
+   ===================================================================== */
+.v10-pdp { background: var(--paper); }
+.v10-pdp__grid { display: grid; }
+.v10-pdp__media { position: relative; min-width: 0; background: var(--porcelain); }
+.v10-pdp__buy { padding: var(--v10-s3) var(--gutter) var(--v10-s7); min-width: 0; } /* Handy oben 12 px statt 24 px (Mobile-Review 2) */
+@media (min-width: 750px) { .v10-pdp__buy { padding-top: var(--v10-s5); } }
+@media (min-width: 990px) {
+  .v10-pdp__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+  .v10-pdp__media { position: sticky; top: var(--header-h); height: calc(100vh - var(--header-h)); }
+  .v10-pdp__buy { padding: clamp(2rem, 4vw, 4rem) var(--gutter) var(--v10-s8) clamp(2rem, 4vw, 4.5rem); max-width: 44rem; }
+}
+/* Galerie im PDP-Kopf: keine Karte, keine Rundung; Handy wischbar mit Punkten; --thumbs: POUCH-Thumbnails senkrecht */
+.v10-pdp .v10-gallery { gap: 0; height: 100%; }
+.v10-pdp .v10-gallery__track { border-radius: 0; background: var(--porcelain); height: 100%; }
+/* Handy 1:1 (Regel art-direction-v1: Galerie 1:1), damit Name und Bewertung auf dem 1. Bildschirm stehen; ab 750 4:5 (Mobile-Review 2) */
+.v10-pdp .v10-gallery__slide { aspect-ratio: 1; background: var(--porcelain); }
+@media (min-width: 750px) { .v10-pdp .v10-gallery__slide { aspect-ratio: 4 / 5; } }
+.v10-pdp .v10-gallery__slide--contain img { padding: 10%; }
+.v10-pdp .v10-gallery__dots { position: absolute; left: 0; right: 0; bottom: 0; }
+.v10-gallery__count { position: absolute; right: var(--gutter); top: var(--v10-s4); z-index: 2; font-family: var(--font-display); font-size: var(--v10-caps); letter-spacing: var(--v10-caps-track); color: var(--ink-mid); font-variant-numeric: tabular-nums; }
+@media (min-width: 990px) {
+  .v10-pdp .v10-gallery { display: block; position: static; }
+  .v10-pdp .v10-gallery__track { height: 100%; }
+  .v10-pdp .v10-gallery__slide { aspect-ratio: auto; height: 100%; max-height: none; }
+  .v10-pdp .v10-gallery__dots { display: flex; }
+  .v10-pdp .v10-gallery--thumbs .v10-gallery__thumbs { position: absolute; left: var(--v10-s4); top: var(--v10-s4); z-index: 2; display: grid; max-height: calc(100% - 2rem); }
+  .v10-pdp .v10-gallery--thumbs .v10-gallery__thumbs button { width: 4.25rem; border-radius: 0; background: var(--paper); }
+  .v10-pdp .v10-gallery--thumbs .v10-gallery__dots { display: none; }
+}
+.v10-pdp .v10-gallery__dots button::before { background: color-mix(in srgb, var(--ink) 25%, transparent); }
+.v10-pdp .v10-gallery__dots button[aria-current="true"]::before { background: var(--ink); }
+
+.v10-buyx { display: grid; gap: var(--v10-s4); align-content: start; }
+.v10-buyx__tag { justify-self: start; display: inline-flex; align-items: center; min-height: 1.5rem; padding: 0 0.55rem; border-radius: var(--v10-r-tag); background: var(--porcelain); font-family: var(--font-display); font-size: var(--v10-caps); font-weight: 500; letter-spacing: var(--v10-caps-track); text-transform: uppercase; color: var(--ink-mid); }
+.v10-buyx__name { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: var(--v10-t-name); line-height: 1.05; letter-spacing: -0.03em; }
+.v10-buyx__rating { display: inline-flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; min-height: var(--v10-touch); padding-bottom: var(--v10-s3); border-bottom: var(--v10-hair); color: var(--ink-mid); font-size: var(--v10-t-small); text-decoration: none; }
+.v10-buyx__rating .stars svg { width: 0.9rem; height: 0.9rem; }
+.v10-buyx__sub { margin: 0; font-weight: 700; color: var(--ink); }
+.v10-buyx__text { margin: 0; color: var(--ink-mid); max-width: 40ch; }
+.v10-proofs { display: flex; flex-wrap: wrap; align-items: center; gap: 0 0.75rem; margin: 0; padding: 0; list-style: none; font-size: var(--v10-t-small); }
+.v10-proofs li { margin: 0; display: inline-flex; align-items: center; gap: 0.75rem; }
+.v10-proofs li + li::before { content: ''; width: 1px; height: 0.9rem; background: var(--line); }
+.v10-proofs a { display: inline-flex; align-items: center; min-height: var(--v10-touch); color: var(--blue-deep); text-decoration: none; }
+@media (hover: hover) { .v10-proofs a:hover { text-decoration: underline; text-underline-offset: 0.2em; } }
+/* Größen- und Set-Zeilen mit Haarlinien (LAB46 "50 ml ...... 39,99 €") */
+.v10-sizes { border: 0; margin: 0; padding: 0; min-width: 0; }
+.v10-sizes legend { padding: 0; margin-bottom: var(--v10-s2); }
+.v10-size { position: relative; display: grid; grid-template-columns: 1.1rem minmax(0, 1fr) auto; gap: var(--v10-s3); align-items: center; min-height: 3.5rem; padding: 0.6rem 0; border-top: var(--v10-hair); cursor: pointer; }
+.v10-size:last-of-type { border-bottom: var(--v10-hair); }
+.v10-size input { width: 1rem; height: 1rem; margin: 0; accent-color: var(--blue-deep); }
+.v10-size__name { font-size: 0.95rem; }
+.v10-size__name small { display: block; font-size: var(--v10-t-micro); color: var(--ink-mid); }
+.v10-size__price { font-variant-numeric: tabular-nums; text-align: right; font-size: 0.95rem; }
+.v10-size__price s { display: block; font-size: var(--v10-t-micro); color: var(--ink-mid); }
+.v10-size:has(input:checked) .v10-size__name { font-weight: 700; }
+.v10-size__flag { margin-left: 0.5rem; padding: 0.1rem 0.45rem; border-radius: var(--v10-r-tag); background: var(--mist); color: var(--blue-deep); font-size: var(--v10-t-micro); font-weight: 700; white-space: nowrap; }
+.v10-buyx__cta { display: grid; gap: var(--v10-s2); }
+.v10-buyx__cta .btn { width: 100%; min-height: 3.5rem; }
+.v10-buyx__meta { margin: 0; text-align: center; font-size: var(--v10-t-micro); color: var(--ink-mid); }
+.v10-stock { display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin: 0; font-size: var(--v10-t-micro); color: var(--ink-mid); }
+.v10-stock::before { content: ''; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--blue); }
+.v10-express { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v10-s2); }
+.v10-express span { display: grid; place-items: center; min-height: 3rem; border: 1px dashed var(--ink-mid); color: var(--ink-mid); font-size: var(--v10-t-micro); text-align: center; padding: 0 0.5rem; }
+/* Akkordeon mit Versalien-Titeln und Haarlinien (Buy-Box, FAQ) */
+.v10-acc { border-top: var(--v10-hair); }
+.v10-acc details { border-bottom: var(--v10-hair); }
+.v10-acc summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--v10-s4); min-height: 3.25rem; padding-block: 0.7rem; cursor: pointer; font-family: var(--font-display); font-size: var(--v10-caps); font-weight: 500; letter-spacing: var(--v10-caps-track); text-transform: uppercase; }
+.v10-acc summary::-webkit-details-marker { display: none; }
+.v10-acc summary::after { content: ''; flex: none; width: 0.55rem; height: 0.55rem; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-25%) rotate(45deg); transition: transform var(--v10-d2) var(--v10-ease); }
+.v10-acc details[open] summary::after { transform: translateY(15%) rotate(-135deg); }
+.v10-acc__body { padding: 0 0 var(--v10-s4); color: var(--ink-mid); font-size: 0.95rem; }
+.v10-acc__body p { margin: 0; }
+.v10-acc__body p + p { margin-top: 0.6rem; }
+.v10-acc--plus summary::after { display: none; }
+.v10-acc--plus summary i { position: relative; flex: none; width: 0.9rem; height: 0.9rem; }
+.v10-acc--plus summary i::before, .v10-acc--plus summary i::after { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1.5px; background: currentColor; transform: translateY(-50%); transition: transform var(--v10-d2) var(--v10-ease); }
+.v10-acc--plus summary i::after { transform: translateY(-50%) rotate(90deg); }
+.v10-acc--plus details[open] summary i::after { transform: translateY(-50%) rotate(0deg); }
+.v10-upsell { display: grid; grid-template-columns: 4rem minmax(0, 1fr) auto; gap: var(--v10-s3); align-items: center; padding: var(--v10-s3); background: var(--mist); color: var(--ink); text-decoration: none; }
+.v10-upsell img { width: 4rem; height: 4rem; object-fit: contain; background: var(--paper); }
+.v10-upsell strong { display: block; font-family: var(--font-display); font-weight: 500; font-size: 0.95rem; }
+.v10-upsell span { font-size: var(--v10-t-small); color: var(--ink-mid); }
+
+/* =====================================================================
+   2 Inhaltsstoff-Vollbild-Szene (LAB46 "UNSERE INHALTSSTOFFE"), blaue Duotone
+   ===================================================================== */
+.v10-ingr { --n: 4; position: relative; background: var(--night); color: var(--paper); }
+.v10-ingr__stage { position: relative; isolation: isolate; overflow: hidden; min-height: 100svh; display: grid; grid-template-rows: auto 1fr auto; }
+.v10-ingr__shots { position: absolute; inset: 0; z-index: -1; }
+/* Duotone: Graustufen-Foto mit mix-blend-mode luminosity über flacher Blaufläche, dann flache Abdunklung. Kein Verlauf. */
+.v10-tone { position: absolute; inset: 0; margin: 0; isolation: isolate; background: var(--tone, var(--v10-tone-1)); opacity: 0; transition: opacity 700ms var(--v10-ease); }
+.v10-tone img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.05) brightness(0.72); mix-blend-mode: luminosity; transform: scale(1.04); transition: transform 1600ms var(--v10-ease); }
+.v10-tone::after { content: ''; position: absolute; inset: 0; background: color-mix(in srgb, var(--night) 56%, transparent); }
+.v10-tone.is-on { opacity: 1; }
+.v10-tone.is-on img { transform: none; }
+.v10-tone--2 { --tone: var(--v10-tone-2); }
+.v10-tone--3 { --tone: var(--v10-tone-3); }
+.v10-ingr__head { padding-top: var(--v10-s6); }
+.v10-ingr__head .v10-kicker { color: var(--paper); }
+.v10-ingr__list { list-style: none; margin: 0; padding: var(--v10-s5) 0 0; display: grid; gap: 0; counter-reset: v10ingr; }
+.v10-ingr__item { margin: 0; display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); align-items: baseline; counter-increment: v10ingr; }
+.v10-ingr__item::before { content: counter(v10ingr, decimal-leading-zero); font-family: var(--font-display); font-size: var(--v10-caps); letter-spacing: 0.08em; font-variant-numeric: tabular-nums; color: var(--on-night); }
+.v10-ingr__name { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 0.15rem 0.85rem; min-height: var(--v10-touch); padding: 0.1rem 0; border: 0; background: none; color: var(--paper); font-family: var(--font-display); font-weight: 200; font-size: var(--v10-t-ingr); line-height: 1.08; letter-spacing: -0.035em; text-align: left; cursor: pointer; transition: opacity var(--v10-d2) var(--v10-ease); }
+.v10-ingr__meta { font-family: var(--font-display); font-weight: 500; font-size: var(--v10-caps); letter-spacing: var(--v10-caps-track); text-transform: uppercase; color: var(--on-night); white-space: normal; } /* Handy darf umbrechen (320 px lief "Moderne Forschung · The Pulse" aus dem Bild), ab 750 einzeilig */
+@media (min-width: 750px) { .v10-ingr__meta { white-space: nowrap; } }
+.v10-ingr__desc { grid-column: 2; margin: 0.35rem 0 var(--v10-s4); max-width: 30rem; color: var(--paper); font-size: 0.98rem; line-height: 1.6; }
+.v10-ingr__desc a { color: var(--paper); text-decoration: underline; text-underline-offset: 0.2em; }
+.v10-ingr__foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--v10-s3); align-items: center; padding-block: var(--v10-s5); }
+.v10-ingr__foot .link { color: var(--paper); }
+/* mit JS (.is-live): Modus scroll gepinnt, je Wirkstoff ein Bildschirm (Handy 70svh), Text unten rechts, aktiver Name voll, andere gedimmt */
+/* Handy: 45svh je Wirkstoff (5 Wirkstoffe = ca. 2,25 Bildschirme, je Bildwechsel ca. ein Daumenwisch), Mobile-Review 2 */
+.v10-ingr--scroll.is-live { height: calc(var(--n) * 45svh); }
+.v10-ingr--scroll.is-live .v10-ingr__stage { position: sticky; top: 0; height: 100svh; }
+/* gedimmt über die Farbe, nicht über opacity: die kleine Versalien-Info bleibt voll lesbar (Kontrast mind. 4,5:1) */
+.v10-ingr.is-live .v10-ingr__name { color: color-mix(in srgb, var(--paper) 62%, transparent); transition: color var(--v10-d2) var(--v10-ease); }
+.v10-ingr.is-live .v10-ingr__item.is-active .v10-ingr__name { color: var(--paper); }
+.v10-ingr.is-live .v10-ingr__desc { grid-column: auto; grid-row: auto; position: absolute; right: var(--gutter); left: var(--gutter); bottom: calc(var(--v10-s7) + 2.75rem); margin: 0; opacity: 0; transform: translateY(0.5rem); transition: opacity var(--v10-d2) var(--v10-ease), transform var(--v10-d2) var(--v10-ease); pointer-events: none; }
+.v10-ingr.is-live .v10-ingr__item.is-active .v10-ingr__desc { opacity: 1; transform: none; pointer-events: auto; }
+.v10-ingr.is-live .v10-ingr__stage { padding-top: var(--header-h); }
+@media (min-width: 990px) {
+  .v10-ingr__head { padding-top: var(--v10-s7); }
+  .v10-ingr__item { grid-template-columns: 4.5rem minmax(0, 1fr); }
+  .v10-ingr--scroll.is-live { height: calc(var(--n) * 100vh); }
+  .v10-ingr.is-live .v10-ingr__desc { left: auto; right: var(--gutter); bottom: calc(var(--v10-s7) + 4.5rem); width: min(26rem, 36vw); } /* über der Kaufleiste */
+}
+/* Kurzform (Startseite): ein Bildschirm, Wechsel per Tipp/Klick/Pfeiltasten */
+.v10-ingr--tap .v10-ingr__stage { min-height: min(100svh, 52rem); }
+
+/* =====================================================================
+   3 Karten-Stapel über Blur-Bild (LAB46 "Sichtbare Aufhellung")
+   ===================================================================== */
+.v10-stack { position: relative; isolation: isolate; overflow: clip; background: var(--night); padding-bottom: var(--v10-s8); } /* clip: Blur-Bild ragt nicht in die nächste Section, Sticky bleibt aktiv */
+.v10-stack__bg { position: sticky; top: 0; height: 100svh; margin-bottom: -100svh; overflow: hidden; z-index: -1; }
+.v10-stack__bg img { width: 100%; height: 100%; object-fit: cover; filter: blur(28px) saturate(0.7); transform: scale(1.15); }
+.v10-stack__bg::after { content: ''; position: absolute; inset: 0; background: color-mix(in srgb, var(--night) 52%, transparent); } /* 52 statt 40 %: weiße Kicker auf hellen Blur-Bildern (PULSE, AURA) erreichen 4,3:1 (Mobile-Review 2) */
+.v10-stack__head { padding-block: var(--v10-s7) var(--v10-s4); color: var(--paper); }
+.v10-stack__head .v10-kicker { color: var(--paper); }
+.v10-stack__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4svh; } /* Mobile-Review 2: Handy kompakt (4svh, Bild 3:2, engere Innenabstände), ab 750 wie entworfen */
+.v10-stack__card { --i: 0; position: sticky; top: calc(var(--header-h) + 1rem + var(--i) * 0.75rem); margin: 0; display: grid; background: var(--paper); color: var(--ink); box-shadow: 0 -1px 0 var(--line); }
+.v10-stack__card:nth-child(2) { --i: 1; } .v10-stack__card:nth-child(3) { --i: 2; } .v10-stack__card:nth-child(4) { --i: 3; }
+.v10-stack__media { margin: 0; aspect-ratio: 3 / 2; overflow: hidden; background: var(--porcelain); }
+.v10-stack__media img { width: 100%; height: 100%; object-fit: cover; }
+.v10-stack__media--contain img { object-fit: contain; padding: 6%; }
+.v10-stack__body { display: grid; gap: var(--v10-s2); align-content: start; padding: var(--v10-s4) var(--v10-s4) var(--v10-s5); }
+.v10-stack__title { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: var(--v10-t-card); line-height: 1.1; letter-spacing: -0.025em; }
+.v10-stack__body p { margin: 0; color: var(--ink-mid); max-width: 38ch; }
+@media (min-width: 750px) {
+  .v10-stack__head { padding-block: var(--v10-s8) var(--v10-s5); }
+  .v10-stack__list { gap: 18vh; }
+  .v10-stack__card { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: min(70vh, 40rem); width: min(100%, 60rem); margin-inline: auto; top: calc(var(--header-h) + 6vh + var(--i) * 1rem); }
+  .v10-stack__media { aspect-ratio: auto; margin: var(--v10-s3) 0 var(--v10-s3) var(--v10-s3); }
+  .v10-stack__body { padding: clamp(2rem, 4vw, 3.5rem); align-content: start; gap: var(--v10-s3); }
+}
+
+/* =====================================================================
+   4 Cross-Sell-Split (LAB46 "Vollende deinen Cycle")
+   ===================================================================== */
+.v10-xs { display: grid; background: var(--paper); }
+.v10-xs__copy { display: grid; gap: var(--v10-s4); align-content: center; padding: var(--v10-section) var(--gutter) var(--v10-s6); min-width: 0; }
+.v10-xs__copy .v10-h2 { max-width: 16ch; }
+.v10-xs__minis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v10-s4); margin-top: var(--v10-s4); max-width: 30rem; }
+.v10-xmini { position: relative; display: grid; gap: 0.4rem; padding-top: var(--v10-s3); border-top: 1px solid var(--ink); }
+.v10-xmini__cat { display: flex; justify-content: space-between; align-items: center; font-family: var(--font-display); font-size: var(--v10-caps); font-weight: 500; letter-spacing: var(--v10-caps-track); text-transform: uppercase; color: var(--ink-mid); }
+.v10-xmini__img { position: relative; aspect-ratio: 1; background: var(--porcelain); overflow: hidden; }
+.v10-xmini__img img { position: absolute; top: 9%; left: 50%; transform: translateX(-50%); height: 82%; width: auto; max-width: none; }
+.v10-xmini__name { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: 1.1rem; letter-spacing: -0.01em; }
+.v10-xmini__name a { color: inherit; text-decoration: none; }
+.v10-xmini__name a::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+.v10-xmini__buy { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; min-height: var(--v10-touch); padding: 0 0 0 0.75rem; border: 1px solid var(--line); font-variant-numeric: tabular-nums; font-size: 0.9rem; }
+.v10-xmini__buy button { width: var(--v10-touch); height: var(--v10-touch); border: 0; border-left: 1px solid var(--line); background: var(--paper); color: var(--blue-deep); display: grid; place-items: center; cursor: pointer; }
+.v10-xmini__buy button svg { width: 1rem; height: 1rem; }
+@media (hover: hover) { .v10-xmini__buy button:hover { background: var(--blue-deep); color: var(--paper); } }
+.v10-xmini--current .v10-xmini__buy { justify-content: flex-start; padding-right: 0.75rem; color: var(--ink-mid); }
+.v10-xs__media { margin: 0; aspect-ratio: 4 / 3; overflow: hidden; background: var(--mist); }
+.v10-xs__media img { width: 100%; height: 100%; object-fit: cover; }
+@media (min-width: 990px) {
+  .v10-xs { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: min(100vh, 56rem); }
+  .v10-xs__copy { padding: var(--v10-s8) clamp(2rem, 5vw, 5rem) var(--v10-s8) max(var(--gutter), calc((100% - var(--wrap)) / 2)); }
+  .v10-xs__media { aspect-ratio: auto; }
+}
+
+/* =====================================================================
+   5 Bewertungs-Block zentriert (LAB46), nur Trusted-Shops-Platzhalter
+   ===================================================================== */
+.v10-revs { background: var(--porcelain); padding-block: var(--v10-section); text-align: center; }
+.v10-revs__head { display: grid; gap: var(--v10-s4); justify-items: center; margin-bottom: var(--v10-head-gap); }
+.v10-revs__line { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: var(--v10-caps); font-weight: 500; letter-spacing: var(--v10-caps-track); text-transform: uppercase; color: var(--ink-mid); }
+.v10-revs__line .stars svg { width: 0.85rem; height: 0.85rem; }
+.v10-revs__title { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: var(--v10-t-h2); line-height: 1.12; letter-spacing: -0.03em; max-width: 20ch; }
+.v10-revs__row { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(15rem, 80%); gap: var(--v10-s3); overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: calc(var(--gutter) * -1); padding: 0 var(--gutter) var(--v10-s2); scrollbar-width: none; text-align: left; }
+.v10-revs__row::-webkit-scrollbar { display: none; }
+.v10-revs__ph { scroll-snap-align: start; display: grid; gap: var(--v10-s2); align-content: start; min-height: 13rem; padding: var(--v10-s4); background: var(--paper); border: 1px dashed var(--blue); color: var(--ink-mid); font-size: var(--v10-t-small); }
+.v10-revs__ph b { font-family: var(--font-display); font-size: var(--v10-caps); letter-spacing: var(--v10-caps-track); text-transform: uppercase; color: var(--blue-deep); }
+@media (min-width: 990px) { .v10-revs__row { grid-auto-flow: row; grid-template-columns: repeat(4, minmax(0, 1fr)); overflow: visible; margin-inline: 0; padding: 0; } }
+
+/* =====================================================================
+   6 Versalien-FAQ (LAB46: zentrierte schmale Liste)
+   ===================================================================== */
+.v10-faqx { display: grid; gap: var(--v10-head-gap); justify-items: center; }
+.v10-faqx__title { margin: 0; text-align: center; font-family: var(--font-display); font-weight: 300; font-size: var(--v10-t-h2); line-height: 1.12; letter-spacing: -0.03em; }
+.v10-faqx .v10-acc { width: min(100%, 48rem); }
+.v10-faqx .v10-acc summary { min-height: 3.75rem; text-align: left; }
+.v10-faqx__more { justify-self: center; }
+
+/* =====================================================================
+   7 Statement-Band (LAB46 "Wir sind LAB46 ..."), 8 zentrierter Text auf Night, 9 Statement mit Inline-Links
+   ===================================================================== */
+.v10-band { background: var(--v10-slate); color: var(--paper); }
+.v10-band__inner { display: grid; align-content: end; min-height: min(70svh, 34rem); padding-block: var(--v10-s8) var(--v10-s7); }
+.v10-band__text { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.75rem, 1.2rem + 2.6vw, 3.6rem); line-height: 1.12; letter-spacing: -0.03em; max-width: 24ch; }
+.v10-band__strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; background: var(--v10-slate); }
+.v10-band__strip img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.v10-manifest { background: var(--night); color: var(--on-night); padding-block: clamp(4.5rem, 3rem + 7vw, 9rem); text-align: center; }
+.v10-manifest__kicker { color: var(--on-night-mid); margin-bottom: var(--v10-s5); display: block; }
+.v10-manifest__text { margin: 0 auto; max-width: 34ch; font-family: var(--font-display); font-weight: 300; font-size: var(--v10-t-manifest); line-height: 1.35; letter-spacing: -0.015em; }
+.v10-manifest__text + .v10-manifest__text { margin-top: var(--v10-s5); }
+.v10-inline { padding-block: clamp(4rem, 3rem + 5vw, 7.5rem); text-align: center; background: var(--paper); }
+.v10-inline__text { margin: 0 auto; max-width: 30ch; font-family: var(--font-display); font-weight: 300; font-size: var(--v10-t-manifest); line-height: 1.6; letter-spacing: -0.015em; } /* Handy 1,6: Links in Folgezeilen liegen nicht aufeinander (Mobile-Review 2) */
+.v10-inline__text a { color: var(--blue-deep); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em; padding-block: 0.12em; }
+@media (min-width: 990px) { .v10-inline__text { line-height: 1.35; } }
+@media (hover: hover) { .v10-inline__text a:hover { color: var(--ink); } }
+
+/* =====================================================================
+   10 Evidenz-Raster (LAB46 "Forschung & Entwicklung") und Studien-Liste
+   ===================================================================== */
+.v10-evx { display: grid; gap: var(--v10-s3); background: var(--porcelain); }
+.v10-evx__aside { display: grid; gap: var(--v10-s4); align-content: start; padding: var(--v10-s6) var(--gutter); background: var(--porcelain); }
+.v10-evx__cards { display: grid; gap: var(--v10-s3); }
+.v10-evx__card { display: grid; background: var(--paper); }
+.v10-evx__card figure { margin: 0; aspect-ratio: 16 / 10; overflow: hidden; background: var(--mist); }
+.v10-evx__card img { width: 100%; height: 100%; object-fit: cover; }
+.v10-evx__body { display: grid; gap: var(--v10-s3); align-content: start; padding: var(--v10-s5); }
+.v10-evx__title { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.4rem, 1.2rem + 0.9vw, 2rem); letter-spacing: -0.02em; }
+.v10-evx__body p { margin: 0; color: var(--ink-mid); max-width: 52ch; }
+@media (min-width: 750px) { .v10-evx__card { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); } .v10-evx__card figure { aspect-ratio: auto; min-height: 16rem; order: 2; } }
+@media (min-width: 990px) {
+  .v10-evx { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); padding: var(--v10-s3); }
+  .v10-evx__aside { position: sticky; top: var(--header-h); padding: var(--v10-s7) clamp(1.5rem, 3vw, 3rem); min-height: calc(100vh - var(--header-h) - 1.5rem); align-content: space-between; }
+  .v10-evx__card figure { min-height: 20rem; }
+}
+.v10-studies { display: grid; gap: var(--v10-s6); }
+.v10-studies__head { display: grid; gap: var(--v10-s4); align-content: start; }
+.v10-studies__head .v10-h2 { max-width: 14ch; }
+.v10-studies__list { display: grid; border: var(--v10-hair); }
+.v10-studies__group { margin: 0; padding: 0.9rem var(--v10-s4); background: var(--porcelain); border-bottom: var(--v10-hair); font-family: var(--font-display); font-size: var(--v10-caps); font-weight: 500; letter-spacing: var(--v10-caps-track); text-transform: uppercase; }
+.v10-studies ol { list-style: none; margin: 0; padding: 0; }
+.v10-studies li { margin: 0; padding: 0.9rem var(--v10-s4); border-bottom: var(--v10-hair); font-size: var(--v10-t-small); color: var(--ink-mid); }
+.v10-studies li:last-child { border-bottom: 0; }
+.v10-studies li i { color: var(--ink); }
+.v10-studies li a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 0.18em; display: inline-flex; align-items: center; min-height: var(--v10-touch); } /* 44 statt 24 px (Mobile-Review 2) */
+@media (min-width: 990px) { .v10-studies { grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr); column-gap: var(--v10-s8); } }
+
+/* =====================================================================
+   11 Produktions-Vollbild (LAB46 Maschinen), sanfter Zoom beim Durchscrollen
+   ===================================================================== */
+.v10-full { position: relative; isolation: isolate; overflow: hidden; height: 72svh; min-height: 22rem; background: var(--night); color: var(--paper); --v10-p: 1; }
+.v10-full img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; transform: scale(calc(1.1 - var(--v10-p) * 0.1)); }
+.v10-full::after { content: ''; position: absolute; inset: 0; z-index: -1; background: color-mix(in srgb, var(--night) 40%, transparent); } /* 40 statt 22 % plus weicher Schatten: weiße Schrift auf hellen Fotos (Mobile-Review 2) */
+.v10-full__cap { position: absolute; left: var(--gutter); bottom: var(--v10-s5); right: var(--gutter); max-width: 34rem; display: grid; gap: var(--v10-s2); text-shadow: 0 1px 2px color-mix(in srgb, var(--night) 55%, transparent), 0 0 1.5rem color-mix(in srgb, var(--night) 45%, transparent); }
+.v10-full__cap p { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.2rem, 1rem + 1vw, 1.75rem); line-height: 1.25; }
+@media (min-width: 990px) { .v10-full { height: 100vh; } }
+
+/* =====================================================================
+   12 Glas-Vergleich über Foto (POUCH "Sip vs Drip")
+   ===================================================================== */
+.v10-glass { position: relative; isolation: isolate; overflow: hidden; background: var(--night); color: var(--on-night); padding-block: var(--v10-section); }
+.v10-glass__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+.v10-glass::before { content: ''; position: absolute; inset: 0; z-index: -1; background: color-mix(in srgb, var(--night) 50%, transparent); }
+.v10-glass__grid { display: grid; gap: var(--v10-s6); }
+.v10-glass__head { display: grid; gap: var(--v10-s4); align-content: start; justify-items: start; }
+.v10-glass__head .v10-h2 { color: var(--paper); }
+.v10-gtable { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; font-size: var(--v10-t-small); }
+.v10-gtable col.v10-gtable__label { width: 36%; } /* Handy 36 statt 40 %: "Cocktail" passt bei 320 px in die Spalte (Mobile-Review 2) */
+@media (min-width: 750px) { .v10-gtable col.v10-gtable__label { width: 40%; } }
+.v10-gtable th, .v10-gtable td { padding: 0.9rem 0.6rem; border-bottom: 1px solid var(--v10-glass-line); text-align: left; vertical-align: top; overflow-wrap: anywhere; hyphens: auto; }
+.v10-gtable thead th { overflow-wrap: normal; hyphens: manual; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.2rem, 0.95rem + 1.6vw, 2.4rem); letter-spacing: -0.02em; line-height: 1; padding-block: var(--v10-s5) var(--v10-s4); color: var(--paper); }
+.v10-gtable tbody th { padding-left: 0; font-family: var(--font-display); font-size: var(--v10-caps); font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--on-night); }
+.v10-gtable .is-ib7 { background: color-mix(in srgb, var(--paper) 10%, transparent); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); color: var(--paper); border-left: 1px solid var(--v10-glass-line); border-right: 1px solid var(--v10-glass-line); }
+.v10-gtable thead .is-ib7 { border-top: 1px solid var(--v10-glass-line); }
+.v10-gtable td:not(.is-ib7) { color: var(--on-night-mid); }
+.v10-gtable tfoot td { border-bottom: 0; padding-top: var(--v10-s4); }
+.v10-gtable tfoot .is-ib7 { border-bottom: 1px solid var(--v10-glass-line); font-family: var(--font-display); font-size: var(--v10-caps); letter-spacing: var(--v10-caps-track); text-align: right; }
+.v10-gtable svg { width: 1rem; height: 1rem; margin-right: 0.3rem; vertical-align: -0.15rem; color: var(--paper); }
+.v10-glass__fn { margin: 0; font-size: var(--v10-t-micro); color: var(--on-night); max-width: 40rem; }
+@media (min-width: 750px) { .v10-gtable th, .v10-gtable td { padding-inline: 1rem; } .v10-gtable { font-size: 0.95rem; } }
+@media (min-width: 990px) { .v10-glass { min-height: 100vh; display: grid; align-content: center; } .v10-glass__grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); column-gap: var(--v10-s8); align-items: center; } }
+
+/* =====================================================================
+   13 Wort-Reihe mit Aufleuchten (POUCH "focused energized health")
+   ===================================================================== */
+.v10-words { padding-block: var(--v10-section); background: var(--paper); }
+.v10-words__row { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.1em 0.45em; font-family: var(--font-display); font-weight: 300; font-size: clamp(2.1rem, 1.2rem + 4.2vw, 5.5rem); line-height: 1.08; letter-spacing: -0.035em; }
+.v10-words__row li { margin: 0; color: var(--ink); transition: color var(--v10-d3) var(--v10-ease); }
+.v10-words.is-live .v10-words__row li { color: color-mix(in srgb, var(--ink) 16%, var(--paper)); }
+.v10-words.is-live .v10-words__row li.is-on { color: var(--ink); }
+.v10-words.is-live .v10-words__row li.is-on:last-child { color: var(--blue-text); }
+.v10-words__foot { display: flex; flex-wrap: wrap; gap: var(--v10-s3) var(--v10-s6); align-items: baseline; margin-top: var(--v10-s6); padding-top: var(--v10-s4); border-top: var(--v10-hair); }
+.v10-words__foot p { margin: 0; color: var(--ink-mid); max-width: 44ch; }
+
+/* =====================================================================
+   14 Gründerzitat-Band (POUCH, Tiefblau)
+   ===================================================================== */
+.v10-founder { background: var(--blue-deep); color: var(--paper); padding-block: clamp(4.5rem, 3rem + 6vw, 9rem); }
+.v10-founder__grid { display: grid; gap: var(--v10-s5); }
+.v10-founder blockquote { margin: 0; }
+.v10-founder__text { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.6rem, 1.15rem + 2.2vw, 3.1rem); line-height: 1.22; letter-spacing: -0.025em; max-width: 26ch; }
+.v10-founder__by { display: flex; gap: var(--v10-s3); align-items: center; margin-top: var(--v10-s6); font-size: var(--v10-t-small); color: var(--on-night); }
+.v10-founder__by img { width: 3.5rem; height: 3.5rem; border-radius: 50%; object-fit: cover; }
+.v10-founder__by b { display: block; font-family: var(--font-display); font-weight: 500; color: var(--paper); }
+.v10-founder .v10-kicker { color: var(--on-night); }
+
+/* =====================================================================
+   15 Akkordeon neben Bild (POUCH "Nachhaltigkeit")
+   ===================================================================== */
+.v10-accimg { display: grid; background: var(--porcelain); }
+.v10-accimg__media { margin: 0; aspect-ratio: 4 / 5; overflow: hidden; background: var(--mist); }
+.v10-accimg__media img { width: 100%; height: 100%; object-fit: cover; }
+.v10-accimg__copy { display: grid; gap: var(--v10-s5); align-content: space-between; padding: var(--v10-s7) var(--gutter); min-width: 0; }
+.v10-accimg__copy .v10-h2 { max-width: 16ch; }
+@media (min-width: 750px) { .v10-accimg__media { aspect-ratio: 16 / 10; } }
+@media (min-width: 990px) {
+  .v10-accimg { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: min(100vh, 52rem); }
+  .v10-accimg__media { aspect-ratio: auto; }
+  .v10-accimg__copy { padding: var(--v10-s8) max(var(--gutter), calc((100% - var(--wrap)) / 2)) var(--v10-s8) clamp(2rem, 5vw, 5rem); }
+  .v10-accimg--rev .v10-accimg__media { order: 2; }
+}
+
+/* =====================================================================
+   16 Collection-Hero (POUCH "Find Your POUCH") und Raster mit farbigen Tags
+   ===================================================================== */
+.v10-chero { position: relative; isolation: isolate; overflow: hidden; background: var(--blue-deep); color: var(--paper); }
+.v10-chero__media { margin: 0; aspect-ratio: 16 / 11; overflow: hidden; }
+.v10-chero__media img { width: 100%; height: 100%; object-fit: cover; }
+.v10-chero__inner { display: grid; gap: var(--v10-s5); padding-block: var(--v10-s5) var(--v10-s6); }
+.v10-chero__title { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: clamp(2.4rem, 1.5rem + 4.4vw, 6rem); line-height: 1; letter-spacing: -0.04em; }
+.v10-chero__lead { margin: 0; max-width: 34rem; color: var(--on-night); }
+.v10-chero .v10-specs li { color: var(--paper); }
+.v10-chero .v10-crumbs, .v10-chero .v10-crumbs a { color: var(--on-night); }
+@media (min-width: 990px) {
+  .v10-chero { min-height: min(46rem, 82vh); display: grid; align-items: end; }
+  .v10-chero__media { position: absolute; inset: 0; z-index: -2; aspect-ratio: auto; }
+  .v10-chero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: color-mix(in srgb, var(--night) 30%, transparent); }
+  .v10-chero__inner { grid-template-columns: minmax(0, 1fr) minmax(0, 20rem); align-items: end; padding-block: var(--v10-s9) var(--v10-s7); }
+}
+/* farbige Tags in der Blau-Skala (POUCH: Geschmack farbig) */
+.v10 .v10-tag--deep { background: var(--blue-deep); color: var(--paper); }
+.v10 .v10-tag--blue { background: var(--blue); color: var(--night); }
+.v10 .v10-tag--mist { background: var(--mist); color: var(--blue-deep); }
+.v10 .v10-tag--paper { background: var(--paper); color: var(--ink-mid); box-shadow: inset 0 0 0 1px var(--line); }
+.v10 .v10-pcard { box-shadow: none; border: var(--v10-hair); }
+.v10 .v10-pcard__media { background: var(--porcelain); }
+@media (hover: hover) { .v10 .v10-pcard:hover .v10-pcard__media { background: var(--mist); } }
+
+/* ---------- Kaufleiste (Runde 3, Form überschreibt der v10-Block) ---------- */
+.sticky-buy.v10-buybar { left: 0; right: 0; bottom: 0; border-radius: 0; padding: 0.5rem var(--gutter) calc(0.5rem + env(safe-area-inset-bottom, 0px)); box-shadow: 0 -1px 0 var(--line); grid-template-columns: 2.75rem minmax(0, 1fr) auto; }
+.sticky-buy.v10-buybar img { border-radius: 0; width: 2.75rem; height: 2.75rem; }
+.sticky-buy.v10-buybar.is-off { transform: translateY(150%); }
+@media (min-width: 990px) { .sticky-buy.v10-buybar { left: auto; right: 1.5rem; bottom: 1.5rem; width: 26rem; padding: 0.6rem; box-shadow: 0 0 0 1px var(--line), var(--shadow); } }
+.v10-notes-btn { border-radius: 0; }
+
+/* ---------- reduzierte Bewegung ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .v10-tone, .v10-tone img, .v10-words__row li, .v10-full img { transition: none; }
+  .v10-full img { transform: none; }
+}
+.sticky-buy.v10-buybar .btn { font-size: 0.72rem; letter-spacing: 0.1em; padding: 0 0.9rem; min-height: 2.9rem; }
+/* Mobile-Review 2: bei 320 px passte der Preis nicht neben den Button (59 px Inhalt in 56 px Spalte) */
+.sticky-buy.v10-buybar { column-gap: 0.5rem; }
+.sticky-buy.v10-buybar .btn { padding-inline: 0.75rem; }
+@media (min-width: 750px) { .sticky-buy.v10-buybar { column-gap: 0.75rem; } .sticky-buy.v10-buybar .btn { padding-inline: 0.9rem; } }
+
+/* =====================================================================
+   v10 POUCH (Runde 4): rund wie v8, Elementstil wie POUCH (gemessen auf drinkpouch.com, 1440 und 390 px)
+   Proportionen, Abstände, Typo-Hierarchie, Labels, Karten, Tags, Buttons, Panels nach POUCH.
+   Alles ab hier überschreibt die übernommenen Regeln. Abgleich: design/plan/art-direction-v3.md
+   ===================================================================== */
+:root {
+  --r-card: 1.5rem; --r-media: 1.25rem; --r-small: 0.75rem;    /* rund wie v8 (Wunsch Daniel) */
+  --v10-r-ctl: var(--r-pill);                                    /* Buttons, Chips, Felder: Pille */
+  --v10-r-tag: 0.375rem;                                         /* Tags gefüllt, leicht gerundet (POUCH 4 px) */
+  --v10-r-box: 0.75rem;                                          /* Optionsboxen, Stepper, Plus-Box-Rahmen */
+  --v10-inset: clamp(0.5rem, 0.2rem + 1.5vw, 1.75rem);           /* eingerückte Panels (POUCH 23 bis 30 px) */
+  --v10-label-size: 0.75rem;                                     /* POUCH Matter Mono 11 bis 12 px */
+  --v10-label-track: 0.08em;
+  --v10-muted: color-mix(in srgb, var(--blue-deep) 62%, var(--porcelain));   /* POUCH Statement-Grau-Blau, groß mind. 3:1 */
+  --v10-sky: color-mix(in srgb, var(--blue) 38%, var(--paper));
+  --v10-t-h2: clamp(1.9rem, 1.45rem + 1.9vw, 3.5rem);            /* POUCH Serif 36 bis 56 px, bei uns Poppins Light */
+  --v10-t-h3: clamp(1.15rem, 1.05rem + 0.4vw, 1.4rem);
+  --v10-t-q: clamp(1.02rem, 0.98rem + 0.25vw, 1.15rem);          /* POUCH FAQ-Frage 18 px */
+  --v10-plus: 1.75rem;                                           /* sichtbare Plus-Box, Ziel 44 px */
+  --v10-bar-h: 4.25rem;
+}
+
+/* ---------- Grundton: kühles Porcelain statt POUCH-Off-White (CI: nie Beige) ---------- */
+.v10 { background: var(--porcelain); }
+.v10 :is(.v10-h1, .v10-h2) em, .v10 .v10-display em { color: var(--blue-text); }
+.v10 .v10-h2 { font-size: var(--v10-t-h2); line-height: 1.12; letter-spacing: -0.03em; }
+
+/* ---------- Section-Label "01 / NAME" (POUCH Matter Mono, bei uns Poppins Versalien tabular) ---------- */
+.v10-label { display: inline-flex; gap: 0.45em; align-items: baseline; font-family: var(--font-display); font-size: var(--v10-label-size); font-weight: 400; letter-spacing: var(--v10-label-track); text-transform: uppercase; font-variant-numeric: tabular-nums; color: var(--ink); line-height: 1.6; }
+.v10-label b { font-weight: 400; }
+.v10-label--light { color: var(--paper); }
+.v10 .v10-kicker, .v10 .v10-caps { font-weight: 400; letter-spacing: var(--v10-label-track); font-variant-numeric: tabular-nums; }
+
+/* ---------- Buttons: Pille (v8), Beschriftung wie POUCH (Versalien 12 px, Pfeil schräg) ---------- */
+.btn { border-radius: var(--r-pill); min-height: 2.875rem; padding: 0 1.3rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
+.btn .v10-arr, .link .v10-arr { width: 0.6em; height: 0.6em; }
+.v10-arr { position: relative; display: inline-block; flex: none; width: 0.65em; height: 0.65em; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; }
+.v10-arr::before { content: ''; position: absolute; right: -1px; top: -1px; width: 141%; height: 1.5px; background: currentColor; transform-origin: right center; transform: rotate(-45deg); }
+.btn--sm { min-height: var(--v10-touch); }
+.btn--frame { border-radius: var(--r-pill); }
+.btn--frame-light { border-radius: var(--r-pill); }
+.v10 .link { font-size: 0.78rem; letter-spacing: 0.06em; }
+.v10-plus { position: relative; flex: none; display: inline-grid; place-items: center; width: var(--v10-touch); height: var(--v10-touch); margin: calc((var(--v10-touch) - var(--v10-plus)) / -2); border: 0; background: none; color: var(--paper); cursor: pointer; }
+.v10-plus::before { content: ''; position: absolute; width: var(--v10-plus); height: var(--v10-plus); border-radius: 0.5rem; background: var(--blue-deep); }
+.v10-plus::after { content: '+'; position: relative; font-family: var(--font-display); font-size: 1rem; line-height: 1; }
+@media (hover: hover) { .v10-plus:hover::before { background: var(--ink); } }
+.v10-plus--line { color: var(--ink); }
+.v10-plus--line::before { background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
+
+/* ---------- Tags: gefüllt, 6 px Radius, Versalien (POUCH Geschmacks-Tags) ---------- */
+.v10 .v10-tag { border-radius: var(--v10-r-tag); min-height: 1.35rem; padding: 0 0.5rem; font-weight: 400; letter-spacing: var(--v10-label-track); font-size: 0.72rem; }
+.v10 .v10-tag--deep { background: var(--blue-deep); color: var(--paper); }
+.v10 .v10-tag--blue { background: var(--blue); color: var(--night); }
+.v10 .v10-tag--sky { background: var(--v10-sky); color: var(--night); }
+.v10 .v10-tag--mist { background: var(--mist); color: var(--blue-deep); }
+.v10 .v10-tag--paper { background: var(--paper); color: var(--ink-mid); box-shadow: inset 0 0 0 1px var(--line); }
+.v10 .v10-tag--glass { background: color-mix(in srgb, var(--paper) 30%, transparent); color: var(--paper); }
+
+/* ---------- Eingerücktes Panel mit Radius (POUCH "03 / THE SCIENCE", "07 / SIP VS DRIP", Kontakt) ---------- */
+.v10-panel { position: relative; isolation: isolate; overflow: clip; margin-inline: var(--v10-inset); border-radius: var(--r-card); background: var(--paper); }
+.v10-panel--deep { background: var(--blue-deep); color: var(--paper); }
+.v10-panel--night { background: var(--night); color: var(--on-night); }
+.v10-panel--mist { background: var(--mist); }
+.v10-panel > .v10-panel__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.v10-panel--shade::before { content: ''; position: absolute; inset: 0; z-index: -1; background: color-mix(in srgb, var(--night) 48%, transparent); }
+.v10-panel__inner { padding: clamp(1.25rem, 1rem + 1.6vw, 2.5rem); }
+.v10-pgap { height: var(--v10-inset); }
+
+/* ---------- Produktkarte POUCH: weiße Karte, 12 px Innenrand, Bild auf hellem Feld, Tag gefüllt, Plus-Knopf ---------- */
+.v10 .v10-pcard { border: 0; box-shadow: none; border-radius: var(--r-card); background: var(--paper); padding: 0.75rem; gap: 0; }
+.v10 .v10-pcard__media { border-radius: calc(var(--r-card) - 0.5rem); background: var(--paper); aspect-ratio: 1 / 1.08; } /* POUCH: Produkt direkt auf der weißen Karte */
+@media (hover: hover) { .v10 .v10-pcard:hover .v10-pcard__media { background: var(--mist); } }
+/* Shop-Variante (POUCH Collection): breiter Button-Balken unten statt Plus */
+.v10 .v10-pcard__cta { position: relative; z-index: 2; grid-column: 1 / -1; margin-top: 0.6rem; width: 100%; min-height: var(--v10-touch); }
+.v10 .v10-pcard--soon .v10-pcard__media { background: var(--mist); }
+.v10 .v10-pcard__tags { left: 0.6rem; top: 0.6rem; }
+.v10 .v10-pcard__body { border-top: 0; padding: 0.85rem 0.25rem 0.25rem; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--v10-s3); row-gap: 0.15rem; align-items: start; }
+.v10 .v10-pcard__row { grid-column: 1 / -1; }
+.v10 .v10-pcard__name { font-size: 1.12rem; font-weight: 400; }
+.v10 .v10-pcard__role { grid-column: 1; font-family: var(--font-display); font-size: 0.72rem; letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--ink-mid); }
+.v10 .v10-pcard__unit { grid-column: 1; }
+.v10 .v10-pcard__add { grid-column: 2; grid-row: 2 / span 2; align-self: end; margin: 0; padding: 0; width: var(--v10-touch); min-height: var(--v10-touch); border: 0; background: none; color: var(--paper); font-size: 0; position: relative; }
+.v10 .v10-pcard__add::before { content: ''; position: absolute; inset: calc((var(--v10-touch) - 2rem) / 2); border-radius: 0.55rem; background: var(--blue-deep); }
+.v10 .v10-pcard__add::after { content: '+'; position: relative; font-family: var(--font-display); font-size: 1.1rem; line-height: 1; }
+@media (hover: hover) { .v10 .v10-pcard__add:hover { background: none; } .v10 .v10-pcard__add:hover::before { background: var(--ink); } }
+.v10 .v10-pcard__add svg { display: none; }
+.v10 .v10-pcard__notify { grid-column: 1 / -1; }
+
+/* ---------- Akkordeon POUCH: Frage 18 px, Haarlinie, 24 px Abstand, Plus-Box rechts ---------- */
+.v10-acc { border-top: 0; }
+.v10-acc details { border-bottom: var(--v10-hair); }
+.v10-acc summary { min-height: 4.25rem; padding-block: 1.25rem; font-family: var(--font-display); font-size: var(--v10-t-q); font-weight: 400; letter-spacing: -0.005em; text-transform: none; }
+.v10-acc summary::after { display: none; }
+.v10-acc summary i { position: relative; flex: none; width: var(--v10-touch); height: var(--v10-touch); margin: -0.5rem -0.5rem -0.5rem 0; display: grid; place-items: center; }
+.v10-acc summary i::before { content: ''; width: var(--v10-plus); height: var(--v10-plus); border-radius: 0.5rem; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); grid-area: 1 / 1; }
+.v10-acc summary i::after { content: '+'; grid-area: 1 / 1; font-family: var(--font-display); font-size: 1rem; line-height: 1; color: var(--ink); transition: transform var(--v10-d2) var(--v10-ease); }
+.v10-acc details[open] summary i::after { transform: rotate(45deg); }
+.v10-acc__body { padding: 0 0 1.25rem; max-width: 46rem; }
+.v10-acc--caps summary { font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; min-height: 3.25rem; padding-block: 0.6rem; }
+.v10-acc--light details { border-color: color-mix(in srgb, var(--on-night) 22%, transparent); }
+.v10-acc--light summary i::before { background: color-mix(in srgb, var(--paper) 14%, transparent); box-shadow: none; }
+.v10-acc--light summary i::after { color: var(--paper); }
+.v10-acc--light .v10-acc__body { color: var(--on-night); }
+
+/* ---------- FAQ POUCH: Label + Button links, Liste mit Plus rechts ---------- */
+.v10-faq { display: grid; gap: var(--v10-s5); }
+.v10-faq__side { display: grid; gap: var(--v10-s4); align-content: start; justify-items: start; }
+.v10-faq__title { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: var(--v10-t-h2); line-height: 1.12; letter-spacing: -0.03em; }
+.v10-faq__group { margin: var(--v10-s6) 0 var(--v10-s2); font-family: var(--font-display); font-weight: 300; font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.9rem); letter-spacing: -0.02em; }
+.v10-faq__group:first-child { margin-top: 0; }
+@media (min-width: 990px) { .v10-faq { grid-template-columns: minmax(0, 0.3fr) minmax(0, 0.7fr); column-gap: var(--v10-s7); } .v10-faq__side { position: sticky; top: calc(var(--header-h) + 1.5rem); } }
+/* FAQ-Seite: Kategorie-Karte links (POUCH "General Questions ...") */
+.v10-faqnav { display: grid; gap: 0; padding: 0.5rem; border-radius: var(--r-small); background: var(--paper); width: 100%; }
+.v10-faqnav a { display: flex; align-items: center; min-height: var(--v10-touch); padding: 0 0.75rem; border-radius: 0.5rem; color: var(--ink); text-decoration: none; font-size: 0.95rem; }
+.v10-faqnav a[aria-current="true"] { background: var(--mist); color: var(--blue-deep); }
+
+/* ---------- Bewertungsliste POUCH: große Note links, Liste rechts (nur Trusted-Shops-Platzhalter) ---------- */
+.v10-revlist { display: grid; gap: var(--v10-s5); }
+.v10-revlist__side { display: grid; gap: var(--v10-s3); align-content: start; justify-items: start; }
+.v10-revlist__score { font-family: var(--font-display); font-weight: 300; font-size: clamp(2.6rem, 2rem + 2vw, 3.6rem); line-height: 1; letter-spacing: -0.03em; }
+.v10-revlist__score small { font-size: 0.45em; color: var(--ink-mid); margin-left: 0.15em; }
+.v10-revlist__meta { display: flex; gap: 0.5rem; align-items: center; font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; }
+.v10-revlist__meta .stars svg { width: 0.85rem; height: 0.85rem; }
+.v10-revlist__items { list-style: none; margin: 0; padding: 0; display: grid; }
+.v10-revlist__item { margin: 0; display: grid; gap: 0.35rem; padding-block: var(--v10-s5); border-bottom: var(--v10-hair); }
+.v10-revlist__item:first-child { padding-top: 0; }
+.v10-revlist__top { display: flex; justify-content: space-between; gap: var(--v10-s3); font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--ink-mid); }
+.v10-revlist__ph { color: var(--ink-mid); border-left: 2px dashed var(--blue); padding-left: var(--v10-s3); }
+@media (min-width: 990px) { .v10-revlist { grid-template-columns: minmax(0, 0.3fr) minmax(0, 0.7fr); column-gap: var(--v10-s7); } }
+
+/* ---------- Statement POUCH: großer Absatz in Grau-Blau mit Inline-Bildern ---------- */
+.v10 .v10-statement__text { color: var(--v10-muted); font-size: clamp(2.1rem, 1.25rem + 3.6vw, 4.6rem); line-height: 1.02; letter-spacing: -0.035em; max-width: 21ch; }
+.v10 .v10-statement__text em { color: var(--blue-deep); }
+.v10 .v10-cap { border-radius: var(--r-small); height: 0.85em; width: 1.25em; }
+.v10-statement__sub { display: grid; gap: var(--v10-s4); justify-items: start; margin-top: var(--v10-s6); max-width: 24rem; }
+@media (min-width: 990px) { .v10-statement__sub { margin-left: 20%; } }
+
+/* ---------- Lifestyle-Bild + Zitat + "01 / ..."-Liste (POUCH Home "02 / BENEFITS & SUPPORT") ---------- */
+.v10-lq { display: grid; gap: var(--v10-s5); }
+.v10-lq__media { position: relative; margin: 0; border-radius: var(--r-media); overflow: hidden; aspect-ratio: 4 / 3; background: var(--mist); }
+.v10-lq__media img { width: 100%; height: 100%; object-fit: cover; }
+.v10-lq__media .v10-specs { position: absolute; left: var(--v10-s3); bottom: var(--v10-s3); padding: 0.6rem 0.8rem; border-radius: var(--r-small); background: color-mix(in srgb, var(--night) 72%, transparent); color: var(--paper); } /* flache Unterlegung: Text auf hellem Foto lesbar */
+.v10-lq__quote { display: grid; gap: var(--v10-s4); align-content: center; justify-items: start; }
+.v10-lq__quote blockquote { margin: 0; display: grid; grid-template-columns: 2.75rem minmax(0, 1fr); gap: var(--v10-s3); }
+.v10-lq__quote blockquote img { width: 2.75rem; height: 2.75rem; border-radius: 0.5rem; object-fit: cover; }
+.v10-lq__quote p { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(1.1rem, 1rem + 0.6vw, 1.45rem); line-height: 1.35; letter-spacing: -0.01em; }
+.v10-lq__quote cite { grid-column: 2; font-style: normal; font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--ink-mid); }
+@media (min-width: 990px) { .v10-lq { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); column-gap: var(--v10-s8); align-items: center; } }
+
+/* ---------- Wort-Reihe POUCH: Mini-Label über jedem Wort ---------- */
+.v10 .v10-words__row { gap: var(--v10-s4) clamp(1rem, 3vw, 3rem); font-size: clamp(1.9rem, 1.2rem + 3vw, 4rem); }
+.v10 .v10-words__row li { display: grid; gap: 0.35rem; }
+.v10 .v10-words__row small { font-family: var(--font-display); font-size: var(--v10-label-size); font-weight: 400; letter-spacing: var(--v10-label-track); text-transform: uppercase; font-variant-numeric: tabular-nums; color: var(--ink-mid); }
+
+/* ---------- Glas-Vergleich POUCH: im runden Panel, Glas-Spalte gerundet ---------- */
+.v10 .v10-glass { margin-inline: var(--v10-inset); border-radius: var(--r-card); }
+.v10 .v10-gtable thead .is-ib7 { border-radius: var(--r-small) var(--r-small) 0 0; }
+.v10 .v10-gtable tfoot .is-ib7 { border-radius: 0 0 var(--r-small) var(--r-small); }
+.v10 .v10-gtable tbody th { font-weight: 400; }
+.v10-glass__thumb { display: none; margin: 0; width: 10rem; aspect-ratio: 4 / 5; border-radius: var(--r-small); overflow: hidden; }
+.v10-glass__thumb img { width: 100%; height: 100%; object-fit: cover; }
+@media (min-width: 990px) { .v10-glass__thumb { display: block; margin-top: auto; } .v10 .v10-glass__grid { align-items: stretch; } .v10 .v10-glass__head { align-self: stretch; align-content: start; } }
+
+/* ---------- Gründer/Zitat-Hero POUCH About: Tiefblau-Panel mit Bild rechts ---------- */
+.v10-qhero { display: grid; margin-inline: var(--v10-inset); border-radius: var(--r-card); overflow: clip; background: var(--blue-deep); color: var(--paper); }
+.v10-qhero__copy { display: grid; gap: var(--v10-s5); align-content: space-between; padding: clamp(1.25rem, 1rem + 2vw, 2.75rem); min-height: 22rem; }
+.v10-qhero__quote { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.7rem, 1.2rem + 2.2vw, 3.2rem); line-height: 1.15; letter-spacing: -0.03em; max-width: 22ch; }
+.v10-qhero__by { font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--on-night); }
+.v10-qhero__media { margin: 0; min-height: 18rem; }
+.v10-qhero__media img { width: 100%; height: 100%; object-fit: cover; }
+@media (min-width: 990px) { .v10-qhero { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); min-height: min(78vh, 44rem); } .v10-qhero__media { margin: var(--v10-inset); border-radius: var(--r-media); overflow: hidden; } }
+
+/* ---------- Zweispaltiger Text, zentriertes Zitat, Editorial-Zeile (POUCH About) ---------- */
+.v10-cols { display: grid; gap: var(--v10-s4); }
+.v10-cols p { margin: 0; color: var(--ink-mid); font-size: 0.94rem; }
+.v10-cols__lead { font-family: var(--font-display); font-size: var(--v10-t-h3); color: var(--ink); margin: 0; }
+@media (min-width: 750px) { .v10-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--v10-s7); } .v10-cols__lead { grid-column: 1 / -1; } }
+.v10-cquote { text-align: center; display: grid; gap: var(--v10-s3); justify-items: center; }
+.v10-cquote p { margin: 0; max-width: 24ch; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.5rem, 1.15rem + 1.6vw, 2.5rem); line-height: 1.2; letter-spacing: -0.025em; }
+.v10-cquote cite { font-style: normal; font-size: var(--v10-t-small); color: var(--ink-mid); }
+.v10-erow { display: grid; gap: var(--v10-s3); padding-block: var(--v10-s5); border-top: var(--v10-hair); border-bottom: var(--v10-hair); }
+.v10-erow h2 { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.6rem); line-height: 1.1; letter-spacing: -0.025em; max-width: 18ch; }
+.v10-erow p { margin: 0; color: var(--ink-mid); max-width: 40rem; align-self: end; }
+@media (min-width: 990px) { .v10-erow { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--v10-s7); } }
+
+/* ---------- Werte-Karten mit Icon und Plus (POUCH "04 / OUR VALUES") ---------- */
+.v10-vcards { display: grid; gap: var(--v10-s3); }
+@media (min-width: 750px) { .v10-vcards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.v10-vcard { margin: 0; border-radius: var(--r-small); background: var(--paper); }
+.v10-vcard summary { list-style: none; position: relative; display: grid; gap: var(--v10-s4); min-height: 9.5rem; padding: 1.1rem 1.1rem 1.25rem; cursor: pointer; }
+.v10-vcard summary::-webkit-details-marker { display: none; }
+.v10-vcard__icon { width: 3.25rem; height: 3.25rem; border-radius: 50%; background: var(--mist); color: var(--blue-deep); display: grid; place-items: center; }
+.v10-vcard__icon svg { width: 1.5rem; height: 1.5rem; }
+.v10-vcard__title { align-self: end; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.9rem); letter-spacing: 0.02em; text-transform: uppercase; }
+.v10-vcard .v10-plus { position: absolute; right: 1.1rem; top: 1.1rem; }
+.v10-vcard[open] summary { background: var(--blue-deep); color: var(--paper); border-radius: var(--r-small) var(--r-small) 0 0; }
+.v10-vcard[open] .v10-vcard__icon { background: color-mix(in srgb, var(--paper) 16%, transparent); color: var(--paper); }
+.v10-vcard[open] { background: var(--blue-deep); color: var(--paper); }
+.v10-vcard__body { padding: 0 1.1rem 1.25rem; color: var(--on-night); font-size: 0.94rem; }
+
+/* ---------- Kontakt-Panel POUCH: Bild-Panel, Kontaktzeile, Button, Hinweisbox ---------- */
+.v10-contact { min-height: 16rem; display: grid; align-content: space-between; }
+.v10-contact__title { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: var(--v10-t-h2); letter-spacing: -0.03em; color: var(--paper); }
+.v10-contact__line { display: flex; flex-wrap: wrap; gap: 0.35rem 1.75rem; margin: var(--v10-s2) 0 0; font-size: var(--v10-t-small); color: var(--paper); }
+.v10-contact__line a { color: var(--paper); }
+.v10-contact__foot { display: grid; gap: var(--v10-s4); align-items: end; margin-top: var(--v10-s6); }
+.v10-contact__note { margin: 0; max-width: 16rem; padding: 0.6rem 0.75rem; border-radius: 0.5rem; background: var(--paper); color: var(--ink); font-size: var(--v10-t-micro); }
+@media (min-width: 750px) { .v10-contact__foot { grid-template-columns: minmax(0, 1fr) auto; } }
+
+/* ---------- Blog/Wissen-Karten POUCH "09 / POUCH 101" ---------- */
+.v10-blog { display: grid; gap: var(--v10-s3); }
+.v10-blog__big { position: relative; display: grid; align-content: end; min-height: 22rem; border-radius: var(--r-media); overflow: hidden; color: var(--paper); text-decoration: none; isolation: isolate; }
+.v10-blog__big img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.v10-blog__big::before { content: ''; position: absolute; inset: 0; z-index: -1; background: color-mix(in srgb, var(--night) 32%, transparent); }
+.v10-blog__big span { padding: var(--v10-s4); display: grid; gap: 0.25rem; font-family: var(--font-display); font-size: 1.1rem; }
+.v10-blog__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--v10-s3); }
+.v10-blog__item { margin: 0; }
+.v10-blog__item a { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: var(--v10-s4); align-items: end; padding-bottom: var(--v10-s3); border-bottom: var(--v10-hair); color: var(--ink); text-decoration: none; }
+.v10-blog__item img { width: 7.5rem; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--r-small); }
+.v10-blog__item b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 1.05rem; }
+.v10-blog__more { font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--blue-deep); }
+@media (min-width: 990px) { .v10-blog { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--v10-s4); } .v10-blog__item img { width: 10rem; } .v10-blog__item a { grid-template-columns: 10rem minmax(0, 1fr); } }
+
+/* ---------- Newsletter "Inside" POUCH: Panel zentriert, zwei Namensfelder, E-Mail, Einwilligung ---------- */
+.v10 .v10-news { margin-inline: var(--v10-inset); border-radius: var(--r-card); }
+.v10 .v10-news__form { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 26rem; gap: 0.5rem; }
+.v10 .v10-news__form input { border-radius: var(--v10-r-box); min-height: 3rem; background: color-mix(in srgb, var(--paper) 14%, transparent); font-family: var(--font-display); font-size: 0.78rem; letter-spacing: 0.06em; }
+.v10 .v10-news__form input[type="email"] { grid-column: 1 / -1; }
+.v10 .v10-news__form .btn { grid-column: 1 / -1; }
+.v10 .v10-news__consent { display: flex; gap: 0.5rem; align-items: flex-start; max-width: 26rem; margin: 0 auto; text-align: left; font-size: var(--v10-t-micro); color: var(--on-night); }
+.v10 .v10-news__consent input { width: 1.1rem; height: 1.1rem; margin: 0.1rem 0 0; accent-color: var(--paper); }
+@media (min-width: 750px) { .v10 .v10-news__form { grid-template-columns: repeat(2, minmax(0, 1fr)) auto; max-width: 40rem; } .v10 .v10-news__form input[type="email"] { grid-column: 1 / 3; } .v10 .v10-news__form .btn { grid-column: 3; } }
+
+/* =====================================================================
+   PDP v10: Dramaturgie v4, Look POUCH (Buy-Box als weißes Panel, Optionsboxen, Stepper, Mini-Upsells)
+   ===================================================================== */
+.v10-pdp { background: var(--porcelain); padding: var(--v10-s2) var(--v10-inset) var(--v10-s6); }
+.v10-pdp .v10-pdp__grid { gap: var(--v10-inset); }
+.v10-pdp .v10-pdp__media { border-radius: var(--r-card); overflow: clip; background: var(--mist); }
+.v10-pdp .v10-gallery__track { background: var(--mist); }
+.v10-pdp .v10-gallery__slide { background: var(--mist); }
+.v10-pdp__buy { border-radius: var(--r-card); background: var(--paper); padding: 1.25rem; }
+.v10 .v10-pdp__crumbs { padding: 0 0 var(--v10-s2); }
+@media (min-width: 990px) {
+  .v10-pdp .v10-pdp__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr); }
+  .v10-pdp .v10-pdp__media { top: calc(var(--header-h) + var(--v10-inset)); height: calc(100vh - var(--header-h) - 2 * var(--v10-inset)); }
+  .v10-pdp__buy { padding: clamp(1.5rem, 2.4vw, 2.5rem); max-width: none; }
+  .v10-pdp .v10-gallery--thumbs .v10-gallery__thumbs { left: var(--v10-s3); top: var(--v10-s3); }
+  .v10-pdp .v10-gallery--thumbs .v10-gallery__thumbs button { width: 4.75rem; border-radius: var(--r-small); }
+}
+.v10-buyx__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--v10-s2) var(--v10-s4); }
+.v10 .v10-buyx__tag { border-radius: var(--v10-r-tag); background: var(--v10-sky); color: var(--night); font-weight: 400; letter-spacing: var(--v10-label-track); }
+.v10 .v10-buyx__size { font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--ink-mid); margin-left: 0.6rem; }
+.v10 .v10-buyx__rating { border-bottom: 0; padding-bottom: 0; font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; }
+.v10 .v10-buyx__name { font-size: clamp(2.1rem, 1.6rem + 2vw, 3.4rem); letter-spacing: -0.035em; }
+/* Optionszeilen in gerundeten Boxen (POUCH "Subscribe & Save", "One-time purchase") */
+.v10 .v10-sizes { display: grid; gap: 0.5rem; }
+.v10 .v10-size { border: 1px solid var(--line); border-radius: var(--v10-r-box); padding: 0.7rem 0.9rem; min-height: 3.5rem; }
+.v10 .v10-size:last-of-type { border-bottom: 1px solid var(--line); }
+.v10 .v10-size:has(input:checked) { border-color: var(--blue-deep); box-shadow: inset 0 0 0 1px var(--blue-deep); background: color-mix(in srgb, var(--mist) 55%, var(--paper)); }
+.v10 .v10-size__name { font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; font-weight: 400; }
+.v10 .v10-size:has(input:checked) .v10-size__name { font-weight: 500; }
+.v10 .v10-size__name small { font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-size: var(--v10-t-micro); }
+.v10 .v10-size__price { font-family: var(--font-display); font-size: 1.05rem; }
+.v10 .v10-size__flag { border-radius: var(--v10-r-tag); }
+/* Mengen-Stepper + großer Button in einer Zeile */
+.v10-cartrow { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.5rem; }
+.v10-qty { display: inline-grid; grid-template-columns: var(--v10-touch) 2rem var(--v10-touch); align-items: center; border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--paper); }
+.v10-qty button { width: var(--v10-touch); height: var(--v10-touch); border: 0; background: none; color: var(--ink); font-family: var(--font-display); font-size: 1.1rem; cursor: pointer; border-radius: 50%; }
+@media (hover: hover) { .v10-qty button:hover { background: var(--mist); } }
+.v10-qty output, .v10-qty input { width: 2rem; text-align: center; font-variant-numeric: tabular-nums; border: 0; background: none; font: inherit; color: var(--ink); -moz-appearance: textfield; }
+.v10-qty input::-webkit-outer-spin-button, .v10-qty input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.v10-cartrow .btn { width: 100%; min-height: 3rem; }
+/* "Hast du daran gedacht?" Mini-Upsells (POUCH "Have you thought of these?") */
+.v10-thought { display: grid; gap: var(--v10-s2); }
+.v10-thought__row { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(13.5rem, 78%); gap: 0.5rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 0.25rem; }
+.v10-thought__row::-webkit-scrollbar { display: none; }
+.v10-tmini { scroll-snap-align: start; position: relative; display: grid; grid-template-columns: 3.25rem minmax(0, 1fr) auto; gap: 0.6rem; align-items: center; padding: 0.55rem; border-radius: var(--v10-r-box); background: var(--porcelain); }
+.v10-tmini img { width: 3.25rem; height: 3.25rem; object-fit: contain; border-radius: 0.5rem; background: var(--paper); }
+.v10-tmini__txt { display: grid; gap: 0.1rem; min-width: 0; }
+.v10-tmini__txt b { font-family: var(--font-display); font-weight: 400; font-size: 0.95rem; }
+.v10-tmini__sub { font-family: var(--font-display); font-size: 0.7rem; letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--ink-mid); }
+.v10-tmini__price { font-size: var(--v10-t-micro); color: var(--ink-mid); font-variant-numeric: tabular-nums; }
+.v10-tmini a { color: inherit; text-decoration: none; }
+.v10-tmini a::after { content: ''; position: absolute; inset: 0; border-radius: inherit; }
+.v10-tmini .v10-plus { position: relative; z-index: 1; }
+@media (min-width: 750px) { .v10-thought__row { grid-auto-columns: minmax(14rem, 48%); } }
+/* Inhaltsstoff-Karten in der Buy-Box (POUCH "INGREDIENTS") */
+.v10-icards { display: grid; gap: var(--v10-s3); }
+.v10-icards__row { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(10.5rem, 46%); gap: 0.6rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.v10-icards__row::-webkit-scrollbar { display: none; }
+.v10-icard { scroll-snap-align: start; margin: 0; display: grid; gap: 0.4rem; align-content: start; }
+.v10-icard__img { aspect-ratio: 4 / 5; border-radius: var(--r-small); overflow: hidden; }
+.v10-icard__img .v10-tone { position: relative; height: 100%; opacity: 1; }
+.v10-icard__img img { width: 100%; height: 100%; object-fit: cover; }
+.v10-icard b { font-family: var(--font-display); font-weight: 400; font-size: 0.95rem; }
+.v10-icard p { margin: 0; font-size: var(--v10-t-micro); color: var(--ink-mid); line-height: 1.45; }
+@media (min-width: 990px) { .v10-icards__row { grid-auto-columns: minmax(0, 1fr); grid-auto-flow: row; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; } }
+
+/* ---------- PDP-Folgeblöcke im runden Look (Dramaturgie v4) ---------- */
+.v10 .v10-ingr { margin-inline: var(--v10-inset); border-radius: var(--r-card); overflow: clip; }
+.v10 .v10-ingr--scroll.is-live .v10-ingr__stage { top: calc(var(--header-h) + var(--v10-inset)); height: calc(100svh - var(--header-h) - 2 * var(--v10-inset)); border-radius: var(--r-card); padding-top: 0; }
+.v10 .v10-ingr__stage { min-height: calc(100svh - var(--header-h) - 2 * var(--v10-inset)); }
+.v10 .v10-ingr__name { font-weight: 300; }
+.v10 .v10-ingr__meta { font-weight: 400; letter-spacing: var(--v10-label-track); }
+.v10 .v10-stack { margin-inline: var(--v10-inset); border-radius: var(--r-card); }
+.v10 .v10-stack__card { border-radius: var(--r-card); overflow: hidden; box-shadow: none; }
+.v10 .v10-stack__media { border-radius: var(--r-media); }
+@media (min-width: 750px) { .v10 .v10-stack__media { margin: 0.75rem 0 0.75rem 0.75rem; } }
+.v10 .v10-stack__title { font-weight: 300; }
+.v10 .v10-xs__media, .v10 .v10-accimg__media, .v10 .v10-chero__media { border-radius: var(--r-media); overflow: hidden; }
+.v10 .v10-xs { gap: var(--v10-inset); padding-inline: var(--v10-inset); background: var(--porcelain); }
+.v10 .v10-xs__copy { padding-inline: clamp(0.5rem, 2vw, 2rem); }
+.v10 .v10-xmini { border-top: 0; padding: 0.75rem; border-radius: var(--r-small); background: var(--paper); }
+.v10 .v10-xmini__img { border-radius: 0.6rem; }
+.v10 .v10-xmini__buy { border-radius: var(--r-pill); padding-left: 0.9rem; }
+.v10 .v10-xmini__buy button { border-radius: 50%; border-left: 0; background: var(--blue-deep); color: var(--paper); margin: 2px; width: 2.5rem; height: 2.5rem; }
+.v10 .v10-accimg { gap: var(--v10-inset); padding-inline: var(--v10-inset); background: var(--porcelain); }
+.v10 .v10-chero { margin-inline: var(--v10-inset); border-radius: var(--r-card); }
+.v10 .v10-chero__media { border-radius: 0; }
+.v10 .v10-band, .v10 .v10-manifest, .v10 .v10-founder, .v10 .v10-full { margin-inline: var(--v10-inset); border-radius: var(--r-card); overflow: clip; }
+.v10 .v10-band__strip img { border-radius: var(--r-small); }
+.v10 .v10-band__strip { gap: var(--v10-inset); padding: 0 var(--v10-inset) var(--v10-inset); }
+.v10 .v10-revs { background: transparent; }
+.v10 .v10-revs__ph { border-radius: var(--r-small); }
+.v10 .v10-evx { margin-inline: var(--v10-inset); border-radius: var(--r-card); overflow: clip; }
+.v10 .v10-evx__card { border-radius: var(--r-small); overflow: hidden; }
+.v10 .v10-studies__list { border-radius: var(--r-small); overflow: hidden; background: var(--paper); }
+.v10 .v10-guarantee { border-radius: var(--r-card); }
+.v10 .v10-stat { border-radius: var(--r-small); box-shadow: none; }
+.v10 .v10-gallery__thumbs button { border-radius: var(--r-small); }
+.v10 .v10-upsell { border-radius: var(--v10-r-box); }
+.v10 .v10-upsell img { border-radius: 0.5rem; }
+.v10 .v10-express span { border-radius: var(--r-pill); }
+.v10 .v10-honest, .v10 .v10-checkcard, .v10 .v10-facts li { border-radius: var(--r-small); }
+
+/* ---------- Kaufleiste: rund wie v8 (Pille), am Handy schwebend ---------- */
+.sticky-buy.v10-buybar { left: 0.5rem; right: 0.5rem; bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px)); border-radius: var(--r-pill); padding: 0.45rem 0.45rem 0.45rem 0.6rem; }
+.sticky-buy.v10-buybar img { border-radius: 50%; }
+.v10-notes-btn { border-radius: var(--r-pill); }
+@media (min-width: 990px) { .sticky-buy.v10-buybar { left: auto; right: 1.5rem; bottom: 1.5rem; } }
+
+/* =====================================================================
+   Ritual-Explorer (ersetzt die Ritual-Scroll-Szene): 5 Rollen auf einen Blick, Morgens/Abends, Detail, Start-Empfehlung
+   ===================================================================== */
+.v10-rx { display: grid; gap: var(--v10-s5); }
+.v10-rx__bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--v10-s3); }
+.v10-rx__time { display: inline-flex; padding: 0.25rem; border-radius: var(--r-pill); background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
+.v10-rx__time button { min-height: var(--v10-touch); min-width: 6.5rem; padding: 0 1.1rem; border: 0; border-radius: var(--r-pill); background: none; color: var(--ink); font-family: var(--font-display); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
+.v10-rx__time button[aria-pressed="true"] { background: var(--blue-deep); color: var(--paper); }
+.v10-rx__picks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.4rem; }
+.v10-rx__picks li { margin: 0; min-width: 0; }
+.v10-rx__pick { position: relative; width: 100%; display: grid; justify-items: center; align-content: start; gap: 0.3rem; min-height: 10.5rem; padding: 0.6rem 0.25rem 0.55rem; border: 0; border-radius: var(--r-small); background: var(--paper); color: var(--ink); cursor: pointer; text-align: center; transition: background var(--v10-d2), box-shadow var(--v10-d2), opacity var(--v10-d2); }
+.v10-rx__pick img { height: 5.5rem; width: 100%; object-fit: contain; transition: transform var(--v10-d3) var(--v10-ease); }
+.v10-rx__no { font-family: var(--font-display); font-size: 0.75rem; font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
+/* Handy: 5 Kacheln auf einen Blick, Name und Status-Text erst ab 750 px sichtbar (Detail zeigt beides), bleiben für Screenreader im Button */
+.v10-rx__name { font-family: var(--font-display); font-size: 0; line-height: 1.15; letter-spacing: 0.02em; text-transform: uppercase; overflow-wrap: anywhere; }
+.v10-rx__state { display: inline-flex; align-items: center; gap: 0; font-size: 0; line-height: 1.2; color: var(--ink-mid); }
+.v10-rx__state::before { content: ''; width: 0.45rem; height: 0.45rem; border-radius: 50%; border: 1px solid var(--ink-mid); }
+.v10-rx__pick.is-buyable .v10-rx__state { color: var(--blue-deep); font-weight: 700; }
+.v10-rx__pick.is-buyable .v10-rx__state::before { background: var(--blue-deep); border-color: var(--blue-deep); }
+.v10-rx__pick.is-soon img { opacity: 0.6; }
+.v10-rx__pick[aria-selected="true"] { box-shadow: inset 0 0 0 2px var(--blue-deep); background: color-mix(in srgb, var(--mist) 60%, var(--paper)); }
+.v10-rx__pick[aria-selected="true"] img { transform: translateY(-4px); }
+.v10-rx__pick.is-off { opacity: 0.45; }
+.v10-rx__pick.is-off .v10-rx__state { color: var(--ink-mid); font-weight: 400; }
+.v10-rx__duoflag { position: absolute; top: 0.4rem; left: 50%; transform: translateX(-50%); padding: 0 0.4rem; border-radius: var(--v10-r-tag); background: var(--blue-deep); color: var(--paper); font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.5; white-space: nowrap; }
+.v10-rx__legend { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; margin: 0; padding: 0; list-style: none; font-size: var(--v10-t-micro); color: var(--ink-mid); }
+.v10-rx__legend li { margin: 0; display: inline-flex; align-items: center; gap: 0.35rem; }
+.v10-rx__legend i { width: 0.5rem; height: 0.5rem; border-radius: 50%; border: 1px solid var(--ink-mid); }
+.v10-rx__legend i.is-live { background: var(--blue-deep); border-color: var(--blue-deep); }
+.v10-rx__pick { min-height: 8.75rem; }
+@media (min-width: 750px) { .v10-rx__state { font-size: 0.75rem; gap: 0.3rem; } .v10-rx__pick { min-height: 13rem; padding-top: 1rem; } .v10-rx__pick img { height: 7.5rem; } .v10-rx__name { font-size: 0.8rem; } .v10-rx__picks { gap: 0.6rem; } }
+@media (min-width: 990px) { .v10-rx__pick img { height: 9.5rem; } .v10-rx__pick { min-height: 16rem; } }
+/* Reihenfolge der gewählten Tageszeit */
+.v10-rx__flow { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.5rem; margin: 0; padding: 0; list-style: none; font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; font-variant-numeric: tabular-nums; }
+.v10-rx__flow li { margin: 0; display: inline-flex; align-items: center; gap: 0.5rem; }
+.v10-rx__flow li + li::before { content: ''; width: 1rem; height: 1px; background: var(--ink-mid); }
+.v10-rx__flow[hidden] { display: none; }
+.v10-rx__flow .is-now { padding: 0.15rem 0.5rem; border-radius: var(--v10-r-tag); background: var(--blue-deep); color: var(--paper); }
+.v10-rx__flow .is-later { color: var(--ink-mid); }
+.v10-rx__flowlabel { flex-basis: 100%; color: var(--ink-mid); }
+/* Detail der gewählten Rolle */
+.v10-rx__panels { display: grid; gap: var(--v10-s3); }
+.v10-rx__panel { display: grid; gap: var(--v10-s4); padding: var(--v10-s5); border-radius: var(--r-card); background: var(--paper); }
+.v10-rx__panel[hidden] { display: none; }
+.v10-rx__ptop { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--v10-s2) var(--v10-s4); }
+.v10-rx__ptitle { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.5rem); letter-spacing: -0.03em; }
+.v10-rx__facts { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; margin: 0; }
+.v10-rx__facts > div { display: grid; grid-template-columns: minmax(0, 7.5rem) minmax(0, 1fr); gap: var(--v10-s3); padding-block: 0.7rem; border-top: var(--v10-hair); }
+.v10-rx__facts dt { font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--ink-mid); }
+.v10-rx__facts dd { margin: 0; color: var(--ink); }
+.v10-rx__cta { display: flex; flex-wrap: wrap; gap: var(--v10-s3); align-items: center; }
+@media (min-width: 990px) { .v10-rx__panel { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); column-gap: var(--v10-s7); align-items: start; } .v10-rx__panel > .v10-rx__pmain { grid-row: span 2; } }
+/* Start-Empfehlung 02 + 04 */
+.v10-rx__duo { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--v10-s4); align-items: center; padding: var(--v10-s4) var(--v10-s5); border-radius: var(--r-card); background: var(--blue-deep); color: var(--paper); }
+.v10-rx__duo img { width: 4.5rem; height: 5.5rem; object-fit: contain; }
+.v10-rx__duo b { display: block; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.3rem, 1.1rem + 0.9vw, 1.8rem); letter-spacing: -0.02em; }
+.v10-rx__duo p { margin: 0.2rem 0 0; color: var(--on-night); font-size: var(--v10-t-small); }
+.v10-rx__duo .v10-actions { grid-column: 1 / -1; }
+@media (min-width: 750px) { .v10-rx__duo { grid-template-columns: auto minmax(0, 1fr) auto; } .v10-rx__duo .v10-actions { grid-column: auto; } }
+/* ohne JS: Zeit-Umschalter aus, alle Rollen als Liste */
+.v10-rx:not(.is-ready) .v10-rx__time { display: none; }
+.v10-rx:not(.is-ready) .v10-rx__panel[hidden] { display: grid; }
+.v10-rx:not(.is-ready) .v10-rx__flow--pm[hidden] { display: flex; }
+
+@media (prefers-reduced-motion: reduce) { .v10-rx__pick, .v10-rx__pick img { transition: none; } }
+
+/* =====================================================================
+   Header und Footer im POUCH-Stil (Runde 4b). Gilt nur mit html.v10-chrome (setzt v10.js, wenn main.v10 da ist).
+   Grundlage bleibt das Markup aus ib7.js; Drawer, Warenkorb und Formular funktionieren unverändert.
+   ===================================================================== */
+/* schmale Announcement-Bar in Versalien */
+.v10-chrome .announce { height: 1.75rem; background: var(--blue-deep); color: var(--paper); font-family: var(--font-display); font-size: 0.7rem; letter-spacing: var(--v10-label-track); text-transform: uppercase; }
+/* Header: Logo links, Pillen-Navigation in der Mitte, rechts Suche, Konto, Warenkorb (Handy: Warenkorb + Menü) */
+.v10-chrome .header { background: color-mix(in srgb, var(--porcelain) 92%, transparent); }
+.v10-chrome .header.header--over { background: transparent; }
+.v10-chrome .header__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--v10-s3); }
+.v10-chrome .header__logo { order: 0; justify-self: auto; display: inline-flex; align-items: center; min-height: var(--v10-touch); }
+.v10-chrome .header__logo img { height: 1.5rem; }
+.v10-chrome .header__right { order: 2; gap: 0.15rem; }
+.v10-chrome .header__burger { order: 3; }
+.v10-chrome .v10-hlink { display: none; }
+.v10-chrome .header .icon-btn { width: var(--v10-touch); height: var(--v10-touch); }
+@media (min-width: 990px) {
+  .v10-chrome .header__bar { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+  .v10-chrome .header__logo { grid-column: 1; grid-row: 1; justify-self: start; }
+  .v10-chrome .header__logo img { height: 1.75rem; }
+  .v10-chrome .header__nav.v10-pillnav { grid-column: 2; grid-row: 1; display: flex; gap: 0.15rem; padding: 0.25rem; border-radius: var(--r-pill); background: var(--paper); box-shadow: 0 0 0 1px var(--line); }
+  .v10-chrome .v10-pillnav .nav-link { height: 2.75rem; padding: 0 1.1rem; color: var(--ink); font-family: var(--font-display); font-size: 0.75rem; letter-spacing: var(--v10-label-track); text-transform: uppercase; }
+  .v10-chrome .v10-pillnav .nav-link[aria-current="page"] { background: var(--blue-deep); color: var(--paper); }
+  .v10-chrome .header__right { grid-column: 3; grid-row: 1; justify-self: end; }
+  .v10-chrome .v10-hlink { display: inline-flex; height: var(--v10-touch); padding: 0 0.8rem; font-size: 0.75rem; letter-spacing: var(--v10-label-track); text-transform: uppercase; }
+  .v10-chrome .header--over .v10-hlink { color: var(--paper); }
+}
+@media (hover: hover) { .v10-chrome .v10-pillnav .nav-link:not([aria-current="page"]):hover { background: var(--mist); } }
+/* Drawer aus ib7.js im v10-Look: runde Flächen, Versalien-Gruppentitel */
+.v10-chrome .menu-group-title { font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; }
+.v10-chrome .drawer .btn { border-radius: var(--r-pill); }
+
+/* Footer: Versalien-Spalten "01 / SHOP" oben, darunter Claim + Newsletter-Zeile, Zahlungsarten, Rechtliches */
+.v10-chrome .v10-footer { background: var(--night); padding-top: clamp(3rem, 2.4rem + 3vw, 5rem); margin-top: var(--v10-inset); border-radius: var(--r-card) var(--r-card) 0 0; }
+.v10-chrome .v10-footer .footer__top { display: grid; gap: var(--v10-s6); }
+.v10-chrome .v10-footer .footer__top > .stack-lg { order: 2; }
+.v10-chrome .v10-footer .footer__cols { order: 1; gap: var(--v10-s5) var(--v10-s4); }
+.v10-chrome .v10-footer .footer__col h4 { margin-bottom: 0.4rem; font-family: var(--font-display); font-size: var(--v10-label-size); font-weight: 400; letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--paper); }
+.v10-chrome .v10-footer .footer__col h4 b { font-weight: 400; color: var(--on-night-mid); }
+.v10-chrome .v10-footer .footer__col a { min-height: var(--v10-touch); font-size: 0.9rem; color: var(--on-night); }
+.v10-chrome .v10-footer .footer__claim { font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.3rem); }
+.v10-chrome .v10-footer .footer__claim em { color: var(--v10-accent-night); }
+.v10-chrome .v10-footer .v10-footer__nl { font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--paper); }
+.v10-chrome .v10-footer .field { border-radius: var(--v10-r-box); }
+.v10-chrome .v10-footer .field .btn { border-radius: 0.55rem; }
+.v10-chrome .v10-footer .pay-icons span { border-radius: var(--v10-r-tag); font-family: var(--font-display); font-weight: 400; letter-spacing: 0.04em; }
+.v10-chrome .v10-footer .footer__bottom { font-family: var(--font-display); font-size: 0.72rem; letter-spacing: var(--v10-label-track); text-transform: uppercase; }
+@media (min-width: 990px) {
+  .v10-chrome .v10-footer .footer__top { grid-template-columns: minmax(0, 1fr); }
+  .v10-chrome .v10-footer .footer__top > .stack-lg { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) auto; align-items: end; column-gap: var(--v10-s7); padding-top: var(--v10-s6); border-top: 1px solid color-mix(in srgb, var(--on-night) 18%, transparent); }
+}
+
+/* =====================================================================
+   Runde 5 (Mobile-Check v10, docs/checks/v10-mobile.md): System-Befunde
+   ===================================================================== */
+:root {
+  --v10-muted-text: color-mix(in srgb, var(--ink-mid) 88%, var(--porcelain));  /* Statement-Grau, 4,8:1 auf Porcelain, 4,7:1 auf Mist */
+  --v10-scrim-text: color-mix(in srgb, var(--night) 62%, transparent);        /* weiße Schrift auf beliebigem Foto: mind. 4,5:1 auch über reinem Weiß */
+}
+
+/* ---------- 1 Ritual-Explorer: übersichtlicher am Handy, nebeneinander am Desktop ----------
+   Handy: Kopf, Kacheln, direkt darunter die Karte, dann die Reihenfolge (reine Anzeige), dann Duo.
+   Legende gestrichen: Status trägt der Punkt an der Kachel und der Tag auf der Karte. */
+.v10-rx { gap: var(--v10-s4); }
+.v10-rx > * { order: 4; }
+.v10-rx > .v10-rx__bar { order: 0; }
+.v10-rx > .v10-rx__picks { order: 1; }
+.v10-rx > .v10-rx__panels { order: 2; }
+.v10-rx > .v10-rx__flow { order: 3; }
+.v10-rx__legend { display: none; }
+.v10-rx__bar { gap: var(--v10-s3); }
+/* Kacheln: Band oben für das Duo-Kennzeichen, Nummer und Statuspunkt in einer Zeile */
+.v10-rx__pick { min-height: 0; padding: 1.55rem 0.25rem 0.5rem; grid-template-columns: auto auto; justify-content: center; column-gap: 0.3rem; row-gap: 0.25rem; align-items: center; }
+.v10-rx__pick img, .v10-rx__name { grid-column: 1 / -1; }
+.v10-rx__pick img { height: 4.75rem; order: 0; }
+.v10-rx__no { order: 1; }
+.v10-rx__state, .v10-rx__pick.is-buyable .v10-rx__state, .v10-rx__pick.is-off .v10-rx__state { order: 2; font-size: 0; gap: 0; }
+.v10-rx__name { order: 3; }
+.v10-rx__duoflag { top: 0.35rem; z-index: 1; font-size: 0.75rem; line-height: 1.45; padding: 0 0.35rem; }
+.v10-rx__pick[aria-selected="true"] img { transform: translateY(-2px); }
+@media (min-width: 750px) {
+  .v10-rx__state, .v10-rx__pick.is-buyable .v10-rx__state, .v10-rx__pick.is-off .v10-rx__state { font-size: 0; gap: 0; }
+  .v10-rx__pick { min-height: 0; padding-top: 1.9rem; }
+  .v10-rx__pick img { height: 7rem; }
+  .v10-rx__name { font-size: 0.8rem; }
+}
+/* Karte: kompakt, Aufgabe / Wirkt / Bekommt von / Übergibt an als 2 x 2-Raster */
+.v10-rx__panel { padding: var(--v10-s4); gap: var(--v10-s3); scroll-margin-top: calc(var(--header-h) + var(--v10-s3)); scroll-margin-bottom: calc(5rem + env(safe-area-inset-bottom, 0px)); }
+.v10-rx__ptitle { font-size: clamp(1.4rem, 1.2rem + 1vw, 2.2rem); }
+.v10-rx__pmain { display: grid; gap: var(--v10-s2); }
+.v10-rx__pmain .v10-text { margin: 0; }
+.v10-rx__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v10-s3) var(--v10-s4); }
+.v10-rx__facts > div { grid-template-columns: minmax(0, 1fr); gap: 0.1rem; padding-block: var(--v10-s2) 0; }
+.v10-rx__facts dd { font-size: var(--v10-t-small); line-height: 1.4; }
+.v10-rx__cta { gap: var(--v10-s2); }
+.v10-rx__cta .btn { flex: 1 1 9rem; }
+.v10-rx__cta .v10-small { flex-basis: 100%; }
+/* Reihenfolge: reine Anzeige, ohne Pillen-Optik; aktuelle Rolle unterstrichen in Blue Deep */
+.v10-rx__flow { gap: 0.25rem 0.45rem; color: var(--ink); }
+.v10-rx__flow li + li::before { width: 0.75rem; }
+.v10-rx__flow .is-now, .v10-rx__flow .is-now.is-later { padding: 0; border-radius: 0; background: none; color: var(--blue-deep); font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.35em; }
+.v10-rx__flowlabel { flex-basis: auto; color: var(--ink-mid); }
+.v10-rx__flowlabel::before { content: 'Reihenfolge '; }
+/* Desktop: Kacheln links, Karte rechts (nur mit JS, ohne JS bleibt die Liste untereinander) */
+@media (min-width: 990px) {
+  .v10-rx.is-ready { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); grid-template-rows: auto auto 1fr; column-gap: var(--v10-s6); align-items: start; }
+  .v10-rx.is-ready > * { grid-column: 1 / -1; }
+  .v10-rx.is-ready > .v10-rx__bar { grid-row: 1; }
+  .v10-rx.is-ready > .v10-rx__picks { grid-column: 1; grid-row: 2; }
+  .v10-rx.is-ready > .v10-rx__flow { grid-column: 1; grid-row: 3; }
+  .v10-rx.is-ready > .v10-rx__panels { grid-column: 2; grid-row: 2 / span 2; }
+  .v10-rx.is-ready .v10-rx__panel { grid-template-columns: minmax(0, 1fr); padding: var(--v10-s5); }
+  .v10-rx.is-ready .v10-rx__panel > .v10-rx__pmain { grid-row: auto; }
+  .v10-rx__pick img { height: 8.5rem; }
+}
+
+/* ---------- 2 Wirkstoff-Szene: Fuß frei (Kaufleiste weicht, v10.js), kompakter bei kleinen Höhen ---------- */
+.v10 .v10-ingr--scroll.is-live .v10-ingr__foot { padding-block: var(--v10-s3); }
+.v10 .v10-ingr--scroll.is-live .v10-ingr__head { padding-top: var(--v10-s4); }
+@media (min-height: 740px) {
+  .v10 .v10-ingr--scroll.is-live .v10-ingr__foot { padding-block: var(--v10-s5); }
+  .v10 .v10-ingr--scroll.is-live .v10-ingr__head { padding-top: var(--v10-s6); }
+}
+
+/* ---------- 3 Kontrast ---------- */
+.v10 .v10-statement__text { color: var(--v10-muted-text); }
+.v10 .v10-statement__text em { color: var(--blue-deep); }
+/* Systemklasse Scrim für weiße Schrift auf Fotos (ohne Verlauf, flach):
+   .v10-scrim auf den Container: erstes Kind img/picture/video/.v10-tone wird Hintergrund, darüber 62 % Night.
+   .v10-scrim--media auf den Bild-Wrapper, wenn der Text außerhalb liegt (Overlay über dem Bild). */
+:where(.v10-scrim) { position: relative; isolation: isolate; }
+.v10-scrim::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--v10-scrim-text); pointer-events: none; }
+.v10-scrim > :is(img, picture, video, .v10-tone):first-child { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.v10-scrim, .v10-scrim :is(h1, h2, h3, p, a, li, span, small, b):where(:not(.btn--light, .btn--light *, .v10-contact__note, .v10-contact__note *, .v10-scrim__keep, .v10-scrim__keep *)) { color: var(--paper); }
+/* helle Inseln im Scrim (heller Button, weiße Hinweisbox, .v10-scrim__keep) behalten ihre eigene Schriftfarbe */
+:where(.v10-scrim--media) { position: relative; }
+.v10-scrim--media::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: var(--v10-scrim-text); pointer-events: none; }
+/* bestehende Muster auf 4,5:1 */
+.v10-panel--shade::before { background: var(--v10-scrim-text); }
+.v10-stack__bg::after { background: var(--v10-scrim-text); }
+
+/* ---------- 4 Touch und Mindestschrift ---------- */
+.v10 .v10-xmini__buy button { width: var(--v10-touch); height: var(--v10-touch); margin: 0; flex: none; }
+.v10 .v10-xmini__buy { padding-right: 0; }
+.v10-qty { grid-template-columns: var(--v10-touch) var(--v10-touch) var(--v10-touch); }
+.v10-qty output, .v10-qty input { width: var(--v10-touch); height: var(--v10-touch); }
+.v10 .v10-news__consent { min-height: var(--v10-touch); align-items: center; cursor: pointer; }
+.v10 .v10-news__consent input { width: 1.25rem; height: 1.25rem; margin: 0; flex: none; }
+.v10-chrome .header__right { gap: var(--v10-s2); }
+.v10 .v10-pcard__add { justify-content: center; }
+.v10 .v10-pcard__add::before { inset: calc((var(--v10-touch) - 2.25rem) / 2); }
+.v10 .v10-pcard__add::after { font-size: 1.35rem; }
+.v10 .v10-tag, .v10 .v10-pcard__role, .v10-tmini__sub, .sticky-buy.v10-buybar .btn { font-size: 0.75rem; }
+.v10-chrome .announce, .v10-chrome .announce__item, .v10-chrome .v10-footer .footer__bottom, .v10-chrome .pay-icons span { font-size: 0.75rem; }
+
+/* ---------- 5 Karten-Stapel bei reduzierter Bewegung nicht sticky ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .v10-stack__card { position: relative; top: auto; }
+  .v10-stack__bg { position: absolute; inset: 0; height: auto; margin: 0; }
+}
+/* aus v10-wissen.css ins System übernommen: Glas-Panel-Lead */
+.v10-glass__head .v10-lead { color: var(--paper); max-width: 22rem; }
+/* Mindestschrift 12 px: Warenkorb-Zähler im Header, Platzhalter-Kennzeichen */
+.v10-chrome .cart-count { font-size: 0.75rem; min-width: 1.25rem; height: 1.25rem; line-height: 1.25rem; background: var(--blue-deep); color: var(--paper); } /* weiß auf IB-7 Blue nur 2,9:1 */
+.v10 .ph { font-size: max(0.75rem, 0.8em); }
+
+/* Wort-Reihe immer einzeilig (Wunsch Daniel 13.10.): Handy als Wisch-Reihe, ab 750 px skaliert die Schrift mit der Breite, damit alle fünf Wörter in eine Zeile passen */
+.v10 .v10-words__row { flex-wrap: nowrap; min-width: 0; max-width: 100%; gap: clamp(1rem, 2.2vw, 3rem); font-size: clamp(1.6rem, 1.1rem + 2vw, 2.2rem); overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: none; padding-bottom: 0.15em; }
+.v10 .v10-words__row::-webkit-scrollbar { display: none; }
+.v10 .v10-words__row li { flex: none; white-space: nowrap; scroll-snap-align: start; }
+.v10 .v10-label + .v10-words__row, .v10 .v10-words .v10-label { margin-bottom: var(--v10-s5); }
+/* Handy: Reihe läuft bis an den Bildschirmrand, damit klar ist, dass man wischen kann */
+.v10 .v10-words__row { max-width: none; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
+@media (min-width: 750px) {
+  .v10 .v10-words__row { justify-content: space-between; overflow-x: visible; margin-inline: 0; padding-inline: 0; font-size: min(3.4vw, 4rem); }
+}

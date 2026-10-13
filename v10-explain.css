@@ -1,0 +1,179 @@
+/* =====================================================================
+   IB-7 Erklär-Szenen v10 (Entwurf 13.10.2026, Runde 4)
+   Ein Muster für alle Erklärungen, nach der gelobten PDP-Wirkstoff-Szene (v9-ingr) und POUCH "03 / THE SCIENCE":
+   rundes eingerücktes Panel, gepinnte Bühne, nummerierte Schritte (aktiv hell, andere gedimmt), Bild/Grafik wechselt
+   pro Schritt, kurzer Text. Handy: ca. ein Daumenwisch (25svh) pro Schritt, Szene max. 2 Bildschirme (4 Schritte).
+   Szenen: data-scene="process" (So entsteht IB-7 / THE MIND), "airless" (Airless-Spender), "skin" (Zusammenspiel).
+   Vertrag siehe design/plan/art-direction-v3.md, Beispiele in system-v5.html.
+   Ohne JS und bei reduzierter Bewegung: nicht gepinnt, alle Schritte mit Text, Grafik im Endzustand.
+   Animiert werden nur transform, opacity und Farbe. Nur Tokens aus ib7.css / v10.css.
+   ===================================================================== */
+
+.v10-scene { --n: 4; --i: 99; position: relative; margin-inline: var(--v10-inset); border-radius: var(--r-card); background: var(--blue-deep); color: var(--paper); }
+.v10-scene--night { background: var(--night); }
+.v10-scene--mist { background: var(--mist); color: var(--ink); }
+.v10-scene__stage { position: relative; isolation: isolate; overflow: clip; border-radius: var(--r-card); display: grid; gap: var(--v10-s3); padding: clamp(1.25rem, 1rem + 1.6vw, 2.5rem); min-height: calc(100svh - var(--header-h) - 2 * var(--v10-inset)); align-content: start; }
+.v10-scene__head { display: grid; gap: var(--v10-s3); }
+.v10-scene__head .v10-h2 { color: inherit; max-width: 18ch; font-size: clamp(1.55rem, 1.2rem + 1.7vw, 3.2rem); }
+.v10-scene__vis { position: relative; margin: 0; min-width: 0; max-width: 100%; min-height: 10.5rem; aspect-ratio: 16 / 9; border-radius: var(--r-media); overflow: hidden; background: color-mix(in srgb, var(--night) 22%, transparent); }
+.v10-scene--mist .v10-scene__vis { background: var(--paper); }
+.v10-scene__vis > figure, .v10-scene__vis > svg { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; }
+.v10-scene__vis > figure { opacity: 0; transition: opacity 700ms var(--v10-ease); }
+.v10-scene__vis > figure.is-on { opacity: 1; }
+.v10-scene__vis img { width: 100%; height: 100%; object-fit: cover; }
+.v10-scene__vis .v10-tone { position: absolute; inset: 0; opacity: 1; }
+.v10-scene__steps { list-style: none; margin: 0; padding: 0 0 0 1.5rem; display: grid; gap: 0.15rem; position: relative; counter-reset: v10scene; }
+.v10-scene__steps::before { content: ''; position: absolute; left: 0.3rem; top: 0.4rem; bottom: 0.4rem; width: 1px; background: color-mix(in srgb, currentColor 30%, transparent); }
+.v10-scene__steps::after { content: ''; position: absolute; left: 0.3rem; top: 0.4rem; width: 1px; height: calc(100% - 0.8rem); background: currentColor; transform-origin: top; transform: scaleY(calc((min(var(--i), var(--n) - 1) + 1) / var(--n))); transition: transform var(--v10-d3) var(--v10-ease); }
+.v10-scene__step { margin: 0; display: grid; gap: 0.35rem; }
+.v10-scene__btn { display: flex; align-items: baseline; gap: 0.75rem; width: 100%; min-height: var(--v10-touch); padding: 0.35rem 0; border: 0; background: none; color: inherit; text-align: left; cursor: pointer; font-family: var(--font-display); font-size: var(--v10-label-size); font-weight: 400; letter-spacing: var(--v10-label-track); text-transform: uppercase; line-height: 1.35; }
+.v10-scene__no { font-variant-numeric: tabular-nums; min-width: 1.6rem; }
+.v10-scene__text { margin: 0; max-width: 34rem; font-size: 0.95rem; line-height: 1.55; }
+.v10-scene__text b { font-weight: 700; }
+.v10-scene__foot { display: flex; flex-wrap: wrap; gap: var(--v10-s3) var(--v10-s5); align-items: center; }
+.v10-scene__foot .link { color: inherit; }
+.v10-scene__count { display: grid; gap: 0.1rem; }
+.v10-scene__count b { font-family: var(--font-display); font-weight: 300; font-size: clamp(2.2rem, 1.7rem + 2vw, 3.4rem); line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.v10-scene__count span { font-size: var(--v10-t-micro); }
+.v10-scene__fn { margin: 0; font-size: var(--v10-t-micro); max-width: 34rem; }
+
+/* mit JS (.is-live): gepinnt, aktiver Schritt hell, andere gedimmt, nur der aktive Text sichtbar */
+.v10-scene.is-live { height: calc(100svh - var(--header-h) + var(--n) * 25svh); }
+.v10-scene.is-live .v10-scene__stage { position: sticky; top: calc(var(--header-h) + var(--v10-inset)); height: calc(100svh - var(--header-h) - 2 * var(--v10-inset)); }
+.v10-scene.is-live .v10-scene__btn { color: color-mix(in srgb, currentColor 55%, transparent); }
+.v10-scene.is-live .v10-scene__step.is-active .v10-scene__btn { color: inherit; }
+.v10-scene--mist.is-live .v10-scene__btn { color: var(--ink-mid); }
+.v10-scene--mist.is-live .v10-scene__step.is-active .v10-scene__btn { color: var(--ink); }
+.v10-scene.is-live .v10-scene__text { display: none; }
+.v10-scene.is-live .v10-scene__step.is-active .v10-scene__text { display: block; animation: v10-in var(--v10-d2) var(--v10-ease); }
+@keyframes v10-in { from { opacity: 0; transform: translateY(0.4rem); } }
+.v10-scene.is-live .v10-scene__vis { flex: none; }
+
+@media (min-width: 750px) { .v10-scene__stage { gap: var(--v10-s4); } .v10-scene__steps { gap: var(--v10-s2); } }
+@media (min-width: 990px) {
+  .v10-scene.is-live { height: calc(100vh - var(--header-h) + var(--n) * 60vh); }
+  .v10-scene__stage { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); grid-template-rows: auto 1fr auto; column-gap: clamp(2rem, 4vw, 4rem); align-content: stretch; }
+  .v10-scene__head { grid-column: 1; grid-row: 1; }
+  .v10-scene__steps { grid-column: 1; grid-row: 2; align-content: center; }
+  .v10-scene__foot { grid-column: 1; grid-row: 3; }
+  .v10-scene__vis { grid-column: 2; grid-row: 1 / span 3; aspect-ratio: auto; min-height: 24rem; }
+  .v10-scene__text { font-size: 1rem; }
+}
+
+/* =====================================================================
+   (a) Airless-Spender: eine Grafik, Zustand je Schritt (data-step)
+   ===================================================================== */
+.v10-air { --p: 0.5; --press: 0; }
+.v10-air[data-step="0"] { --p: 0.08; }
+.v10-air[data-step="1"] { --p: 0.38; --press: 1; }
+.v10-air[data-step="2"] { --p: 0.66; }
+.v10-air[data-step="3"] { --p: 0.95; }
+.v10-air:not([data-step]) { --p: 0.5; }
+.v10-air__svg { color: var(--paper); }
+.v10-air__svg .body { fill: none; stroke: currentColor; stroke-opacity: 0.7; stroke-width: 1.5; }
+.v10-air__svg .fill { fill: var(--blue); fill-opacity: 0.55; transform-box: fill-box; transform-origin: 50% 0; transform: scaleY(calc(1 - var(--p) * 0.9)); transition: transform 700ms var(--v10-ease); }
+.v10-air__svg .piston { fill: var(--paper); transform: translateY(calc(var(--p) * -284px)); transition: transform 700ms var(--v10-ease); }
+.v10-air__svg .arrow { fill: none; stroke: var(--paper); stroke-width: 1.5; transform: translateY(calc(var(--p) * -284px)); transition: transform 700ms var(--v10-ease); }
+.v10-air__svg .head { fill: currentColor; fill-opacity: 0.85; transform: translateY(calc(var(--press) * 6px)); transition: transform 300ms var(--v10-ease-io); }
+.v10-air__svg .nozzle { fill: none; stroke: currentColor; stroke-opacity: 0.85; stroke-width: 1.5; }
+.v10-air__svg .drop { fill: var(--paper); opacity: var(--press); transform: translateY(calc(var(--press) * 10px)); transition: opacity 300ms, transform 500ms var(--v10-ease); }
+.v10-air__svg .noair { opacity: 0.35; transition: opacity 300ms; }
+.v10-air[data-step="0"] .v10-air__svg .noair, .v10-air:not([data-step]) .v10-air__svg .noair { opacity: 1; }
+.v10-air__svg .noair text, .v10-air__svg .label { font-family: var(--font-display); font-size: 11px; fill: currentColor; letter-spacing: 0.06em; }
+.v10-air__svg .noair path { stroke: var(--paper); stroke-width: 1.5; fill: none; }
+.v10-air__svg .shield { fill: none; stroke: var(--paper); stroke-width: 1.5; stroke-dasharray: 4 5; opacity: 0; transition: opacity 400ms; }
+.v10-air[data-step="2"] .v10-air__svg .shield { opacity: 0.9; }
+.v10-air .v10-scene__count { opacity: 0.55; transition: opacity 300ms; }
+.v10-air[data-step="3"] .v10-scene__count, .v10-air:not([data-step]) .v10-scene__count { opacity: 1; }
+
+/* =====================================================================
+   (c) Hautquerschnitt: PULSE aktiviert, AURA versiegelt, Ergebnis
+   ===================================================================== */
+.v10-skin { --a: 1; --b: 1; --c: 1; }
+.v10-skin[data-step="0"] { --a: 1; --b: 0; --c: 0; }
+.v10-skin[data-step="1"] { --a: 1; --b: 1; --c: 0; }
+.v10-skin[data-step="2"] { --a: 1; --b: 1; --c: 1; }
+.v10-skin__svg text { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.04em; fill: var(--ink-mid); }
+.v10-skin__svg .l1 { fill: var(--mist); }
+.v10-skin__svg .l2 { fill: color-mix(in srgb, var(--blue) 22%, var(--paper)); }
+.v10-skin__svg .l3 { fill: color-mix(in srgb, var(--blue) 36%, var(--paper)); }
+.v10-skin__svg .drop { fill: var(--blue-deep); transform: translateY(calc(var(--a) * var(--dy) * 1px)); opacity: calc(1 - var(--a) * 0.3); transition: transform 900ms var(--v10-ease), opacity 900ms; }
+.v10-skin__svg .cream { fill: var(--paper); stroke: var(--blue); stroke-width: 1.5; transform-box: fill-box; transform-origin: 0 50%; transform: scaleX(var(--b)); transition: transform 800ms var(--v10-ease); }
+.v10-skin__svg .vap { stroke: var(--ink-mid); stroke-width: 1.5; fill: none; stroke-linecap: round; opacity: calc(0.9 - var(--b) * 0.9); transition: opacity 500ms; }
+.v10-skin__svg .stop { stroke: var(--blue-deep); stroke-width: 2.5; stroke-linecap: round; opacity: var(--c); transition: opacity 500ms; }
+.v10-skin__legend { position: absolute; left: var(--v10-s3); bottom: var(--v10-s3); display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0; padding: 0; list-style: none; }
+.v10-skin__legend li { margin: 0; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.15rem 0.5rem; border-radius: var(--v10-r-tag); background: var(--paper); font-family: var(--font-display); font-size: 0.7rem; letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--ink); }
+.v10-skin__legend i { width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--blue-deep); }
+.v10-skin__legend i.is-cream { border-radius: 2px; background: var(--paper); box-shadow: inset 0 0 0 1.5px var(--blue); }
+
+/* =====================================================================
+   (b) Prozess: Bilder in Duotone wechseln, Punktfelder als Daten-Grafik
+   ===================================================================== */
+.v10-proc .v10-scene__vis svg .dot { fill: var(--paper); }
+.v10-proc .v10-scene__vis svg .lbl { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.08em; fill: var(--paper); text-transform: uppercase; }
+.v10-proc .v10-scene__vis .v10-proc__field { background: var(--v10-tone-3, var(--night)); }
+
+@media (prefers-reduced-motion: reduce) {
+  .v10-scene *, .v10-scene *::before, .v10-scene *::after { transition: none !important; animation: none !important; }
+}
+
+/* =====================================================================
+   Runde 5 (Mobile-Check v10): Bühne schneidet am kleinen Handy nichts mehr ab
+   - Die Kaufleiste weicht gepinnten Szenen aus (v10.js, Punkt 9), die Bühne bekommt die volle Höhe.
+   - Die Grafik ist die einzige flexible Zeile (minmax(0, 1fr)): kleine Handys bekommen eine kleinere Grafik,
+     große eine größere. So bleibt auch nach dem Lösen keine leere Fläche unten in der Bühne.
+   - Typo kompakt für kleine Höhen, ab min-height 740 px wie entworfen (Höhen-Query, keine max-Query).
+   ===================================================================== */
+.v10-scene__stage { min-height: 0; }                       /* ruhige Liste (ohne JS, reduce): so hoch wie der Inhalt */
+.v10-scene.is-live .v10-scene__stage { grid-template-rows: auto minmax(0, 1fr) auto auto; gap: var(--v10-s2); padding: var(--v10-s4); }
+.v10-scene.is-live .v10-scene__vis { aspect-ratio: auto; min-height: 0; height: 100%; }
+.v10-scene.is-live .v10-scene__head { gap: var(--v10-s2); }
+.v10-scene.is-live .v10-scene__head .v10-h2 { font-size: clamp(1.3rem, 1.05rem + 1.2vw, 3.2rem); max-width: 26ch; }
+.v10-scene.is-live .v10-scene__text { font-size: 0.9rem; line-height: 1.5; }
+.v10-scene.is-live .v10-scene__foot { gap: var(--v10-s2) var(--v10-s4); }
+.v10-scene.is-live .v10-scene__count { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.15rem 0.6rem; }
+.v10-scene.is-live .v10-scene__count b { font-size: clamp(1.8rem, 1.5rem + 1.6vw, 3.4rem); }
+@media (min-height: 740px) {
+  .v10-scene.is-live .v10-scene__stage { gap: var(--v10-s3); padding: clamp(1.25rem, 1rem + 1.6vw, 2.5rem); }
+  .v10-scene.is-live .v10-scene__head .v10-h2 { font-size: clamp(1.55rem, 1.2rem + 1.7vw, 3.2rem); }
+  .v10-scene.is-live .v10-scene__text { font-size: 0.95rem; line-height: 1.55; }
+  .v10-scene.is-live .v10-scene__count b { font-size: clamp(2.2rem, 1.7rem + 2vw, 3.4rem); }
+}
+@media (min-width: 990px) {
+  .v10-scene.is-live .v10-scene__stage { grid-template-rows: auto 1fr auto; gap: var(--v10-s4); padding: clamp(1.25rem, 1rem + 1.6vw, 2.5rem); }
+  .v10-scene.is-live .v10-scene__vis { min-height: 24rem; }
+  .v10-scene.is-live .v10-scene__text { font-size: 1rem; }
+  .v10-scene.is-live .v10-scene__count { display: grid; }
+  .v10-scene.is-live .v10-scene__head .v10-h2 { max-width: 18ch; }
+}
+
+/* Mindestschrift 12 px auch in den Szenen-Grafiken (SVG-Beschriftung, Haut-Legende) */
+.v10-air__svg .noair text, .v10-air__svg .label, .v10-skin__svg text, .v10-proc .v10-scene__vis svg .lbl { font-size: 12px; }
+.v10-skin__legend li { font-size: 0.75rem; }
+
+/* =====================================================================
+   Runde 5: Variante .v10-scene--layers, eine SVG-Ebene je Schritt
+   Markup: in .v10-scene__vis eine svg, darin g[data-scene-layer="0"], "1-3", "2+" (Schritte ab 0).
+   v10-explain.js setzt .is-on am passenden Schritt. Ohne JS: alle Ebenen sichtbar; reduce: Endzustand.
+   Animiert nur opacity und transform.
+   ===================================================================== */
+.v10x-on .v10-scene.is-live [data-scene-layer] { opacity: 0; transform: translateY(4px); transition: opacity 600ms var(--v10-ease), transform 600ms var(--v10-ease); }
+.v10x-on .v10-scene.is-live [data-scene-layer].is-on { opacity: 1; transform: none; }
+.v10-scene [data-scene-layer].is-on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .v10-scene.has-layers [data-scene-layer] { opacity: 0; }
+  .v10-scene.has-layers [data-scene-layer].is-on { opacity: 1; }
+}
+
+/* Seitenverhältnis der Grafik je Szene (ruhige Liste, ohne Pinnen): --vis-ar am Element, z. B. style="--vis-ar: 360 / 296" */
+.v10-scene__vis { aspect-ratio: var(--vis-ar, 16 / 9); }
+.v10-skin .v10-scene__vis { --vis-ar: 360 / 260; }
+@media (min-width: 990px) { .v10-scene__vis { aspect-ratio: auto; } }
+.v10-scene.is-live .v10-scene__vis { aspect-ratio: auto; }
+
+/* Demo-Grafik der Ebenen-Variante (system-v5) */
+.v10-lay__svg .dot { fill: var(--paper); }
+.v10-lay__svg .ln { fill: none; stroke: var(--paper); stroke-opacity: 0.55; stroke-width: 1; }
+.v10-lay__svg .pk { fill: var(--paper); }
+.v10-lay__svg .bt { fill: none; stroke: var(--v10-accent-night); stroke-width: 1.5; }
+.v10-lay__svg .lbl { font-family: var(--font-display); font-size: 12px; letter-spacing: 0.08em; fill: var(--paper); }

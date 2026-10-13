@@ -1,0 +1,190 @@
+/* =====================================================================
+   IB-7 Über uns v8 (Builder C, Runde 7, auf Basis v7 aus Runde 6, 13.10.2026): Maße aus den POUCH-Frames ab-01 bis ab-56 (1200 x 624) und about-m (390).
+   Additiv zu v10.css und v10-marke.css. Präfix .va-. Nur Tokens, Mobile First (min-width 750 / 990).
+   Gemessene POUCH-Werte (in % der Viewport- bzw. Containerbreite, Frame 1200 px):
+   Seitenrand 1,6 %, Hero: Label bei 23 % der Hero-Höhe, Porträt x 43,7 bis 98,4 %, y 29 bis 96,5 %, Zitat 2,7 vw,
+   Story-Block 52,7 % breit mittig, Spalten 23,5 %, Lead 1,4 vw, Zitat 2,2 vw, Anspruch: Bild 47 % links, Text ab 51,3 %,
+   Werte: 3 Karten à 31,6 % mit 1 % Abstand, Editorial: Text ab 43,4 %, Wir sehen dich: Bild 47,4 % quadratisch rechts,
+   Kontakt: Band 12 vw hoch, Hinweisbox 15,7 % breit rechts unten.
+   Scroll-Effekte: Variablen --va-p (Hero) und --va-e (Elemente), gesetzt von v12-about.js. Ohne JS und bei reduzierter
+   Bewegung gibt es keine Klasse .va-js, alles steht sofort im Endzustand.
+   ===================================================================== */
+
+.va-page { --va-g: max(1rem, var(--v10-inset)); --va-gap: clamp(3.5rem, 5.4vw, 6rem); --va-dim: 0.4; }
+.va-wide { width: calc(100% - 2 * var(--va-g)); margin-inline: auto; }
+.va-sec { padding-top: var(--va-gap); }
+.va-sec--contact { padding-top: var(--va-g); }
+.va-stack { display: grid; gap: var(--v10-s5); }
+
+/* ---------- 01 Vom Gründer: gepinnter Hero ---------- */
+.va-pin { --va-h: calc(100svh - var(--header-h) - var(--v10-s4)); }
+.va-hero { --va-p: 1; position: relative; isolation: isolate; display: grid; gap: var(--v10-s6); padding-bottom: var(--va-g); border-radius: 0 0 var(--r-card) var(--r-card); color: var(--paper); overflow: clip; }
+.va-hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--night); /* wie POUCH: tiefes Nachtblau statt Blue Deep */ }
+.va-hero__copy { display: grid; gap: var(--v10-s4); align-content: start; padding: clamp(3rem, 14vw, 5rem) var(--va-g) 0; min-width: 0; }
+.va-quote { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.65rem, 1.3rem + 1.6vw, 2rem); line-height: 1.18; letter-spacing: -0.03em; text-wrap: pretty; }
+.va-by { margin: 0; font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--on-night); line-height: 1.5; }
+.va-hero__media { margin: 0 var(--va-g); border-radius: var(--r-small); overflow: hidden; aspect-ratio: 1; background: var(--night); }
+.va-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 62% 20%; }
+/* Seitenwechsel: die dunkle Fläche fährt von oben ein (nur ohne reduzierte Bewegung) */
+@media (prefers-reduced-motion: no-preference) {
+  .va-hero::before { animation: va-in 700ms var(--v10-ease) both; }
+}
+@keyframes va-in { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
+/* Scroll-Scrub: Wörter gedimmt bis voll, Name danach, Porträt von dunkel auf hell */
+.va-js .va-w { opacity: var(--va-dim); }
+.va-js .va-w.is-on { opacity: 1; }
+.va-js .va-by { opacity: clamp(0, calc((var(--va-p) - 0.45) * 8), 1); }
+.va-js .va-hero__media { opacity: clamp(0, calc((var(--va-p) - 0.5) * 2.5), 1); }
+@media (min-width: 750px) { .va-hero__media, .va-claim__media { aspect-ratio: 4 / 3; } }
+@media (min-width: 990px) {
+  .va-js .va-pin { height: calc(var(--va-h) + 100svh); }
+  .va-js .va-hero { position: sticky; top: var(--header-h); }
+  .va-hero { display: block; height: var(--va-h); padding-bottom: 0; }
+  .va-hero__copy { position: absolute; z-index: 2; inset: 22% 0 auto 0; padding: 0 var(--va-g); }
+  .va-quote { font-size: clamp(2rem, 2.9vw, 3.6rem); max-width: 17em; }
+  .va-hero__media { position: absolute; z-index: 1; margin: 0; top: 29%; right: var(--va-g); bottom: var(--va-g); width: 54.7%; aspect-ratio: auto; }
+}
+
+/* ---------- 02 Unsere Geschichte: Lead allein, Spalten und Zitat blenden ein ---------- */
+.va-story { display: grid; gap: var(--v10-s6); width: 100%; margin-inline: auto; }
+.va-story__head { display: grid; gap: var(--v10-s3); }
+.va-story__lead { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 1.35rem; line-height: 1.3; letter-spacing: -0.015em; color: var(--ink); }
+.va-story__cols { display: grid; gap: var(--v10-s4); }
+.va-story__cols p { margin: 0; color: var(--ink); font-size: 0.95rem; line-height: 1.5; break-inside: avoid; }
+.va-bigquote { display: grid; gap: var(--v10-s3); margin: 0; }
+.va-bigquote p { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: 1.65rem; line-height: 1.2; letter-spacing: -0.025em; max-width: 14em; }
+.va-bigquote cite { font-style: normal; font-size: var(--v10-t-small); color: var(--ink-mid); }
+@media (min-width: 750px) {
+  .va-story { width: min(100%, 44rem); }
+  .va-story__cols { display: block; columns: 2; column-gap: 7.3%; }
+  .va-story__cols p { margin-bottom: 1.5rem; }
+  .va-story__cols p:last-child { margin-bottom: 0; }
+}
+@media (min-width: 990px) {
+  .va-story { width: 52.7%; gap: clamp(2rem, 2.5vw, 3rem); }
+  .va-story__lead { font-size: clamp(1.05rem, 1.4vw, 1.5rem); max-width: 40em; }
+  .va-story__cols p { font-size: clamp(0.8rem, 0.95vw, 0.95rem); }
+  .va-bigquote { margin-top: clamp(0.5rem, 2.5vw, 2rem); }
+  .va-bigquote p { font-size: clamp(1.6rem, 2.2vw, 2.6rem); }
+}
+
+/* ---------- 03 Unser Anspruch: Bild gepinnt, Titel oben, Akkordeons unten ---------- */
+.va-claim__stick { display: grid; gap: var(--v10-s5); }
+.va-claim__media { position: relative; margin: 0; border-radius: var(--r-small); overflow: hidden; aspect-ratio: 1; background: var(--blue-deep); }
+.va-claim__copy, .va-claim__head { display: contents; }
+.va-claim__label { order: 0; }
+.va-claim__media { order: 1; }
+.va-claim__title { order: 2; margin: 0; font-family: var(--font-display); font-weight: 300; font-size: 1.75rem; line-height: 1.12; letter-spacing: -0.03em; max-width: 14em; }
+.va-claim__acc { order: 3; }
+.va-claim .v10-acc summary { font-size: 1.35rem; min-height: 4.25rem; }
+@media (min-width: 750px) { .va-claim .v10-acc summary { font-size: clamp(1.15rem, 1.4vw + 0.5rem, 1.4rem); min-height: 3.5rem; } }
+@media (min-width: 990px) {
+  .va-claim__stick { min-height: 125svh; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--v10-s6); align-items: start; }
+  .va-claim__media { order: -1; position: sticky; top: calc(var(--header-h) + var(--v10-s4)); height: calc(100svh - var(--header-h) - var(--v10-s5) * 2); aspect-ratio: auto; }
+  .va-claim__copy { position: sticky; top: calc(var(--header-h) + var(--v10-s4)); display: grid; align-content: space-between; gap: var(--v10-s5); min-height: calc(100svh - var(--header-h) - var(--v10-s5) * 2); min-width: 0; }
+  .va-claim__head { display: grid; gap: var(--v10-s3); align-content: start; }
+  .va-claim__title { font-size: clamp(1.9rem, 2.75vw, 3.6rem); max-width: 12em; }
+  .va-claim .v10-acc summary { font-size: clamp(1.05rem, 1.4vw, 1.4rem); }
+}
+
+/* ---------- 04 Unsere Werte: weiße Karten, Icon oben links, Plus oben rechts, Wort unten ---------- */
+.va-cards { display: grid; gap: var(--v10-s3); align-items: start; }
+.va-card { min-width: 0; border-radius: var(--r-small); background: var(--paper); }
+.va-card summary { list-style: none; position: relative; display: grid; align-content: space-between; justify-items: start; gap: var(--v10-s4); min-height: 12rem; padding: 0.9rem 0.9rem 1.1rem; cursor: pointer; }
+.va-card summary::-webkit-details-marker { display: none; }
+.va-card .v10-plus { position: absolute; right: 0.9rem; top: 0.9rem; }
+.va-card[open] .v10-plus::after { content: '\2212'; }
+.va-card__word { font-family: var(--font-display); font-weight: 300; font-size: 1.75rem; letter-spacing: 0.02em; text-transform: uppercase; line-height: 1.1; overflow-wrap: anywhere; }
+.va-card__body { margin: 0; padding: 0 0.9rem 1.1rem; color: var(--ink-mid); font-size: 0.95rem; line-height: 1.6; }
+.va-ico { width: 4.5rem; height: 4.5rem; }
+.va-ico .a { fill: var(--blue-deep); }
+.va-ico .b { fill: var(--blue); }
+.va-ico .c { fill: var(--v10-sky); }
+@media (min-width: 750px) {
+  .va-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 1%; }
+  .va-card__word { font-size: clamp(1.15rem, 2.3vw, 2.5rem); }
+}
+
+/* ---------- Editorial-Zeile: Titel links zweizeilig, Text rechts ab 43,4 %, auf einer Linie ---------- */
+.va-erow { padding-block: var(--v10-s5); }
+.va-erow h2 { font-size: 1.75rem; max-width: 9em; }
+.va-erow .inline-link { padding-block: 0.95em; margin-block: -0.95em; }
+.va-erow p { font-size: 0.95rem; color: var(--ink); max-width: 46rem; line-height: 1.5; }
+@media (min-width: 990px) {
+  .va-erow { grid-template-columns: 43.4% minmax(0, 1fr); column-gap: 0; align-items: end; padding-block: clamp(1.25rem, 2vw, 2rem); }
+  .va-erow h2 { font-size: clamp(1.75rem, 2.6vw, 3rem); max-width: 8em; }
+  .va-erow p { font-size: clamp(0.8rem, 1.08vw, 1rem); }
+}
+
+/* ---------- 05 Wir sind IB-7: Label, Bild, Text (Handy), Text links und Bild rechts (Desktop) ---------- */
+.va-see { display: grid; gap: var(--v10-s5); }
+.va-see__media { margin: 0; border-radius: var(--r-small); overflow: hidden; aspect-ratio: 1; background: var(--mist); }
+.va-see__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; }
+.va-see__copy { display: grid; gap: var(--v10-s4); align-content: start; justify-items: start; }
+.va-see__copy p { margin: 0; max-width: 26rem; color: var(--ink); font-size: 0.95rem; line-height: 1.45; }
+.va-see__title { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: 1.75rem; line-height: 1.1; letter-spacing: -0.03em; }
+.va-see__copy .btn { margin-top: var(--v10-s3); }
+@media (min-width: 990px) {
+  .va-see { grid-template-columns: minmax(0, 1fr) 47.4%; grid-template-rows: auto 1fr; grid-template-areas: "label media" "copy media"; column-gap: var(--v10-s6); row-gap: var(--v10-s4); }
+  .va-see__label { grid-area: label; }
+  .va-see__media { grid-area: media; }
+  .va-see__copy { grid-area: copy; }
+  .va-see__title { font-size: clamp(1.75rem, 2.7vw, 3.2rem); }
+  .va-see__copy p { font-size: clamp(0.8rem, 0.95vw, 0.95rem); max-width: 21em; }
+}
+.va-see__label { order: 0; }
+.va-see__media { order: 1; }
+.va-see__copy { order: 2; }
+
+/* ---------- Kontakt: flaches Band mit Bild, Titel oben links, Hinweisbox rechts unten ---------- */
+.va-contact { position: relative; isolation: isolate; display: grid; margin: 0; border-radius: var(--r-small); overflow: clip; min-height: 21rem; background: var(--night); }
+.va-contact__in { display: grid; align-content: space-between; gap: var(--v10-s4); padding: clamp(1.1rem, 1.2vw + 0.6rem, 1.5rem); }
+.va-contact__top { display: grid; gap: var(--v10-s1); }
+.va-page .va-contact .v10-contact__title { font-size: 1.75rem; line-height: 1.1; }
+.va-page .va-contact .v10-contact__line { flex-direction: column; align-items: flex-start; margin: 0; gap: 0.1rem; }
+.va-page .va-contact .v10-contact__foot { margin-top: 0; }
+/* .v10-scrim färbt alle p, a und span weiß: Button und Hinweisbox behalten ihre eigene Farbe */
+.va-page .va-contact .btn--light, .va-page .va-contact .btn--light span { color: var(--blue-deep); }
+.va-page .va-contact .v10-contact__note { color: var(--ink); max-width: none; }
+@media (min-width: 750px) {
+  .va-contact { min-height: clamp(9rem, 12vw, 15rem); }
+  .va-contact__in { gap: var(--v10-s3); }
+  .va-page .va-contact .v10-contact__line { flex-direction: row; align-items: center; gap: 0.1rem 1.75rem; }
+  .va-page .va-contact .v10-contact__title { font-size: clamp(1.75rem, 2.3vw, 2.6rem); }
+  .va-page .va-contact .v10-contact__note { max-width: 15.7vw; min-width: 11rem; }
+}
+
+/* ---------- Newsletter direkt unter dem Kontaktband ---------- */
+.va-news { margin-top: var(--va-g); }
+
+/* ---------- Scroll-Scrub für Elemente: von gedimmt (fade) bzw. unsichtbar und tiefer (rise) auf voll ---------- */
+.va-js [data-va-fade] { opacity: calc(var(--va-dim) + var(--va-e, 0) * (1 - var(--va-dim))); }
+.va-js [data-va-rise] { opacity: var(--va-e, 0); transform: translateY(calc((1 - var(--va-e, 0)) * 3rem)); }
+
+/* =====================================================================
+   Runde 7 (v8): Editorial-Split (Weg, Vision, Premium), Fundus-Video-Panel, große Namens-Zeile
+   ===================================================================== */
+.va-edit { display: grid; gap: var(--v10-s5); }
+.va-edit__head { display: grid; gap: var(--v10-s3); align-content: start; }
+.va-edit__title { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: 1.75rem; line-height: 1.12; letter-spacing: -0.03em; max-width: 16em; }
+.va-edit__text { display: grid; gap: var(--v10-s4); justify-items: start; min-width: 0; }
+.va-edit__text > p { margin: 0; color: var(--ink); font-size: 0.95rem; line-height: 1.5; max-width: 38rem; }
+.va-edit__text .v10-acc { width: 100%; }
+.va-edit__text .v10-acc summary { font-size: 1.15rem; min-height: 3.5rem; }
+@media (min-width: 990px) {
+  .va-edit { grid-template-columns: 43.4% minmax(0, 1fr); align-items: start; }
+  .va-edit__title { font-size: clamp(1.75rem, 2.6vw, 3rem); max-width: 12em; }
+  .va-edit__text > p { font-size: clamp(0.8rem, 1.08vw, 1rem); }
+  .va-edit__text .v10-acc summary { font-size: clamp(1.05rem, 1.4vw, 1.4rem); }
+}
+
+.va-fund { position: relative; isolation: isolate; display: grid; min-height: 28rem; border-radius: var(--r-small); overflow: clip; background: var(--night); }
+.va-fund__in { display: grid; align-content: space-between; gap: var(--v10-s6); padding: clamp(1.1rem, 1.2vw + 0.6rem, 2rem); }
+.va-fund__title { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: clamp(2.1rem, 1.2rem + 3.4vw, 5rem); line-height: 1.04; letter-spacing: -0.035em; max-width: 11em; }
+.va-fund__tags { display: flex; flex-wrap: wrap; gap: var(--v10-s2); margin: 0; }
+@media (min-width: 750px) { .va-fund { min-height: min(72svh, 40rem); } }
+
+.va-name h2 { max-width: none; font-size: clamp(4rem, 22vw, 6rem); font-weight: 200; letter-spacing: -0.045em; line-height: 0.95; color: var(--blue-deep); }
+.va-name__text { display: grid; gap: var(--v10-s3); }
+.va-name p b { font-weight: 700; color: var(--blue-text); }
+@media (min-width: 750px) { .va-name h2 { font-size: clamp(5rem, 12vw, 11rem); } }

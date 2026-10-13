@@ -1,0 +1,264 @@
+/* =====================================================================
+   IB-7 Wissensseiten v5 (Entwurf 13.10.2026, Runde 3, Builder B)
+   Ergänzungen für ritual-v5, the-mind-v5, inhaltsstoffe-v5, geprueft-v5, vergleich-v5.
+   Lädt NACH ib7.css, v4.css, v10.css und v10-explain.css. Ändert keine Systemdatei.
+   Regeln wie v10.css: Mobile First für 375 px, nur min-width 750 / 990 px, nur Tokens aus ib7.css
+   (und color-mix mit Tokens), rund (Radius-Tokens), Touch-Ziele mind. 44 px,
+   nur transform und opacity werden animiert, keine Hover-only-Inhalte.
+   Klassen mit Präfix vw- gehören nur zu dieser Datei.
+   ===================================================================== */
+
+/* ---------- Helfer ---------- */
+.vw-fn { margin-top: var(--v10-s4); max-width: 46rem; }
+.vw-first { padding-top: var(--v10-s6); }
+.vw-first .v10-crumbs { margin-bottom: var(--v10-s4); }
+.vw-first .v10-label { margin-bottom: var(--v10-s4); }
+.vw-link-light, .vw-link-light:hover { color: var(--paper); }
+.vw-pgap-top { margin-top: 0; }
+#kapitel-pulse, #kapitel-aura, #herkunft, #inci, #vergleich, #rechnung, #problem, #prozess, #airless, #belege, #explorer, #zusammenspiel { scroll-margin-top: calc(var(--header-h) + 0.5rem); }
+.vw-h1 { max-width: 20ch; }
+.vw-headrow { display: grid; gap: var(--v10-s5); align-items: end; }
+.vw-resthead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--v10-s3) var(--v10-s5); }
+.vw-count { font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--on-night); }
+@media (min-width: 990px) { .vw-headrow { grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--v10-s7); } }
+
+/* Zeilen aus Überschrift und Text (the-mind, inhaltsstoffe): Haarlinien treffen sich */
+.vw-erows { display: grid; }
+.vw-erows .v10-erow + .v10-erow { border-top: 0; }
+.vw-erows .v10-erow p { overflow-wrap: break-word; }
+.vw-erows a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 0.18em; }
+
+/* ---------- Zitat-Hero (the-mind) ---------- */
+.vw-qhero { margin-top: var(--v10-s2); }
+.vw-qhero__foot { display: grid; gap: var(--v10-s4); justify-items: start; }
+
+/* ---------- Dunkles Panel mit Kennzahlen (the-mind) ---------- */
+.vw-mpanel { margin-block: var(--v10-s2); }
+.vw-mpanel .v10-panel__inner { display: grid; gap: var(--v10-s6); padding-block: clamp(1.75rem, 1.2rem + 3vw, 4rem); }
+.vw-mpanel__title { margin: 0; max-width: 26ch; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.55rem, 1.1rem + 2.2vw, 3rem); line-height: 1.15; letter-spacing: -0.03em; color: var(--paper); text-wrap: balance; }
+.vw-bignums .v10-bignum { border-top-color: color-mix(in srgb, var(--on-night) 35%, transparent); }
+.vw-bignums .v10-bignum b { color: var(--paper); overflow-wrap: anywhere; }
+@media (min-width: 750px) { .vw-bignums { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--v10-s6); } }
+
+/* Wort-Reihe: Ziffern klein vor dem Wort (POUCH) */
+.vw-wordsrow small { display: block; margin-bottom: 0.15em; }
+.vw-wordsrow li { display: inline-block; }
+
+/* ---------- Prinzip-Kurve (the-mind) ---------- */
+.vw-curve { margin: var(--v10-s5) auto 0; max-width: 34rem; display: grid; gap: var(--v10-s2); justify-items: center; }
+.vw-curve svg { width: 100%; height: auto; display: block; overflow: visible; }
+.vw-curve__zone { fill: var(--mist); }
+.vw-curve__axis { fill: none; stroke: var(--ink-mid); stroke-width: 1.25; stroke-linecap: round; }
+.vw-curve__line { fill: none; stroke: var(--blue-deep); stroke-width: 2.5; stroke-linecap: round; }
+.vw-curve__dash { fill: none; stroke: var(--blue); stroke-width: 1.25; stroke-dasharray: 3 5; }
+.vw-curve__opt { fill: var(--blue-deep); stroke: var(--paper); stroke-width: 3; }
+.vw-curve__max { fill: var(--paper); stroke: var(--ink-mid); stroke-width: 2; }
+.vw-curve__label { font-family: var(--font-display); font-size: 12px; letter-spacing: 0.06em; fill: var(--ink-mid); }
+.vw-curve__strong { font-family: var(--font-display); font-weight: 500; font-size: 13px; letter-spacing: 0.06em; fill: var(--blue-deep); }
+
+/* Quellen-Liste (the-mind): Kategorie, Beispiel, Beleg-Status */
+.vw-src { list-style: none; margin: var(--v10-s5) 0 0; padding: 0; display: grid; border-radius: var(--r-card); background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); overflow: hidden; }
+.vw-src li { margin: 0; display: grid; gap: 0.15rem; padding: var(--v10-s4) var(--v10-s5); border-bottom: var(--v10-hair); overflow-wrap: anywhere; }
+.vw-src li:last-child { border-bottom: 0; }
+.vw-src span { font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--ink); }
+.vw-src i { font-style: normal; color: var(--ink-mid); font-size: var(--v10-t-small); }
+.vw-src em { font-style: normal; font-size: var(--v10-t-micro); color: var(--blue-deep); }
+@media (min-width: 750px) { .vw-src li { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr) auto; column-gap: var(--v10-s5); align-items: baseline; } }
+
+/* ---------- Prüfberichte (geprueft): runde Liste ---------- */
+.vw-studies .v10-studies__list { border-radius: var(--r-card); overflow: hidden; background: var(--paper); }
+.v10-studies li { overflow-wrap: anywhere; }
+
+/* ---------- Blog-Zeile (ritual) ---------- */
+.vw-blog { margin-top: var(--v10-s5); }
+
+/* ---------- Duo-Band als Abschluss ---------- */
+.vw-end { padding-top: 0; }
+.vw-duoband { padding: var(--v10-s5); }
+@media (min-width: 750px) { .vw-duoband { padding: var(--v10-s5) var(--v10-s6); column-gap: var(--v10-s6); } .vw-duoband img { width: 6rem; height: 7.5rem; } }
+.vw-duoband .v10-actions { gap: var(--v10-s3); }
+
+/* ---------- Benachrichtigen (Newsletter-Band, ritual): Rollen als runde Auswahlfelder ---------- */
+.vw-notify { max-width: 40rem; width: 100%; margin: 0; padding: 0; border: 0; min-width: 0; display: grid; gap: var(--v10-s2); text-align: left; }
+.vw-notify legend { padding: 0; margin-bottom: var(--v10-s2); }
+.vw-notify__opt { display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: var(--v10-s3); align-items: center; min-height: 3.25rem; padding: 0.5rem var(--v10-s4); border-radius: var(--r-small); border: 1px solid color-mix(in srgb, var(--paper) 45%, transparent); cursor: pointer; font-family: var(--font-display); font-size: 0.95rem; color: var(--paper); }
+.vw-notify__opt input { width: 1.1rem; height: 1.1rem; margin: 0; accent-color: var(--paper); }
+.vw-notify__opt small { display: block; font-family: var(--font-body); font-size: var(--v10-t-small); color: var(--on-night); }
+.vw-notify__opt:has(input:checked) { background: color-mix(in srgb, var(--paper) 14%, transparent); border-color: var(--paper); }
+.vw-notify__opt:has(input:focus-visible) { outline: 2px solid var(--paper); outline-offset: 3px; }
+@media (min-width: 750px) { .vw-notify { grid-template-columns: repeat(3, minmax(0, 1fr)); } .vw-notify legend { grid-column: 1 / -1; } }
+
+/* ---------- Vergleich: Optimum-Skala ---------- */
+.vw-scalegrid { display: grid; gap: var(--v10-s6); align-items: center; }
+.vw-scale { display: grid; gap: var(--v10-s2); padding: var(--v10-s5); border-radius: var(--r-card); background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
+.vw-scale__legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; padding-bottom: var(--v10-s3); font-size: var(--v10-t-small); color: var(--ink-mid); }
+.vw-scale__legend span { display: inline-flex; align-items: center; gap: 0.5rem; }
+.vw-dot { display: inline-block; flex: none; width: 0.9rem; height: 0.9rem; border-radius: 50%; }
+.vw-dot--mix { background: var(--paper); border: 2px solid var(--ink-soft); }
+.vw-dot--ib7 { background: var(--blue); box-shadow: 0 0 0 4px color-mix(in srgb, var(--blue) 22%, transparent); }
+.vw-scale__rows { list-style: none; margin: 0; padding: 0; }
+.vw-srow { display: grid; gap: 0.5rem; margin: 0; padding-block: 0.85rem; border-top: var(--v10-hair); }
+.vw-srow__head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.vw-srow__name { font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; }
+.vw-srow__verdict { font-size: 0.8rem; font-weight: 700; color: var(--ink-mid); }
+.vw-srow__track { position: relative; height: 1.5rem; container-type: inline-size; }
+.vw-srow__track::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 2px; transform: translateY(-50%); border-radius: 1px; background: color-mix(in srgb, var(--ink-soft) 45%, transparent); }
+.vw-srow__zone { position: absolute; left: 42%; width: 16%; top: 0.15rem; bottom: 0.15rem; border-radius: 0.5rem; background: color-mix(in srgb, var(--blue) 18%, transparent); }
+.vw-srow__mark, .vw-srow__ib7 { position: absolute; top: 50%; margin: -0.45rem 0 0 -0.45rem; }
+.vw-srow__ib7 { left: 50%; }
+.vw-srow__mark { left: calc(50% + var(--d, 0) * 1%); }
+.vw-srow--p90 { --d: 40; } .vw-srow--p80 { --d: 30; } .vw-srow--p32 { --d: -18; } .vw-srow--p24 { --d: -26; } .vw-srow--p5 { --d: -45; }
+.vw-srow:nth-child(2) { --i: 1; } .vw-srow:nth-child(3) { --i: 2; } .vw-srow:nth-child(4) { --i: 3; } .vw-srow:nth-child(5) { --i: 4; }
+/* die Cocktail-Punkte wandern einmalig aus dem Optimum auf ihre Position (nur transform) */
+@supports (width: 1cqw) {
+  .vw-srow__mark { left: 50%; transform: translateX(calc(var(--d, 0) * 1cqw)); transition: transform 1100ms var(--v10-ease); transition-delay: calc(var(--i, 0) * 120ms); }
+  .v10-js .vw-scale:not(.is-in) .vw-srow__mark { transform: none; }
+}
+.vw-scale__ends { display: flex; justify-content: space-between; padding-top: 0.75rem; border-top: var(--v10-hair); font-size: 0.8rem; color: var(--ink-mid); }
+.vw-scale__ends b { color: var(--blue-deep); font-weight: 700; }
+@media (min-width: 990px) {
+  .vw-scalegrid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); column-gap: var(--v10-s8); }
+  .vw-scalegrid__note { grid-column: 1 / -1; }
+}
+
+/* ---------- Vergleich: Beispielrechnung und Rechner ---------- */
+.vw-cost { display: grid; gap: var(--v10-s6); align-items: start; }
+.vw-cost__fn { max-width: 56rem; }
+.vw-calc { display: grid; gap: var(--v10-s3); padding: var(--v10-s5); border-radius: var(--r-card); background: var(--porcelain); }
+.vw-calc p { margin: 0; }
+.vw-calc__fields { display: grid; gap: var(--v10-s3); }
+.vw-field { display: grid; gap: 0.35rem; }
+.vw-field label { font-size: var(--v10-t-small); color: var(--ink-mid); }
+.vw-field input { min-height: 3.25rem; width: 100%; padding: 0 1.2rem; border-radius: var(--v10-r-ctl); border: 1px solid var(--line); background: var(--paper); color: var(--ink); font: inherit; }
+.vw-calc__out { padding: var(--v10-s3) var(--v10-s4); border-radius: var(--r-small); background: var(--mist); color: var(--ink); font-size: var(--v10-t-small); }
+@media (min-width: 750px) { .vw-calc__fields { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 990px) { .vw-cost { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); column-gap: var(--v10-s8); } .vw-calc__fields { grid-template-columns: minmax(0, 1fr); } }
+.vw-note--night { color: var(--on-night); }
+
+/* ---------- Kaufleiste: mittlere Spalte darf schrumpfen, damit der Button bei 320 px nicht aus dem Bild läuft ---------- */
+.sticky-buy.v10-buybar > div { min-width: 0; }
+
+/* ---------- Sichtbare Treffer beim Anspringen eines Wirkstoffs ---------- */
+.vw-flash { animation: vw-flash 1400ms var(--v10-ease) 1; }
+@keyframes vw-flash { 0% { outline: 2px solid var(--blue); outline-offset: 6px; } 100% { outline: 2px solid transparent; outline-offset: 6px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .vw-srow__mark { transition: none; }
+  .vw-flash { animation: none; }
+}
+
+/* Blog-Karte mit Bild: "Weiterlesen" auf dem Foto in Weiß (Kontrast) */
+.vw-blog .v10-blog__big .v10-blog__more { color: var(--paper); }
+
+.vw-nb { white-space: nowrap; }
+
+/* Hautquerschnitt: Handy mit eigener Höhe, damit die Legende unter den Schichten sitzt und nichts verdeckt */
+.v10-skin .v10-scene__vis { aspect-ratio: 360 / 296; min-height: 0; }
+@media (min-width: 750px) { .v10-skin .v10-scene__vis { aspect-ratio: auto; min-height: 24rem; } }
+.v10-ctable--light caption { color: var(--ink-mid); }
+
+
+/* Glas-Panel: Lead bleibt links neben den Flaschen im Hintergrund lesbar */
+.v10-glass__head .v10-lead { color: var(--paper); max-width: 22rem; }
+
+/* Szenen bei 320 px: Bildfläche darf nicht breiter werden als die Spalte (min-height plus Seitenverhältnis) */
+.v10-scene__vis { min-width: 0; max-width: 100%; }
+
+/* =====================================================================
+   Runde 4: Erklärgrafiken mit Zustand je Schritt (data-step der Szene)
+   Ohne JS und bei reduzierter Bewegung fehlt data-step: die Grafik zeigt den Endzustand.
+   ===================================================================== */
+
+/* ---------- THE MIND: Prozess als Punktfeld (Quellen, Aufgaben, Kombinationen, Formel) ---------- */
+.vw-proc .v10-scene__vis { aspect-ratio: 320 / 190; background: var(--v10-tone-3); }
+@media (min-width: 990px) { .vw-proc .v10-scene__vis { aspect-ratio: auto; } }
+.vw-proc { --cl: 0; --ln: 0; --bt: 0; }
+.vw-proc[data-step="1"] { --cl: 1; }
+.vw-proc[data-step="2"] { --cl: 1; --ln: 1; }
+.vw-proc[data-step="3"], .vw-proc:not([data-step]) { --bt: 1; }
+.vw-mf { color: var(--paper); }
+.vw-mf text { font-family: var(--font-display); font-size: 12px; letter-spacing: 0.04em; fill: currentColor; }
+.vw-mf .d { --tx: var(--x0); --ty: var(--y0); fill: currentColor; opacity: var(--o); transform: translate(calc(var(--tx) * 1px), calc(var(--ty) * 1px)); transition: transform 1000ms var(--v10-ease), opacity 700ms var(--v10-ease); transition-delay: calc(var(--k) * 6ms); }
+.vw-proc[data-step="1"] .vw-mf .d { --tx: var(--x1); --ty: var(--y1); opacity: 0.9; }
+.vw-proc[data-step="2"] .vw-mf .d { --tx: var(--x1); --ty: var(--y1); opacity: 0.3; }
+.vw-proc[data-step="2"] .vw-mf .d:is(.s, .u) { opacity: 1; }
+.vw-proc:is([data-step="3"], :not([data-step])) .vw-mf .d { --tx: var(--x3); --ty: var(--y3); opacity: 0.12; }
+.vw-proc:is([data-step="3"], :not([data-step])) .vw-mf .d.s { opacity: 1; stroke: var(--v10-accent-night); stroke-width: 5; stroke-opacity: 0.4; paint-order: stroke; }
+.vw-mf .cl { opacity: calc(var(--cl) * (1 - var(--bt))); transition: opacity 600ms var(--v10-ease) 400ms; }
+.vw-mf .ln { stroke: currentColor; stroke-width: 0.9; opacity: 0; transition: opacity 500ms var(--v10-ease); }
+.vw-proc[data-step="2"] .vw-mf .ln { opacity: 0.75; transition-delay: 500ms; }
+.vw-proc[data-step="2"] .vw-mf .ln.w { opacity: 0.1; animation: vw-weak 1400ms var(--v10-ease) 1100ms both; }
+@keyframes vw-weak { from { opacity: 0.75; } }
+.vw-mf .bt { opacity: var(--bt); transition: opacity 700ms var(--v10-ease) 300ms; }
+.vw-mf .bt.soon { opacity: calc(var(--bt) * 0.45); }
+.vw-mf .bt rect { fill: none; stroke: currentColor; stroke-width: 1.2; }
+.vw-mf .bt.soon rect { stroke-dasharray: 3 3; }
+.vw-mf .nm { opacity: calc(var(--bt) * 0.85); transition: opacity 700ms var(--v10-ease) 300ms; }
+.vw-mf .nt { opacity: 0; transition: opacity 500ms var(--v10-ease) 600ms; }
+.vw-proc[data-step="2"] .vw-mf .nt { opacity: 0.8; }
+
+/* ---------- Geprüft: Beleg-Links in den Schritten und Prüfmarke ---------- */
+.vw-beleg { position: relative; display: inline; color: inherit; font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; text-decoration: underline; text-underline-offset: 0.25em; }
+.vw-seal { position: absolute; left: var(--v10-s2); bottom: var(--v10-s2); display: grid; gap: 0.1rem; max-width: 8.5rem; padding: 0.5rem 0.7rem; border-radius: var(--r-small); background: var(--paper); color: var(--ink); font-size: var(--v10-t-micro); line-height: 1.35; opacity: 0; transform: translateY(0.4rem); transition: opacity 500ms var(--v10-ease), transform 500ms var(--v10-ease); }
+.vw-seal b { font-family: var(--font-display); font-weight: 500; font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--blue-deep); }
+.v10-air[data-step="2"] .vw-seal, .v10-air:not([data-step]) .vw-seal { opacity: 1; transform: none; }
+@media (min-width: 990px) { .vw-seal { left: var(--v10-s4); bottom: var(--v10-s4); max-width: 11rem; padding: 0.75rem 1rem; font-size: var(--v10-t-small); } }
+.v10-studies li:target { background: var(--mist); }
+#beleg-verpackung, #beleg-stabilitaet, #beleg-patch { scroll-margin-top: calc(var(--header-h) + 1rem); }
+.vw-leaf .v10-tone { position: absolute; inset: 0; opacity: 1; }
+.vw-leaf { position: relative; }
+.v10-glass .v10-gtable thead th { font-size: clamp(0.95rem, 0.5rem + 1.8vw, 2.4rem); }
+
+/* ---------- Vergleich: Hautquerschnitt mit Cocktail als erstem Schritt ---------- */
+.v10-skin.vw-skin4[data-step="0"] { --a: 0; --b: 0; --c: 0; }
+.v10-skin.vw-skin4[data-step="1"] { --a: 1; --b: 0; --c: 0; }
+.v10-skin.vw-skin4[data-step="2"] { --a: 1; --b: 1; --c: 0; }
+.v10-skin.vw-skin4[data-step="3"] { --a: 1; --b: 1; --c: 1; }
+.vw-skin4 .v10-skin__legend { transition: opacity 400ms var(--v10-ease); }
+.vw-skin4[data-step="0"] .v10-skin__legend { opacity: 0; }
+.vw-skin4[data-step="0"] .v10-skin__svg .drop, .vw-skin4[data-step="0"] .v10-skin__svg .vap { opacity: 0; }
+.vw-skin4 .cock { opacity: 0; transition: opacity 500ms var(--v10-ease); }
+.vw-skin4[data-step="0"] .cock { opacity: 1; }
+.vw-skin4 .v10-skin__svg .cock text { font-size: 12.5px; fill: var(--ink); }
+.vw-skin4 .v10-skin__svg .cock .mute, .vw-skin4 .v10-skin__svg .cock .cap { fill: var(--ink-mid); }
+.vw-skin4 .cock .pl { fill: var(--mist); stroke: var(--blue); stroke-width: 1.2; }
+.vw-skin4 .cock .pl.no { fill: none; stroke: var(--ink-soft); stroke-dasharray: 4 3; }
+
+/* ---------- Ritual: Szene "Die Reihenfolge" ---------- */
+.vw-order .v10-scene__vis { aspect-ratio: 320 / 190; }
+@media (min-width: 990px) { .vw-order .v10-scene__vis { aspect-ratio: auto; } }
+.vw-order { --cl: 0; --d: 0; --cr: 0; }
+.vw-order[data-step="1"] { --cl: 1; --d: 1; }
+.vw-order[data-step="2"], .vw-order:not([data-step]) { --cl: 1; --d: 1; --cr: 1; }
+.vw-ord .tx { font-family: var(--font-display); font-size: 12px; letter-spacing: 0.04em; fill: var(--ink-mid); }
+.vw-ord .s1 { fill: var(--mist); }
+.vw-ord .s2 { fill: color-mix(in srgb, var(--blue) 22%, var(--paper)); }
+.vw-ord .s3 { fill: color-mix(in srgb, var(--blue) 36%, var(--paper)); }
+.vw-ord .imp { fill: var(--ink-mid); opacity: calc(1 - var(--cl)); transition: opacity 800ms var(--v10-ease); }
+.vw-ord .dr { fill: var(--blue-deep); opacity: var(--d); transform: translateY(calc(var(--d) * var(--dy) * 1px)); transition: transform 900ms var(--v10-ease), opacity 600ms var(--v10-ease); }
+.vw-ord .cr { fill: var(--paper); stroke: var(--blue); stroke-width: 1.5; transform-box: fill-box; transform-origin: 0 50%; transform: scaleX(var(--cr)); transition: transform 800ms var(--v10-ease); }
+.vw-ord .pl rect { fill: var(--mist); transition: fill 400ms var(--v10-ease); }
+.vw-ord .pl text { font-family: var(--font-display); font-size: 12px; letter-spacing: 0.04em; fill: var(--ink); transition: fill 400ms var(--v10-ease); }
+.vw-order[data-step="0"] .pl0 rect, .vw-order[data-step="1"] .pl1 rect, .vw-order[data-step="2"] .pl2 rect, .vw-order:not([data-step]) .pl2 rect { fill: var(--blue-deep); }
+.vw-order[data-step="0"] .pl0 text, .vw-order[data-step="1"] .pl1 text, .vw-order[data-step="2"] .pl2 text, .vw-order:not([data-step]) .pl2 text { fill: var(--paper); }
+.vw-ord .wr { opacity: 0; transition: opacity 600ms var(--v10-ease) 400ms; }
+.vw-order[data-step="2"] .wr, .vw-order:not([data-step]) .wr { opacity: 1; }
+.vw-ord .wrs { fill: color-mix(in srgb, var(--blue) 22%, var(--paper)); }
+.vw-ord .wrc { fill: var(--paper); stroke: var(--ink-mid); stroke-width: 1.2; stroke-dasharray: 3 3; }
+.vw-ord .wrd { fill: var(--blue-deep); }
+.vw-ord .wrx { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; }
+
+/* Beleg-Link: Fläche zum Tippen größer als die Textzeile, ohne Höhe zu kosten (44 px) */
+.vw-beleg::after { content: ''; position: absolute; inset: -0.85rem -0.5rem; }
+
+/* Niedrige Handys: im System gelöst (v10-explain.css Runde 5, Basis kompakt, ab min-height 740 px großzügiger) */
+@media (min-width: 990px) { .vw-proc .v10-scene__vis, .vw-order .v10-scene__vis { aspect-ratio: auto; } }
+.vw-ord .lb { transition: opacity 500ms var(--v10-ease); }
+.vw-ord .lb0 { opacity: calc(1 - var(--cl)); }
+.vw-ord .lb1 { opacity: calc(var(--d) * (1 - var(--cr))); }
+.vw-ord .lb2 { opacity: var(--cr); }
+
+/* Glas-Tabelle bei 320 px: engere Zellen, damit "Versprechen" nicht abgeschnitten wird */
+.v10-glass .v10-gtable th, .v10-glass .v10-gtable td { padding-inline: 0.45rem; }
+.v10-glass .v10-gtable tbody th { padding-left: 0; }
+@media (min-width: 750px) { .v10-glass .v10-gtable th, .v10-glass .v10-gtable td { padding-inline: 1rem; } .v10-glass .v10-gtable tbody th { padding-left: 0; } }

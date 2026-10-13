@@ -1,0 +1,267 @@
+/* =====================================================================
+   IB-7 Marke und Einstieg, System v10 (Builder C, Runde 3, 13.10.2026)
+   Seiten: index-v10, ueber-uns-v5, bewertungen-v5, hilfe-v5, ritual-check-v5.
+   Lädt NACH v10.css. Nur Ergänzungen, die v10.css nicht kennt, alle mit Präfix .vm-.
+   Elementstil POUCH (drinkpouch.com), rund wie v10, kühle Blauwelt.
+   Regeln wie v10.css: Mobile First (375 px), nur min-width 750 / 990 px, nur Tokens und color-mix mit Tokens,
+   Touch-Ziele mind. 44 px, Spalten minmax(0, 1fr).
+   Kandidaten für v10.css: .vm-feature, .vm-leaf, .vm-pack, .vm-see, .vm-cform, .vm-quiz.
+   ===================================================================== */
+
+/* ---------- Anker unter Header ---------- */
+.vm-anchor { scroll-margin-top: calc(var(--header-h) + 1.5rem); }
+.vm-narrow { width: min(100%, 52rem); margin-inline: auto; }
+.vm-stack { display: grid; gap: var(--v10-s6); }
+.v10 .v10-label a { color: inherit; }
+
+/* ---------- Startseite: Hero (Florians Video bleibt), POUCH: Wortmarke senkrecht links, Text unten links ---------- */
+.vm-hero { border-radius: 0 0 var(--r-card) var(--r-card); }
+.vm-hero .hero__inner { min-height: min(40rem, 84svh); align-content: end; padding-bottom: clamp(2.5rem, 2rem + 3vw, 4.5rem); }
+.vm-hero .hero__copy { max-width: 40rem; gap: var(--v10-s3); }
+.vm-hero .display { font-size: clamp(2.2rem, 1.5rem + 3.4vw, 4.4rem); }
+.vm-hero .hero__proof { margin: var(--v10-s2) 0 0; padding: 0; }
+.vm-hero .hero__proof .ph { color: var(--paper); border-color: color-mix(in srgb, var(--paper) 65%, transparent); }
+.vm-hero__mark { display: none; }
+.vm-hero__tag { position: absolute; left: var(--gutter); bottom: 1rem; z-index: 1; font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--paper); }
+@media (min-width: 990px) {
+  .vm-hero__mark { display: block; position: absolute; left: var(--gutter); top: calc(var(--header-h) + 1.5rem); bottom: 3rem; z-index: 1; width: clamp(5rem, 8vw, 8rem); font-family: var(--font-display); font-weight: 200; font-size: clamp(7rem, 11vw, 11rem); line-height: 0.8; letter-spacing: -0.06em; writing-mode: vertical-rl; transform: rotate(180deg); text-align: end; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--paper) 55%, transparent); pointer-events: none; }
+  .vm-hero .hero__inner { padding-left: clamp(9rem, 14vw, 14rem); }
+  .vm-hero__tag { left: auto; right: var(--gutter); bottom: 2rem; }
+}
+
+/* ---------- Section-Kopf POUCH: Label links, Titel mittig, Text rechts ---------- */
+.vm-head3 { display: grid; gap: var(--v10-s3); margin-bottom: var(--v10-s6); }
+.vm-head3 .v10-h2 { font-size: clamp(1.5rem, 1.3rem + 1vw, 2.1rem); font-weight: 400; letter-spacing: -0.02em; max-width: none; }
+.vm-head3__text { margin: 0; max-width: 24rem; color: var(--ink-mid); font-size: var(--v10-t-small); }
+@media (min-width: 990px) { .vm-head3 { grid-template-columns: minmax(0, 0.2fr) minmax(0, 0.45fr) minmax(0, 0.35fr); column-gap: var(--v10-s5); align-items: start; } .vm-head3__text { justify-self: end; } }
+.vm-below { margin-top: var(--v10-s6); }
+
+/* ---------- Produkt-Feature-Panel (POUCH "03 / THE SCIENCE"): Text links auf Blue Deep, Bild rechts ---------- */
+.vm-feature { display: grid; }
+.vm-feature__copy { display: grid; gap: var(--v10-s4); align-content: start; padding: clamp(1.25rem, 1rem + 2vw, 2.75rem); }
+.vm-feature__title { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: clamp(2rem, 1.4rem + 2.6vw, 3.6rem); line-height: 1.05; letter-spacing: -0.035em; color: var(--paper); max-width: 14ch; }
+.vm-feature__list { list-style: none; margin: var(--v10-s2) 0 0; padding: 0 0 0 var(--v10-s5); display: grid; gap: var(--v10-s4); position: relative; counter-reset: vmf; }
+.vm-feature__list::before { content: ''; position: absolute; left: 0; top: 0.4rem; bottom: 0.4rem; width: 1px; background: color-mix(in srgb, var(--paper) 40%, transparent); }
+.vm-feature__item { margin: 0; display: grid; gap: 0.3rem; counter-increment: vmf; position: relative; }
+.vm-feature__item::before { content: counter(vmf, decimal-leading-zero); position: absolute; left: calc(var(--v10-s5) * -1 - 0.1rem); top: 0.15rem; width: 1.6rem; font-family: var(--font-display); font-size: 0.65rem; letter-spacing: 0.04em; color: var(--paper); background: var(--blue-deep); text-align: center; transform: translateX(-35%); }
+.vm-feature__item b { font-family: var(--font-display); font-weight: 400; font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--paper); }
+.vm-feature__item span { color: var(--on-night); font-size: 0.95rem; max-width: 34ch; }
+.vm-feature__buy { display: grid; gap: var(--v10-s3); margin-top: var(--v10-s2); }
+.vm-feature__buy .v10-price { color: var(--paper); }
+.vm-feature__buy .v10-price__was, .vm-feature__buy .v10-price__unit { color: var(--on-night); }
+.vm-feature__buy .v10-price__save { background: color-mix(in srgb, var(--paper) 16%, transparent); color: var(--paper); }
+.vm-feature__chips { display: flex; flex-wrap: wrap; gap: 0.4rem; list-style: none; margin: 0; padding: 0; }
+.vm-feature__chips a { display: inline-flex; align-items: center; min-height: var(--v10-touch); padding: 0 0.9rem; border-radius: var(--r-pill); border: 1px solid color-mix(in srgb, var(--paper) 45%, transparent); color: var(--paper); font-family: var(--font-display); font-size: 0.78rem; letter-spacing: 0.04em; text-decoration: none; }
+@media (hover: hover) { .vm-feature__chips a:hover { background: var(--paper); color: var(--blue-deep); } }
+.vm-feature__media { margin: var(--v10-s2); border-radius: var(--r-media); overflow: hidden; aspect-ratio: 4 / 3; background: var(--blue); }
+.vm-feature__media img { width: 100%; height: 100%; object-fit: cover; }
+@media (min-width: 990px) {
+  .vm-feature { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); min-height: 38rem; }
+  .vm-feature__media { margin: var(--v10-inset); aspect-ratio: auto; }
+}
+
+/* ---------- "One pack. Every formula." (POUCH Split): Text links, Bild im runden Panel rechts ---------- */
+.vm-pack { display: grid; gap: var(--v10-s5); }
+.vm-pack__copy { display: grid; gap: var(--v10-s4); align-content: start; justify-items: start; }
+.vm-pack__title { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: var(--v10-t-h2); line-height: 1.1; letter-spacing: -0.03em; max-width: 14ch; }
+.vm-pack__list { list-style: none; margin: var(--v10-s2) 0 0; padding: 0; display: grid; gap: 0.35rem; font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--ink); }
+.vm-pack__media { margin: 0; border-radius: var(--r-media); overflow: hidden; background: var(--paper); aspect-ratio: 4 / 3; }
+.vm-pack__media img { width: 100%; height: 100%; object-fit: cover; }
+@media (min-width: 990px) {
+  .vm-pack { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); column-gap: var(--v10-s7); align-items: stretch; }
+  .vm-pack__copy { align-content: space-between; padding-block: 0 var(--v10-s2); }
+  .vm-pack__media { aspect-ratio: auto; min-height: 30rem; }
+}
+
+/* ---------- Über uns: Blatt-Bild + Akkordeon (POUCH "03 / OUR ETHOS OF RESPECT") ---------- */
+.vm-leaf { display: grid; gap: var(--v10-s5); }
+.vm-leaf__media { margin: 0; border-radius: var(--r-media); overflow: hidden; aspect-ratio: 4 / 3; background: var(--mist); }
+.vm-leaf__media img { width: 100%; height: 100%; object-fit: cover; }
+.vm-leaf__copy { display: grid; gap: var(--v10-s5); align-content: start; }
+.vm-leaf__title { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: var(--v10-t-h2); line-height: 1.1; letter-spacing: -0.03em; max-width: 14ch; }
+@media (min-width: 990px) { .vm-leaf { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); column-gap: var(--v10-s7); align-items: stretch; } .vm-leaf__media { aspect-ratio: auto; min-height: 30rem; } .vm-leaf__copy { padding-top: var(--v10-s2); } }
+
+/* ---------- Über uns: "Wir sehen dich." (POUCH "05 / WE ARE POUCH") ---------- */
+.vm-see { display: grid; gap: var(--v10-s5); }
+.vm-see__copy { display: grid; gap: var(--v10-s4); align-content: start; justify-items: start; }
+.vm-see__copy p { margin: 0; max-width: 26rem; color: var(--ink); font-size: 0.95rem; }
+.vm-see__title { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: var(--v10-t-h2); line-height: 1.1; letter-spacing: -0.03em; }
+.vm-see__media { margin: 0; border-radius: var(--r-media); overflow: hidden; aspect-ratio: 4 / 5; background: var(--mist); }
+.vm-see__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+@media (min-width: 990px) { .vm-see { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); column-gap: var(--v10-s7); align-items: stretch; } .vm-see__media { aspect-ratio: auto; min-height: 36rem; } .vm-see__copy { padding-top: var(--v10-s2); } }
+
+/* ---------- Über uns: Zitat-Hero und Zweispalter etwas zentrierter wie POUCH ---------- */
+.vm-qhero .v10-qhero__media img { object-position: 62% 25%; }
+.vm-cols { width: min(100%, 52rem); margin-inline: auto; display: grid; gap: var(--v10-s5); }
+.vm-cols .v10-cols__lead { font-size: clamp(1.15rem, 1.05rem + 0.5vw, 1.4rem); }
+
+/* ---------- Bewertungen ---------- */
+.vm-pagehead { display: grid; gap: var(--v10-s3); margin-bottom: var(--v10-s6); }
+.vm-pagehead .v10-h1 { font-size: clamp(2.2rem, 1.4rem + 3.6vw, 4.5rem); line-height: 1.04; letter-spacing: -0.04em; max-width: 14ch; }
+.vm-pagehead__text { margin: 0; max-width: 34rem; color: var(--ink-mid); }
+.vm-protect { display: grid; gap: var(--v10-s2); padding: var(--v10-s4); border-radius: var(--r-small); background: var(--paper); max-width: 20rem; }
+.vm-protect b { font-family: var(--font-display); font-weight: 400; font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; }
+.vm-protect p { margin: 0; color: var(--ink-mid); font-size: var(--v10-t-small); line-height: 1.7; }
+.vm-more { display: flex; justify-content: center; margin-top: var(--v10-s5); }
+.vm-revlist .v10-revlist__item .v10-revlist__stars { display: inline-flex; }
+.vm-revlist .stars svg { width: 0.85rem; height: 0.85rem; }
+.vm-widget .v10-ts { min-height: 24rem; }
+
+/* ---------- Hilfe: FAQ-Seite (POUCH faq) ---------- */
+.vm-faqpage__head { display: grid; gap: var(--v10-s3); margin-bottom: var(--v10-s6); }
+.vm-faqpage__head .v10-h1 { font-size: clamp(2.4rem, 1.5rem + 4vw, 5rem); line-height: 1.02; letter-spacing: -0.04em; max-width: 12ch; }
+.vm-faqnote { margin: 0; padding: var(--v10-s3) var(--v10-s3) var(--v10-s2); border-top: var(--v10-hair); font-size: var(--v10-t-small); line-height: 1.7; color: var(--ink-mid); }
+.vm-faqnote a { color: var(--blue-deep); }
+.vm-faqpage .v10-faq__side { gap: var(--v10-s3); }
+.vm-faqpage .v10-faqnav a[aria-current="true"]::before { content: ''; width: 0.4rem; height: 0.4rem; margin-right: 0.6rem; border-radius: 50%; background: var(--blue-deep); }
+.vm-faqpage .v10-faq__group { padding-top: var(--v10-s2); }
+.vm-faqpage .v10-faq__group + .v10-acc { margin-bottom: var(--v10-s6); }
+.vm-stats3 { margin-top: var(--v10-s6); }
+.vm-stats3 .v10-stat b [data-fakt] { font-size: inherit; color: inherit; }
+
+/* ---------- Hilfe: Kontaktseite (POUCH contact): Support-Karte, Formular-Karte, Promo-Panel ---------- */
+.vm-contactpage { display: grid; gap: var(--v10-s3); }
+.vm-card { display: grid; gap: var(--v10-s4); align-content: start; padding: var(--v10-s5); border-radius: var(--r-card); background: var(--paper); }
+.vm-card h2, .vm-card h3 { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 1.2rem; letter-spacing: -0.01em; }
+.vm-card__item { display: grid; gap: 0.2rem; padding-top: var(--v10-s3); border-top: var(--v10-hair); }
+.vm-card__item:first-of-type { padding-top: 0; border-top: 0; }
+.vm-card__item b { font-family: var(--font-display); font-weight: 400; }
+.vm-card__item a, .vm-card__item span { color: var(--ink-mid); font-size: var(--v10-t-small); }
+.vm-card__note { margin: 0; padding-top: var(--v10-s3); border-top: var(--v10-hair); font-size: var(--v10-t-small); line-height: 1.7; color: var(--ink-mid); }
+.vm-cform { display: grid; gap: var(--v10-s3); }
+.vm-cform__row { display: grid; gap: var(--v10-s3); }
+.vm-cform label { display: grid; gap: 0.35rem; font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--ink-mid); }
+.vm-cform :is(input, select, textarea) { width: 100%; min-height: 3.25rem; padding: 0.8rem 1rem; border: 1px solid var(--line); border-radius: var(--v10-r-box); background: var(--paper); color: var(--ink); font: inherit; font-size: 0.95rem; text-transform: none; letter-spacing: 0; }
+.vm-cform textarea { min-height: 9rem; resize: vertical; }
+.vm-cform .btn { width: 100%; }
+.vm-cform__msg { margin: 0; min-height: 1.4em; font-size: var(--v10-t-small); color: var(--ink-mid); }
+.vm-promo { position: relative; isolation: isolate; overflow: clip; display: grid; align-content: space-between; gap: var(--v10-s5); min-height: 20rem; padding: var(--v10-s5); border-radius: var(--r-card); color: var(--paper); text-decoration: none; background: var(--blue-deep); }
+.vm-promo img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.vm-promo::before { content: ''; position: absolute; inset: 0; z-index: -1; background: color-mix(in srgb, var(--night) 42%, transparent); }
+.vm-promo b { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.3rem); line-height: 1.1; letter-spacing: -0.03em; }
+@media (min-width: 750px) { .vm-cform__row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 990px) { .vm-contactpage { grid-template-columns: minmax(0, 0.24fr) minmax(0, 0.52fr) minmax(0, 0.24fr); align-items: start; } .vm-contactpage .vm-promo { align-self: stretch; } }
+
+/* ---------- Ritual-Check: Quiz in weißer Karte, Optionen als .v10-size-Boxen (POUCH Optionsboxen) ---------- */
+.vm-rchead { display: grid; gap: var(--v10-s4); align-content: space-between; min-height: 18rem; }
+.vm-rchead .v10-h1 { color: var(--paper); font-size: clamp(2.1rem, 1.4rem + 3.2vw, 4.2rem); line-height: 1.05; letter-spacing: -0.04em; max-width: 16ch; }
+.vm-rchead .v10-h1 em { color: var(--v10-accent-night); }
+.vm-rchead .v10-lead { color: var(--on-night); max-width: 34rem; }
+.vm-rchead .v10-specs li { color: var(--paper); }
+.vm-quiz { scroll-margin-top: calc(var(--header-h) + 1rem); display: grid; gap: var(--v10-s5); padding: clamp(1.25rem, 1rem + 2vw, 2.5rem); border-radius: var(--r-card); background: var(--paper); min-width: 0; }
+.vm-progress { height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; }
+.vm-progress i { display: block; height: 100%; min-width: 0.5rem; width: calc(var(--p, 0) * 100%); border-radius: 4px; background: var(--blue-deep); transition: width 500ms var(--v10-ease); }
+.vm-step { display: grid; gap: var(--v10-s4); border: 0; margin: 0; padding: 0; min-width: 0; }
+.vm-step legend { padding: 0; width: 100%; }
+.vm-q { display: block; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.4rem); line-height: 1.15; letter-spacing: -0.03em; margin: var(--v10-s2) 0 var(--v10-s4); max-width: 24ch; }
+.vm-q:focus, #vm-res:focus { outline: none; }
+.vm-opts { display: grid; gap: 0.5rem; }
+.vm-quiz .v10-size { grid-template-columns: 1.1rem minmax(0, 1fr) 1rem; }
+.vm-quiz .v10-size svg { width: 1rem; height: 1rem; color: var(--blue-deep); }
+.vm-linkbtn { border: 0; background: none; padding: 0; justify-self: start; cursor: pointer; }
+.vm-nav { display: flex; flex-wrap: wrap; gap: var(--v10-s2) var(--v10-s5); align-items: center; }
+.vm-result { display: grid; gap: var(--v10-s6); }
+.vm-result__head { display: grid; gap: var(--v10-s3); justify-items: start; }
+.vm-result__head .v10-h2 { max-width: 16ch; }
+.vm-legend { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); text-align: center; color: var(--ink-mid); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; font-family: var(--font-display); }
+.vm-legend span:first-child { text-align: left; }
+.vm-legend span:last-child { text-align: right; }
+.vm-score { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid var(--ink); }
+.vm-score li { display: grid; gap: var(--v10-s2); padding-block: var(--v10-s4); border-bottom: var(--v10-hair); margin: 0; }
+.vm-score__word { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.75rem; font-family: var(--font-display); font-weight: 300; font-size: clamp(1.9rem, 1.2rem + 3vw, 3.2rem); line-height: 1.05; letter-spacing: -0.035em; color: var(--ink); }
+.vm-score li.is-good .vm-score__word { color: var(--blue-text); }
+.vm-score__state { color: var(--ink-mid); font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; }
+.vm-scale { position: relative; height: 0.5rem; border-radius: var(--r-pill); background: var(--mist); }
+.vm-scale::before { content: ''; position: absolute; top: 0; bottom: 0; left: 33.3%; width: 33.4%; background: color-mix(in srgb, var(--blue) 38%, var(--mist)); }
+.vm-scale i { position: absolute; top: 50%; left: var(--at, 50%); width: 1rem; height: 1rem; border-radius: 50%; background: var(--blue-deep); box-shadow: 0 0 0 3px var(--paper); transform: translate(-50%, -50%); transition: left 600ms var(--v10-ease); }
+@media (min-width: 750px) { .vm-score li { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); column-gap: var(--v10-s6); align-items: center; } .vm-score__side { display: grid; gap: var(--v10-s2); } }
+.vm-tips { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--v10-s3); }
+.vm-tips li { margin: 0; display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0.6rem; font-size: 0.95rem; color: var(--ink-mid); }
+.vm-tips svg { width: 1.1rem; height: 1.1rem; margin-top: 0.2rem; color: var(--blue-deep); }
+.vm-disclaimer { padding: var(--v10-s3) var(--v10-s4); border-radius: var(--r-small); background: var(--porcelain); }
+.vm-mailbox { display: grid; gap: var(--v10-s3); padding-top: var(--v10-s5); border-top: var(--v10-hair); }
+.vm-mailbox form { display: grid; gap: var(--v10-s3); max-width: 34rem; }
+.vm-mailbox input[type="email"] { width: 100%; min-height: 3.25rem; padding: 0.8rem 1rem; border: 1px solid var(--line); border-radius: var(--v10-r-box); background: var(--paper); font: inherit; }
+.vm-consent { display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: var(--v10-s3); align-items: start; font-size: var(--v10-t-small); color: var(--ink-mid); }
+.vm-consent input { width: 1.15rem; height: 1.15rem; margin: 0.2rem 0 0; accent-color: var(--blue-deep); }
+.vm-noscript { padding: var(--v10-s4); border-radius: var(--r-small); border: 1px dashed var(--blue); color: var(--ink-mid); }
+.v10 .vm-quiz .v10-rx__duo { margin: 0; }
+
+/* ---------- Statement: Abstand Label zu Text, Sub-Zeile ---------- */
+.v10-statement .v10-label + .v10-statement__text { margin-top: var(--v10-s4); }
+.vm-lifestyle { padding-block: var(--v10-section); }
+
+.vm-feature__buy .v10-micro { color: var(--on-night); }
+.vm-glassnote { margin-block: var(--v10-s4); }
+.v10-blog__big .v10-blog__more { color: var(--paper); }
+.v10-news__consent .ph { color: var(--paper); border-color: color-mix(in srgb, var(--paper) 65%, transparent); }
+
+.v10-blog__big .v10-blog__more { display: inline-flex; align-items: center; gap: 0.5em; padding: 0; font-size: var(--v10-label-size); }
+.v10-blog__big .v10-arr { display: inline-block; padding: 0; }
+.v10-contact__line .ph { color: var(--paper); border-color: color-mix(in srgb, var(--paper) 65%, transparent); }
+.vm-faqnote a { display: inline; min-height: 0; padding: 0; border-radius: 0; font-size: inherit; text-decoration: underline; background: none; }
+.v10-contact__line a, .vm-card__item a { display: inline-flex; align-items: center; min-height: var(--v10-touch); }
+.v10-contact__line { align-items: center; }
+.vm-consent, .v10-news__consent { min-height: var(--v10-touch); align-items: center; }
+
+/* =====================================================================
+   Runde 4 (Mobile-Check v10): Kontrast auf Fotos, ein Newsletter, Labels, Tippflächen, POUCH-Nähe
+   ===================================================================== */
+:root {
+  --vm-scrim: color-mix(in srgb, var(--night) 66%, transparent);       /* flache Abdunklung unter weißer Schrift auf Fotos, kein Verlauf */
+  --vm-scrim-hero: var(--v10-scrim-text);  /* über Florians Video, 62 % Night, 4,5:1 auch über Weiß */
+}
+.vm-hero .hero__media::after { content: ''; position: absolute; inset: 0; background: var(--vm-scrim-hero); }
+.vm-hero .lead { font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); }
+.v10-panel.v10-contact::before { background: var(--vm-scrim); }
+.vm-promo::before { background: var(--vm-scrim); }
+
+/* Ein Newsletter: das Footer-Formular aus ib7.js entfällt auf Seiten mit Newsletter-Panel */
+.v10:has(.v10-news) ~ .footer form[data-signup] { display: none; }
+
+/* Newsletter-Panel mit sichtbaren Labels (POUCH: zwei Namensfelder, E-Mail, Button) */
+.v10 .vm-news .v10-news__form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 0.5rem; width: 100%; max-width: 26rem; text-align: left; }
+.vm-field { display: grid; gap: 0.3rem; min-width: 0; }
+.vm-field--wide { grid-column: 1 / -1; }
+.vm-field label { font-family: var(--font-display); font-size: var(--v10-label-size); letter-spacing: var(--v10-label-track); text-transform: uppercase; color: var(--paper); }
+.v10 .vm-news .v10-news__form input { width: 100%; min-height: 3rem; padding: 0 1rem; border: 1px solid color-mix(in srgb, var(--paper) 60%, transparent); border-radius: var(--v10-r-box); background: color-mix(in srgb, var(--paper) 14%, transparent); color: var(--paper); font: inherit; font-size: 1rem; }
+.v10 .vm-news .v10-news__form .btn { grid-column: 1 / -1; }
+@media (min-width: 750px) { .v10 .vm-news .v10-news__form { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 26rem; } .v10 .vm-news .v10-news__form input[type="email"] { grid-column: auto; } }
+.v10 .vm-news .v10-news__consent { align-items: center; font-size: var(--v10-t-small); }
+
+/* Inline-Links: mehr Zeilenhöhe und Tippfläche */
+.v10 :is(.v10-cols, .v10-erow, .vm-faqnote, .vm-card__note, .vm-noscript, .vm-protect, .v10-acc__body) { line-height: 1.75; }
+.v10 :is(.inline-link, .vm-faqnote a, .vm-card__note a) { display: inline-block; padding-block: 0.7em; margin-block: -0.7em; }
+.v10 .ph { font-size: max(0.75rem, 0.8em); }
+.v10 .v10-contact__line { line-height: 1.5; }
+
+/* POUCH-Nähe Startseite: höhere Karten, größere Kapseln, Reihenfolge am Handy */
+.vm-shop .v10-pcard__media { aspect-ratio: 1 / 1.22; }
+.v10 .v10-cap { height: 1em; width: 1.55em; border-radius: var(--r-small); vertical-align: -0.12em; }
+.vm-pack__media { order: -1; }
+.vm-see__media { order: -1; }
+@media (min-width: 990px) { .vm-pack__media, .vm-see__media { order: 0; } }
+.vm-leaf .v10-acc summary { font-size: clamp(1.15rem, 1.05rem + 0.6vw, 1.5rem); }
+.vm-leaf__title, .vm-see__title, .vm-pack__title { font-weight: 300; }
+
+/* POUCH Home/FAQ am Handy: Label, Liste, dann der Button darunter */
+.vm-faqhome .v10-faq__side { display: contents; }
+.vm-faqhome .v10-faq__side .v10-label { order: 1; }
+.vm-faqhome .v10-acc { order: 2; }
+.vm-faqhome .v10-faq__side .btn { order: 3; justify-self: start; }
+@media (min-width: 990px) { .vm-faqhome .v10-faq__side { display: grid; } .vm-faqhome .v10-faq__side .v10-label, .vm-faqhome .v10-acc, .vm-faqhome .v10-faq__side .btn { order: 0; } }
+
+/* POUCH FAQ-Seite: am Handy waagerechte Kategorie-Reihe statt Karte, Hinweis-Karte am Ende */
+.vm-faqpage .v10-faqnav { display: flex; gap: 0.4rem; padding: 0.4rem; overflow-x: auto; scrollbar-width: none; }
+.vm-faqpage .v10-faqnav::-webkit-scrollbar { display: none; }
+.vm-faqpage .v10-faqnav a { flex: none; white-space: nowrap; }
+.vm-faqpage .v10-faqnav .vm-faqnote { display: none; }
+.vm-faqnote--end { display: block; margin-top: var(--v10-s4); padding: var(--v10-s4); border: 0; border-radius: var(--r-small); background: var(--paper); }
+@media (min-width: 990px) {
+  .vm-faqpage .v10-faqnav { display: grid; padding: 0.5rem; overflow: visible; }
+  .vm-faqpage .v10-faqnav a { white-space: normal; }
+  .vm-faqpage .v10-faqnav .vm-faqnote { display: block; }
+  .vm-faqnote--end { display: none; }
+}
+.v10 .vm-news .v10-news__consent { display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0.6rem; align-items: start; max-width: 26rem; margin-inline: auto; text-align: left; }
+.v10 .vm-news .v10-news__consent input { margin: 0.2rem 0 0; }

@@ -1,0 +1,80 @@
+/* =====================================================================
+   IB-7 Ritual v7 (Entwurf 13.10.2026, Runde 8b, Builder B)
+   Nur additiv, lädt NACH v13-wissen.css. Szene "Die Reihenfolge" (.vw7) und Vergleichskarte (.vw7-cmp).
+   Bildsprache: ein Haut-Block mit feiner Oberkante, eine Creme-Schicht (gefüllt, mit Kontur), Serum als Tropfen.
+   Pro Element genau ein Label, alle in einer Spalte rechts auf Höhe des Elements, nie gestapelt.
+   Regeln wie v10.css: Mobile First, nur min-width 750 / 990 px, nur Tokens, keine Verläufe, Schrift in Grafiken mind. 12 px.
+   Ohne JS und bei reduzierter Bewegung fehlt data-step: die Grafik zeigt den Endzustand.
+   ===================================================================== */
+
+/* ---------- Szene: Pillen am oberen Kartenrand, darunter der Querschnitt ---------- */
+.vw7 { --d: 1; --cr: 1; --o1: 0.65; --o2: 0.65; --o3: 1; --vw7-h: 30svh; }
+.vw7[data-step="0"] { --d: 0; --cr: 0; --o1: 1; --o2: 0; --o3: 0; }
+.vw7[data-step="1"] { --d: 1; --cr: 0; --o1: 0.5; --o2: 1; --o3: 0; }
+.vw7[data-step="2"] { --d: 1; --cr: 1; --o1: 0.5; --o2: 0.5; --o3: 1; }
+.vw7 .v10-scene__vis { aspect-ratio: auto; min-height: 0; display: grid; align-content: stretch; padding: var(--v10-s2) var(--v10-s3) var(--v10-s3); background: var(--paper); align-self: start; }
+.vw7__fig { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: var(--v10-s2); align-items: center; min-width: 0; height: 100%; }
+.vw7-pills { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.4rem; }
+.vw7-pills li { margin: 0; padding: 0.3rem 0.25rem; border-radius: var(--v10-r-ctl); background: var(--mist); color: var(--blue-deep); font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.02em; text-align: center; white-space: nowrap; transition: background 400ms var(--v10-ease), color 400ms var(--v10-ease); }
+.vw7[data-step="0"] .vw7-pills li:nth-child(n+2), .vw7[data-step="1"] .vw7-pills li:nth-child(3) { background: transparent; box-shadow: inset 0 0 0 1px var(--line); color: var(--ink-mid); }
+.vw7[data-step="0"] .vw7-pills li:nth-child(1), .vw7[data-step="1"] .vw7-pills li:nth-child(2), .vw7[data-step="2"] .vw7-pills li:nth-child(3) { background: var(--blue-deep); color: var(--paper); }
+.vw7-svg { display: block; width: 100%; height: 100%; max-height: var(--vw7-h); max-width: 26rem; margin-inline: auto; overflow: visible; }
+.vw7-svg .sk { fill: color-mix(in srgb, var(--blue) 24%, var(--paper)); }
+.vw7-svg .edge, .vw7-card .edge { fill: none; stroke: var(--ink-soft); stroke-width: 1; }
+.vw7-svg .imp { fill: var(--ink-mid); opacity: 0; }
+.vw7[data-step="0"] .vw7-svg .imp { animation: vw7-clean 1800ms var(--v10-ease) 700ms both; }
+@keyframes vw7-clean { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-8px); } }
+.vw7-svg .dr { fill: var(--blue-deep); opacity: var(--d); transform: translateY(calc(var(--d) * var(--dy) * 1px)); transition: transform 1100ms var(--v10-ease), opacity 500ms var(--v10-ease); transition-delay: calc(var(--k) * 70ms); }
+.vw7-svg .cr { fill: var(--mist); stroke: var(--blue); stroke-width: 1.5; transform-box: fill-box; transform-origin: 0 50%; transform: scaleX(var(--cr)); transition: transform 900ms var(--v10-ease); }
+.vw7-svg .l path { fill: none; stroke: var(--ink-soft); stroke-width: 1; }
+.vw7-svg .l text { font-family: var(--font-display); font-size: 12px; letter-spacing: 0.02em; fill: var(--ink); }
+.vw7-svg .l { transition: opacity 500ms var(--v10-ease); }
+.vw7-svg .l1 { opacity: var(--o1); } .vw7-svg .l2 { opacity: var(--o2); } .vw7-svg .l3 { opacity: var(--o3); }
+.vw7 .v10-scene__foot .btn { width: auto; }
+@media (min-width: 990px) {
+  .vw7 .v10-scene__vis { min-height: 24rem; padding: var(--v10-s4) var(--v10-s5) var(--v10-s5); align-self: stretch; }
+  .vw7 { --vw7-h: 26rem; }
+  .vw7-svg { max-width: 38rem; }
+  .vw7-svg .l text { font-size: 5.3px; }
+}
+/* Niedrige Handys (375 x 667, 320 x 640): Bühne kompakter, damit alles in den Bildschirm passt */
+@media (max-height: 720px) {
+  .vw7 { --vw7-h: 40svh; }
+  .vw7 .v10-scene__head .v10-h2 { font-size: 1.35rem; line-height: 1.15; }
+  .vw7 .v10-scene__stage { gap: 0.5rem; padding-block: 1rem; }
+  .vw7 .v10-scene__vis { padding: 0.25rem var(--v10-s2) var(--v10-s2); }
+  .vw7__fig { gap: 0.25rem; }
+}
+@media (min-width: 990px) { .vw7 { --vw7-h: 26rem; } }
+
+/* ---------- Vergleichskarte: Richtig gegen Andersherum, gleiche Bildsprache ---------- */
+.vw7-cmp__head { display: grid; gap: var(--v10-s2); }
+.vw7-cmp__grid { display: grid; gap: var(--v10-s3); }
+.vw7-card { --vw7-t: 14px; margin: 0; display: grid; gap: var(--v10-s3); padding: var(--v10-s4); border-radius: var(--r-card); background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
+.vw7-card figcaption { display: flex; align-items: center; gap: var(--v10-s3); }
+.vw7-sym { flex: none; width: 1.75rem; height: 1.75rem; }
+.vw7-sym svg { display: block; width: 100%; height: 100%; }
+.vw7-sym circle { fill: var(--mist); stroke: var(--blue-deep); stroke-width: 1.5; }
+.vw7-sym path { fill: none; stroke: var(--blue-deep); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.vw7-cap { display: grid; gap: 0.1rem; min-width: 0; }
+.vw7-cap b { font-family: var(--font-display); font-weight: 500; font-size: var(--v10-t-h3); letter-spacing: -0.01em; }
+.vw7-cap span { font-size: var(--v10-t-small); color: var(--ink-mid); }
+.vw7-card > svg { display: block; width: 100%; height: auto; border-radius: var(--r-small); overflow: hidden; background: var(--paper); }
+.vw7-card .sk { fill: color-mix(in srgb, var(--blue) 24%, var(--paper)); }
+.vw7-card .cr { fill: var(--mist); stroke: var(--blue); stroke-width: 1.5; }
+.vw7-card .d { fill: var(--blue-deep); }
+.vw7-card text { font-family: var(--font-display); font-size: var(--vw7-t); letter-spacing: 0.06em; fill: var(--ink-mid); }
+.vw7-card .tc { fill: var(--blue-deep); }
+.vw7-res { margin: 0; font-family: var(--font-display); font-size: 0.95rem; line-height: 1.35; color: var(--ink); }
+.vw7-card.is-wrong { box-shadow: inset 0 0 0 1px var(--blue-deep); }
+.vw7-cmp__text { max-width: 40rem; }
+.vw-js .vw7-card { transform: translateY(calc((1 - var(--vw-e, 0)) * 1.25rem)); }
+@media (min-width: 400px) { .vw7-card { --vw7-t: 12.5px; } }
+@media (min-width: 750px) { .vw7-cmp__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v10-s4); } .vw7-card { padding: var(--v10-s5); --vw7-t: 13px; } }
+@media (min-width: 990px) { .vw7-card { --vw7-t: 9.5px; } }
+@media (min-width: 1200px) { .vw7-card { --vw7-t: 8px; } }
+
+/* Die Grafik passt immer in die Karte: die Karte hat genau eine Zeile mit fester Höhe, nichts wird unten abgeschnitten */
+.vw7 .v10-scene__vis { grid-template-rows: minmax(0, 1fr); }
+/* Textblock hat immer mindestens drei Zeilen: die Grafik springt zwischen den Schritten nicht in der Größe */
+.v10-scene.is-live.vw7 .v10-scene__step.is-active .v10-scene__text { min-height: 4.5em; }
